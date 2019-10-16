@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, Grids, DBGrids, SMDBGrid,
   StdCtrls, RxLookup, DBFilter, Mask, ToolEdit, CurrEdit, FMTBcd, DB, Provider, DBClient, SqlExpr, DBCtrls, Buttons, jpeg,
   DBTables, uDmCupomFiscal, uDmEstoque, uDmMovimento, rsDBUtils, uDmParametros, NxCollection, UCupomFiscalImposto, StrUtils,
-  ValEdit, UCBase, ACBrBase, ACBrBAL, ACBrDevice;
+  ValEdit, UCBase, ACBrBase, ACBrBAL, ACBrDevice, uNFCE_ACBr;
 
 type
   TfCupomFiscal = class(TForm)
@@ -45,7 +45,6 @@ type
     btPedido: TNxButton;
     btOrcamento: TNxButton;
     Image1: TImage;
-    UCControls1: TUCControls;
     btCliente: TNxButton;
     btnCopiarComanda: TBitBtn;
     Panel5: TPanel;
@@ -127,6 +126,7 @@ type
     { Private declarations }
     fDmParametros: TDmParametros;
     fDmCupomFiscal: TDmCupomFiscal;
+    fNFCE_ACBr : TfNFCE_ACBR;
     
     vAliqIcms: Real;
     vTipoDesc: String;
@@ -224,7 +224,10 @@ var
 begin
   fDmCupomFiscal := TDmCupomFiscal.Create(Self);
   oDBUtils.SetDataSourceProperties(Self,fDmCupomFiscal);
-  oDBUtils.OpenTables(True,Self);
+//  oDBUtils.OpenTables(True,Self);
+  fNFCE_ACBr := TfNFCE_ACBR.Create(nil);
+
+  fDmCupomFiscal.cdsPessoa.Open;
 
   fDmParametros := TdmParametros.Create(Self);
   vFilial_Loc   := vFilial;
@@ -1130,12 +1133,11 @@ begin
   end;
 
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
-
+  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+  fDmCupomFiscal.cdsCupomFiscal.Close;
+  fNFCE_ACBr.btEnviarNovoClick(Sender);
   ///////////////////////////////////////////////
-
-  
-
-
 end;
 
 procedure TfCupomFiscal.CurrencyEdit2KeyDown(Sender: TObject;
@@ -1378,8 +1380,10 @@ begin
     Edit1.Text := ValueListEditor1.Strings.Names[ValueListEditor1.Row - 1];
     Edit3.Text := ValueListEditor1.Values[ValueListEditor1.Keys[ValueListEditor1.Row]];
     ValueListEditor1.Visible := False;
-    CurrencyEdit1.SetFocus;
+//    Edit1.SetFocus;
+//    CurrencyEdit1.SetFocus;
     Edit1Exit(Sender);
+    btConfirmarItClick(Sender);
   end
   else
   if (Key = 27) then
@@ -1886,6 +1890,8 @@ begin
           Result := False;
       end;
     end;
+    if Result then
+      fDmCupomFiscal.vID_Fechamento := fDmParametros.qCaixaAbertoID.AsInteger;
   end;
   fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'CODIGO';
   fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
@@ -1898,8 +1904,6 @@ begin
     MessageDlg(vMSG, mtInformation, [mbOk], 0);
     Result := False;
   end;
-  if Result then
-    fDmCupomFiscal.vID_Fechamento := fDmParametros.qCaixaAbertoID.AsInteger;
   fDmParametros.qCaixaAberto.Close;
 end;
 

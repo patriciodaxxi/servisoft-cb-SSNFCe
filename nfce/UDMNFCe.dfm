@@ -1,8 +1,8 @@
 object DMNFCe: TDMNFCe
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 255
-  Top = 91
+  Left = 259
+  Top = 168
   Height = 603
   Width = 853
   object sdsNFe_Email: TSQLDataSet
@@ -3600,8 +3600,8 @@ object DMNFCe: TDMNFCe
       'SELECT * FROM PRODUTO '
       'WHERE ID = :ID')
     SQLConnection = dmDatabase.scoDados
-    Left = 368
-    Top = 136
+    Left = 392
+    Top = 80
     object qProdutoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -3725,6 +3725,81 @@ object DMNFCe: TDMNFCe
     object qProdutoCOD_CEST: TStringField
       FieldName = 'COD_CEST'
       Size = 7
+    end
+  end
+  object qFilial_Certificado: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'select * from FILIAL_CERTIFICADOS where ID = :ID')
+    SQLConnection = dmDatabase.scoDados
+    Left = 424
+    Top = 80
+    object qFilial_CertificadoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object qFilial_CertificadoCHAVE_ACESSO: TMemoField
+      FieldName = 'CHAVE_ACESSO'
+      BlobType = ftMemo
+      Size = 1
+    end
+    object qFilial_CertificadoCNPJ_TITULAR: TStringField
+      FieldName = 'CNPJ_TITULAR'
+    end
+    object qFilial_CertificadoEMISSOR: TStringField
+      FieldName = 'EMISSOR'
+      Size = 60
+    end
+    object qFilial_CertificadoNOME_TITULAR: TStringField
+      FieldName = 'NOME_TITULAR'
+      Size = 100
+    end
+    object qFilial_CertificadoNUMERO_SERIE: TStringField
+      FieldName = 'NUMERO_SERIE'
+      Size = 100
+    end
+    object qFilial_CertificadoUTILIZA_NFE: TIntegerField
+      FieldName = 'UTILIZA_NFE'
+    end
+    object qFilial_CertificadoUTILIZA_NFSE: TIntegerField
+      FieldName = 'UTILIZA_NFSE'
+    end
+    object qFilial_CertificadoVALIDADE_INICIO: TSQLTimeStampField
+      FieldName = 'VALIDADE_INICIO'
+    end
+    object qFilial_CertificadoVALIDADE_FIM: TSQLTimeStampField
+      FieldName = 'VALIDADE_FIM'
+    end
+    object qFilial_CertificadoUTILIZA_MDFE: TIntegerField
+      FieldName = 'UTILIZA_MDFE'
+    end
+    object qFilial_CertificadoUSUARIO_WEB: TStringField
+      FieldName = 'USUARIO_WEB'
+      Size = 100
+    end
+    object qFilial_CertificadoSENHA_WEB: TStringField
+      FieldName = 'SENHA_WEB'
+      Size = 30
+    end
+    object qFilial_CertificadoAGUARDARCONSULTARETORNO: TIntegerField
+      FieldName = 'AGUARDARCONSULTARETORNO'
+    end
+    object qFilial_CertificadoCONSULTARLOTEAPOSENVIO: TStringField
+      FieldName = 'CONSULTARLOTEAPOSENVIO'
+      Size = 1
+    end
+    object qFilial_CertificadoINTERVALOTENTATIVAS: TIntegerField
+      FieldName = 'INTERVALOTENTATIVAS'
+    end
+    object qFilial_CertificadoSENHA: TStringField
+      FieldName = 'SENHA'
+      Size = 30
     end
   end
 end

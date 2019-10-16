@@ -1,6 +1,6 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 88
-  Top = 22
+  Left = 187
+  Top = 76
   Width = 1292
   Height = 727
   BorderIcons = [biSystemMenu, biMaximize]
@@ -448,6 +448,55 @@ object fCupomFiscal: TfCupomFiscal
     BevelOuter = bvNone
     Constraints.MinWidth = 380
     TabOrder = 0
+    object Panel7: TPanel
+      Left = 0
+      Top = 634
+      Width = 388
+      Height = 54
+      Align = alBottom
+      Anchors = [akLeft, akBottom]
+      Color = 3683329
+      Constraints.MaxHeight = 54
+      Constraints.MaxWidth = 400
+      Constraints.MinHeight = 54
+      Constraints.MinWidth = 380
+      TabOrder = 4
+      object btCancelar: TNxButton
+        Left = 6
+        Top = 12
+        Width = 187
+        Height = 30
+        Caption = 'Cancelar produto'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        GlyphSpacing = 5
+        ParentFont = False
+        TabOrder = 1
+        TabStop = False
+        Transparent = True
+        OnClick = btCancelarClick
+      end
+      object btFinalizar: TNxButton
+        Left = 194
+        Top = 12
+        Width = 187
+        Height = 30
+        Caption = 'F10 Finalizar Cupom'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clBlue
+        Font.Height = -16
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        GlyphSpacing = 5
+        ParentFont = False
+        TabOrder = 0
+        Transparent = True
+        OnClick = btFinalizarClick
+      end
+    end
     object Panel4: TPanel
       Left = 0
       Top = 29
@@ -913,55 +962,6 @@ object fCupomFiscal: TfCupomFiscal
         TabStop = False
         Transparent = True
         OnClick = btOrcamentoClick
-      end
-    end
-    object Panel7: TPanel
-      Left = 0
-      Top = 634
-      Width = 388
-      Height = 54
-      Align = alBottom
-      Anchors = [akLeft, akBottom]
-      Color = 3683329
-      Constraints.MaxHeight = 54
-      Constraints.MaxWidth = 400
-      Constraints.MinHeight = 54
-      Constraints.MinWidth = 380
-      TabOrder = 4
-      object btCancelar: TNxButton
-        Left = 6
-        Top = 12
-        Width = 187
-        Height = 30
-        Caption = 'Cancelar produto'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clRed
-        Font.Height = -16
-        Font.Name = 'Verdana'
-        Font.Style = [fsBold]
-        GlyphSpacing = 5
-        ParentFont = False
-        TabOrder = 1
-        TabStop = False
-        Transparent = True
-        OnClick = btCancelarClick
-      end
-      object btFinalizar: TNxButton
-        Left = 194
-        Top = 12
-        Width = 187
-        Height = 30
-        Caption = 'F10 Finalizar Cupom'
-        Font.Charset = DEFAULT_CHARSET
-        Font.Color = clBlue
-        Font.Height = -16
-        Font.Name = 'Verdana'
-        Font.Style = [fsBold]
-        GlyphSpacing = 5
-        ParentFont = False
-        TabOrder = 0
-        Transparent = True
-        OnClick = btFinalizarClick
       end
     end
     object Panel6: TPanel
@@ -1545,13 +1545,6 @@ object fCupomFiscal: TfCupomFiscal
         OnClick = btClienteClick
       end
     end
-  end
-  object UCControls1: TUCControls
-    GroupName = 'Cupom'
-    UserControl = fMenu.UserControl1
-    NotAllowed = naInvisible
-    Left = 361
-    Top = 614
   end
   object ACBrBAL1: TACBrBAL
     Porta = 'COM1'

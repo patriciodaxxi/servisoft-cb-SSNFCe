@@ -11,6 +11,8 @@ object fNFCE_ACBR: TfNFCE_ACBR
   Font.Name = 'MS Sans Serif'
   Font.Style = []
   OldCreateOrder = False
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel
@@ -171,6 +173,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 1
+            OnClick = btEnviarNovoClick
           end
         end
         object GroupBox2: TGroupBox

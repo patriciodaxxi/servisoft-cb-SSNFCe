@@ -100,15 +100,14 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'SSNFCe';
+  Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
-  Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfCupomFiscal_Canc, fCupomFiscal_Canc);
   Application.CreateForm(TDMNFCe, DMNFCe);
   Application.CreateForm(TfNFCe, fNFCe);
   Application.CreateForm(TfrmNFCe_Log, frmNFCe_Log);
   Application.CreateForm(TfRelDanfe_NFCe, fRelDanfe_NFCe);
-  Application.CreateForm(TfNFCE_ACBR, fNFCE_ACBR);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
 

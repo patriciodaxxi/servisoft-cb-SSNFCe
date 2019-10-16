@@ -690,6 +690,24 @@ type
     qProdutoCOD_BARRA2: TStringField;
     qProdutoQTD_EMBALAGEM: TFloatField;
     qProdutoCOD_CEST: TStringField;
+    qFilial_Certificado: TSQLQuery;
+    qFilial_CertificadoID: TIntegerField;
+    qFilial_CertificadoCHAVE_ACESSO: TMemoField;
+    qFilial_CertificadoCNPJ_TITULAR: TStringField;
+    qFilial_CertificadoEMISSOR: TStringField;
+    qFilial_CertificadoNOME_TITULAR: TStringField;
+    qFilial_CertificadoNUMERO_SERIE: TStringField;
+    qFilial_CertificadoUTILIZA_NFE: TIntegerField;
+    qFilial_CertificadoUTILIZA_NFSE: TIntegerField;
+    qFilial_CertificadoVALIDADE_INICIO: TSQLTimeStampField;
+    qFilial_CertificadoVALIDADE_FIM: TSQLTimeStampField;
+    qFilial_CertificadoUTILIZA_MDFE: TIntegerField;
+    qFilial_CertificadoUSUARIO_WEB: TStringField;
+    qFilial_CertificadoSENHA_WEB: TStringField;
+    qFilial_CertificadoAGUARDARCONSULTARETORNO: TIntegerField;
+    qFilial_CertificadoCONSULTARLOTEAPOSENVIO: TStringField;
+    qFilial_CertificadoINTERVALOTENTATIVAS: TIntegerField;
+    qFilial_CertificadoSENHA: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mItensNFeBeforePost(DataSet: TDataSet);
     procedure mDadosAdicionaisNFeBeforePost(DataSet: TDataSet);
@@ -720,6 +738,7 @@ type
 
     procedure prc_Abrir_NFe_Log(Rec : Boolean = False);
     procedure prc_Procurar_Recibo;
+    procedure prc_Abrir_Filial(ID : Integer);
     procedure prc_Abrir_Produto(ID : Integer);
 
   end;
@@ -849,7 +868,10 @@ begin
   qCidade.Open;
 
   qUF.Close;
-  qUF.ParamByName('UF').AsString := qCidadeUF.AsString;
+  if qCidadeUF.AsString = EmptyStr then
+    qUF.ParamByName('UF').AsString := qFilialUF.AsString
+  else
+    qUF.ParamByName('UF').AsString := qCidadeUF.AsString;
   qUF.Open;
 
   qPais.Close;
@@ -902,6 +924,22 @@ begin
   qProduto.Close;
   qProduto.ParamByName('ID').AsInteger := ID;
   qProduto.Open;
+end;
+
+procedure TDMNFCe.prc_Abrir_Filial(ID: Integer);
+begin
+  qFilial.Close;
+  qFilial.ParamByName('ID').AsInteger := ID;
+  qFilial.Open;
+
+  qFilial_Certificado.Close;
+  qFilial_Certificado.ParamByName('ID').AsInteger := ID;
+  qFilial_Certificado.Open;
+
+  qFilial_NFCe.Close;
+  qFilial_NFCe.ParamByName('ID').AsInteger := ID;
+  qFilial_NFCe.Open;
+
 end;
 
 end.

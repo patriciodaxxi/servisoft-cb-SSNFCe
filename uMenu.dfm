@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = 180
-  Top = 50
+  Left = 306
+  Top = 73
   Width = 1000
   Height = 617
   Caption = 'Menu Principal'
@@ -2632,7 +2632,7 @@ object fMenu: TfMenu
   end
   object UserControl1: TUserControl
     AutoStart = True
-    ApplicationID = 'SSCupomFiscal'
+    ApplicationID = 'SSNFCe'
     ControlRight.MainMenu = MainMenu1
     UsersForm.MenuItem = Cadastro1
     UsersForm.UsePrivilegedField = False
@@ -2661,12 +2661,6 @@ object fMenu: TfMenu
         CompName = 'btnExcluir'
         Caption = 'Excluir'
         GroupName = 'Terminal'
-      end
-      item
-        FormName = 'fCupomFiscal'
-        CompName = 'btFinalizar'
-        Caption = 'F10 - Finalizar Cupom'
-        GroupName = 'Cupom'
       end
       item
         FormName = 'frmCadFechamento'

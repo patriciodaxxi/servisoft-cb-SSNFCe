@@ -1561,6 +1561,7 @@ type
   private
     { Private declarations }
     ctCupomFiscal: String;
+    ctPessoa : string;
     f: TextFile;
 
     procedure DoLogAdditionalValues(ATableName: string; var AValues: TArrayLogData; var UserName: string);
@@ -1650,7 +1651,8 @@ type
     function fnc_IncrementaCartao(vTerminal: Integer): Integer;
     procedure prcGravaTransacao;
 
-    procedure prc_Busca_IBPT;   
+    procedure prc_Busca_IBPT;
+    procedure prc_Localizar_Pessoa(vId: Integer);
   end;
 
   //Funções Balança Urano
@@ -1766,6 +1768,7 @@ var
   aIndices: array of string;
 begin
   ctCupomFiscal := sdsCupomFiscal.CommandText;
+  ctPessoa := sdsPessoa.CommandText;
   ctCupomFiscal_ProdPrincipal := sdsCupomFiscal_ProdPrincipal.CommandText;;
   ctCondPgto    := sdsCondPgto.CommandText;
   ctPedido      := sdsPedido.CommandText;
@@ -3409,6 +3412,16 @@ begin
     cdsParametrosGeral.Post;
     cdsParametrosGeral.ApplyUpdates(0);
   end;
+end;
+
+procedure TdmCupomFiscal.prc_Localizar_Pessoa(vId: Integer);
+begin
+  cdsPessoa.Close;
+  sdsPessoa.CommandText := ctPessoa;
+  if vId <> 0 then
+    sdsPessoa.CommandText := sdsPessoa.CommandText
+                         + ' WHERE CODIGO = ' + IntToStr(vId);
+  cdsPessoa.Open;
 end;
 
 end.

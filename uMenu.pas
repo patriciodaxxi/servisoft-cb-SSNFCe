@@ -107,7 +107,7 @@ implementation
 
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
-  DmdDatabase_NFeBD, uCarnePgtoC;
+  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -199,7 +199,7 @@ function TfMenu.GetBuildInfoAsString: string;
 var
   V1, V2, V3, V4: word;
 begin
-  GetBuildInfo(GetCurrentDir + '\SSCupomFiscal.EXE', V1, V2, V3, V4);
+  GetBuildInfo(GetCurrentDir + '\SSNFCe.EXE', V1, V2, V3, V4);
   Result := IntToStr(V1) + '.' + IntToStr(V2) + '.' +
     IntToStr(V3) + '.' + IntToStr(V4);
 end;
@@ -427,7 +427,14 @@ begin
     vTipo_Dig_Cupom := 'I'
   else
     vTipo_Dig_Cupom := 'C';
-  OpenForm(TfCupomFiscalC,wsMaximized);
+  fCupomFiscal := TfCupomFiscal.Create(nil);
+  try
+    fCupomFiscal.WindowState := wsMaximized;
+    fCupomFiscal.ShowModal;
+  finally
+    FreeAndNil(fCupomFiscal);
+  end;
+//  OpenForm(TfCupomFiscal,wsMaximized);
 end;
 
 procedure TfMenu.ConsultaCupom1Click(Sender: TObject);
