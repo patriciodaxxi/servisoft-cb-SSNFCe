@@ -1,6 +1,6 @@
 object fNFCE_ACBR: TfNFCE_ACBR
-  Left = 317
-  Top = 228
+  Left = 262
+  Top = 147
   Width = 979
   Height = 563
   Caption = 'Cupom Eletr'#244'nico'
@@ -10,28 +10,30 @@ object fNFCE_ACBR: TfNFCE_ACBR
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel
     Left = 0
     Top = 0
     Width = 963
-    Height = 73
+    Height = 80
     Align = alTop
     TabOrder = 0
     object Label2: TLabel
       Left = 72
-      Top = 41
+      Top = 33
       Width = 47
       Height = 13
       Caption = 'Ambiente:'
     end
     object ComboAmbiente: TComboBox
       Left = 123
-      Top = 33
+      Top = 25
       Width = 145
       Height = 21
       Style = csDropDownList
@@ -43,19 +45,51 @@ object fNFCE_ACBR: TfNFCE_ACBR
         'Produ'#231#227'o'
         'Homologa'#231#227'o')
     end
+    object pnlErro: TPanel
+      Left = 1
+      Top = 56
+      Width = 961
+      Height = 23
+      Align = alBottom
+      TabOrder = 1
+      object lbErro: TLabel
+        Left = 9
+        Top = 2
+        Width = 543
+        Height = 23
+        AutoSize = False
+        Caption = 'Nota Denegada - Irregularidade Destinat'#225'rio'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clRed
+        Font.Height = -16
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentFont = False
+        Visible = False
+      end
+    end
+    object chkGravarXml: TCheckBox
+      Left = 712
+      Top = 40
+      Width = 153
+      Height = 17
+      Caption = 'Gravar XML em c:\A'
+      TabOrder = 2
+      Visible = False
+    end
   end
   object pnlPrincipal: TPanel
     Left = 0
-    Top = 73
+    Top = 80
     Width = 963
-    Height = 410
+    Height = 403
     Align = alClient
     TabOrder = 1
     object RzPageControl1: TRzPageControl
       Left = 1
       Top = 1
       Width = 961
-      Height = 408
+      Height = 401
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0

@@ -1,6 +1,6 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 187
-  Top = 76
+  Left = 53
+  Top = 30
   Width = 1292
   Height = 727
   BorderIcons = [biSystemMenu, biMaximize]
@@ -437,6 +437,21 @@ object fCupomFiscal: TfCupomFiscal
         TabOrder = 2
         OnKeyDown = DBEdit4KeyDown
       end
+    end
+    object pnlCaixaLivre: TPanel
+      Left = 1
+      Top = 1
+      Width = 886
+      Height = 469
+      Align = alClient
+      Caption = 'CAIXA LIVRE'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -67
+      Font.Name = 'Verdana'
+      Font.Style = [fsBold]
+      ParentFont = False
+      TabOrder = 4
     end
   end
   object Panel2: TPanel

@@ -3528,10 +3528,10 @@ object DMNFCe: TDMNFCe
     end
   end
   object ACBrNFe: TACBrNFe
-    Configuracoes.Geral.SSLLib = libNone
-    Configuracoes.Geral.SSLCryptLib = cryNone
-    Configuracoes.Geral.SSLHttpLib = httpNone
-    Configuracoes.Geral.SSLXmlSignLib = xsNone
+    Configuracoes.Geral.SSLLib = libCapicom
+    Configuracoes.Geral.SSLCryptLib = cryCapicom
+    Configuracoes.Geral.SSLHttpLib = httpWinINet
+    Configuracoes.Geral.SSLXmlSignLib = xsMsXmlCapicom
     Configuracoes.Geral.FormatoAlerta = 'TAG:%TAGNIVEL% ID:%ID%/%TAG%(%DESCRICAO%) - %MSG%.'
     Configuracoes.Geral.VersaoQRCode = veqr000
     Configuracoes.Arquivos.OrdenacaoPath = <>
@@ -3567,6 +3567,7 @@ object DMNFCe: TDMNFCe
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
     ACBrNFe = ACBrNFe
+    ImprimeTributos = trbSeparadamente
     ExibeInforAdicProduto = infNenhum
     ImprimeEmUmaLinha = True
     LarguraBobina = 290
@@ -3585,6 +3586,7 @@ object DMNFCe: TDMNFCe
     CasasDecimais.vUnCom = 2
     CasasDecimais.MaskqCom = ',0.00'
     CasasDecimais.MaskvUnCom = ',0.00'
+    ImprimeEmUmaLinha = True
     Left = 728
     Top = 16
   end

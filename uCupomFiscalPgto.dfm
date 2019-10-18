@@ -1,8 +1,8 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 316
-  Top = 6
+  Left = 333
+  Top = 76
   Width = 822
-  Height = 682
+  Height = 697
   BorderIcons = [biSystemMenu]
   Caption = 'fCupomFiscalPgto - Pagamento'
   Color = clBtnFace
@@ -21,7 +21,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 602
+    Top = 617
     Width = 806
     Height = 41
     Align = alBottom
@@ -87,7 +87,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Left = 0
     Top = 0
     Width = 806
-    Height = 602
+    Height = 617
     ActivePage = TabSheet1
     ActivePageDefault = TabSheet1
     Align = alClient
@@ -100,16 +100,16 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Left = 0
         Top = 0
         Width = 802
-        Height = 579
+        Height = 594
         Align = alClient
         TabOrder = 0
         object Panel3: TPanel
           Left = 1
-          Top = 390
+          Top = 405
           Width = 800
           Height = 116
           Align = alBottom
-          Color = 3683329
+          Color = 11599792
           TabOrder = 3
           object Label8: TLabel
             Left = 94
@@ -119,7 +119,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'CPF/CNPJ:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -133,7 +133,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Cliente:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -181,7 +181,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Obs.:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -212,7 +212,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Pessoas:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -310,7 +310,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           Width = 800
           Height = 124
           Align = alTop
-          Color = 3683329
+          Color = 11599792
           TabOrder = 0
           OnExit = Panel4Exit
           object Label2: TLabel
@@ -321,7 +321,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Forma Pagamento:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -335,7 +335,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'NFCe:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -363,7 +363,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Perc. Juros:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -378,7 +378,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Condi'#231#227'o:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -674,7 +674,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           Left = 1
           Top = 221
           Width = 800
-          Height = 169
+          Height = 184
           Align = alClient
           TabOrder = 2
           OnEnter = Panel7Enter
@@ -784,11 +784,11 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         end
         object pnlCanalVenda: TPanel
           Left = 1
-          Top = 543
+          Top = 558
           Width = 800
           Height = 35
           Align = alBottom
-          Color = 3683329
+          Color = 11599792
           Ctl3D = False
           ParentCtl3D = False
           TabOrder = 5
@@ -800,7 +800,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Canal de Venda:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -828,11 +828,11 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         end
         object pnlVendedor: TPanel
           Left = 1
-          Top = 506
+          Top = 521
           Width = 800
           Height = 37
           Align = alBottom
-          Color = 3683329
+          Color = 11599792
           Ctl3D = False
           ParentCtl3D = False
           TabOrder = 4
@@ -844,7 +844,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Alignment = taRightJustify
             Caption = 'Vendedor:'
             Font.Charset = DEFAULT_CHARSET
-            Font.Color = clWhite
+            Font.Color = clBlack
             Font.Height = -19
             Font.Name = 'Verdana'
             Font.Style = []
@@ -994,7 +994,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Left = 0
         Top = 39
         Width = 802
-        Height = 468
+        Height = 483
         Align = alClient
         Color = 12633514
         DataSource = dmCupomFiscal.dsCupom_Parc
@@ -1071,7 +1071,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       end
       object Panel8: TPanel
         Left = 0
-        Top = 507
+        Top = 522
         Width = 802
         Height = 72
         Align = alBottom

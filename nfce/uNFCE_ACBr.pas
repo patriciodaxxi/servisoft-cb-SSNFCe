@@ -5,10 +5,11 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RzTabs, Buttons, StdCtrls, UDMNFCe, uDmParametros,
-  uDmCupomFiscal, ACBrDFeUtil, pcnConversao, pcnConversaoNFe, ACBrPosPrinter;
+  uDmCupomFiscal, ACBrDFeUtil, pcnConversao, pcnConversaoNFe, ACBrPosPrinter,
+  SqlExpr, dbXPress;
 
 type
-  tEnumAmbiente = (tpProducao, tpHomologacao);
+  tEnumAmbiente = (tpProducao = 1, tpHomologacao = 2);
 
 type
   TfNFCE_ACBR = class(TForm)
@@ -32,9 +33,14 @@ type
     btCancelar: TBitBtn;
     Label2: TLabel;
     ComboAmbiente: TComboBox;
+    pnlErro: TPanel;
+    lbErro: TLabel;
+    chkGravarXml: TCheckBox;
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     sXML: string;
@@ -59,6 +65,7 @@ type
     fdmCupomFiscal: TdmCupomFiscal;
     vID_Cupom_Novo : Integer;
     function fnc_Gerar_NFCe(ID: Integer): string;
+    function fnc_Buscar_Finalidade : Integer;
 
     { Public declarations }
   end;
@@ -68,7 +75,7 @@ var
 
 implementation
 
-uses DB, uUtilPadrao, pcnNFe, ACBrNFe;
+uses DB, uUtilPadrao, pcnNFe, ACBrNFe, DmdDatabase, ACBrNFeWebServices;
 
 {$R *.dfm}
 
@@ -91,16 +98,19 @@ begin
   fDMNFCe.ACBrNFe.DANFE.vTribMun := 0;
   vItemNFe := 0;
   vVlr_Desconto_NFCe := 0;
+
   case TEnumAmbiente(ComboAmbiente.ItemIndex) of
     tpProducao : vTipo_Ambiente_NFe := 1;
     tpHomologacao : vTipo_Ambiente_NFe := 2;
   end;
+  vTipo_Ambiente_NFe := 2;
+  fDMCupomFiscal.vDescricao_Operacao := fDMCupomFiscal.cdsCFOPNOME.AsString;
   fdmCupomFiscal.cdsCupomFiscal.First;
   fDMNFCe.ACBrNFe.NotasFiscais.Clear;
   with fDMNFCe.ACBrNFe.NotasFiscais.Add.NFe do
   begin
     Ide.cNF := GerarCodigoDFe(fDMCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger);
-    Ide.natOp := fDMCupomFiscal.vDescricao_Operacao;
+    Ide.natOp := 'VENDA CONSUMIDOR';// fDMCupomFiscal.vDescricao_Operacao;
     Ide.modelo := 65;
     Ide.serie := StrToInt(fdmCupomFiscal.cdsCupomFiscalSERIE.AsString);
     Ide.nNF := fDMCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger;
@@ -146,7 +156,7 @@ begin
     if fDMCupomFiscal.cdsPessoaPESSOA.AsString = 'J' then
       Dest.CNPJCPF := Monta_Texto(fDMCupomFiscal.cdsPessoaCNPJ_CPF.AsString,14)
     else
-    if fDMCupomFiscal.cdsPessoaPESSOA.AsString = 'F' then
+    if (fDMCupomFiscal.cdsPessoaPESSOA.AsString = 'F') and (fDMCupomFiscal.cdsPessoaCNPJ_CPF.AsString <> '000.000.000-00') then
       Dest.CNPJCPF := Monta_Texto(fDMCupomFiscal.cdsPessoaCNPJ_CPF.AsString,11);
 
     if vTipo_Ambiente_NFe = 2 then
@@ -183,7 +193,13 @@ begin
           Prod.XProd := 'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
         else
           Prod.XProd := TirarAcento(fDMCupomFiscal.cdsCupom_ItensNOME_PRODUTO.AsString);
-        Prod.NCM   := Replace(fDMNFCe.mItensNFeClasFiscal.AsString,'.','');
+
+        if fDMCupomFiscal.cdsTab_NCM.FindKey([fDMCupomFiscal.cdsCupom_ItensID_NCM.AsInteger]) then
+        begin
+          Prod.NCM := fDMCupomFiscal.cdsTab_NCMNCM.AsString;
+          if (trim(fDMCupomFiscal.cdsTab_NCMCOD_CEST.AsString) <> '') then
+            Prod.CEST := fDMCupomFiscal.cdsTab_NCMCOD_CEST.AsString;
+        end;
         Prod.EXTIPI := '';
         fDMCupomFiscal.cdsCFOP.Locate('ID',fDMCupomFiscal.cdsCupom_ItensID_CFOP.AsInteger,([Locaseinsensitive]));
         Prod.CFOP := fDMCupomFiscal.cdsCFOPCODCFOP.AsString;
@@ -202,7 +218,6 @@ begin
           Prod.vUnTrib :=  StrToFloat(FormatFloat('0.0000000000',fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat / fDMNFCe.qProdutoQTD_EMBALAGEM.AsFloat))
         else
           Prod.vUnTrib := StrToFloat(FormatFloat('0.0000000000',fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat));
-
         Prod.vOutro := StrToFloat(FormatFloat('0.000',fDMCupomFiscal.cdsCupomFiscalVLR_OUTROS.AsCurrency));
         Prod.vFrete := 0;
         Prod.vSeg := 0;
@@ -233,22 +248,70 @@ begin
           vPerc_Interno := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.qUFPERC_ICMS_INTERNO.AsFloat));
 
           if vCodCST = '00' then
-            prc_Monta_ICMS00(fDMNFCe,vCodCST)
+          begin
+            ICMS.CST := cst00;
+            ICMS.modBC := dbiMargemValorAgregado;
+            ICMS.vBC := fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
+          end
           else
           if vCodCST = '10' then
-            prc_Monta_ICMS10(fDMNFCe,vCodCST,vPerc_Interno)
+          begin
+            ICMS.CST := cst10;
+            ICMS.modBC := dbiMargemValorAgregado;
+            ICMS.vBC := fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := vPerc_Interno;
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+          end
           else
           if vCodCST = '20' then
-            prc_Monta_ICMS20(fDMNFCe,vCodCST)
+          begin
+            ICMS.CST := cst20;
+            ICMS.modBC := dbiMargemValorAgregado;
+            ICMS.vBC := fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
+            if fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat > 0 then
+              ICMS.pRedBC := 100 - fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat;
+            ICMS.vICMSDeson := 0;
+          end
           else
           if vCodCST = '30' then
-            prc_Monta_ICMS30(fDMNFCe,vCodCST,vPerc_Interno)
+          begin
+            ICMS.CST := cst30;
+            ICMS.modBC := dbiMargemValorAgregado;
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := StrToFloat(FormatFloat('0.00##',vPerc_Interno));
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+            ICMS.vICMSDeson := 0;
+          end
           else
           if (vCodCST = '40') or (vCodCST = '41') or (vCodCST = '50') then
-            prc_Monta_ICMS40(fDMNFCe,vCodCST)
+          begin
+            ICMS.CST := cst40;
+            ICMS.vICMSDeson := 0;
+          end
           else
           if (vCodCST = '51') then
-            prc_Monta_ICMS51(fDMNFCe,vCodCST)
+          begin
+            ICMS.CST := cst51;
+            ICMS.modBC := dbiMargemValorAgregado;
+            if fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat > 0 then
+              ICMS.pRedBC := 100 - StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat));
+            ICMS.vBC := StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat));
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat));
+          end
           else
           if (vCodCST = '60') then
           begin
@@ -268,28 +331,122 @@ begin
           end
           else
           if (vCodCST = '70') then
-            prc_Monta_ICMS70(fDMNFCe,vCodCST,vPerc_Interno)
+          begin
+            ICMS.CST := cst70;
+            ICMS.modBC := dbiMargemValorAgregado;
+            if fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat > 0 then
+              ICMS.pRedBC := 100 - fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat;
+            ICMS.vBC := StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat));
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat));
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := StrToFloat(FormatFloat('0.00##',vPerc_Interno));
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+            ICMS.vICMSDeson := 0;
+          end
           else
           if (vCodCST = '90') then
-            prc_Monta_ICMS90(fDMNFCe,vCodCST,vPerc_Interno)
+          begin
+            ICMS.CST := cst90;
+            ICMS.modBC := dbiMargemValorAgregado;
+            if fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat > 0 then
+              ICMS.pRedBC := 100 - StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat));
+            ICMS.vBC := StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat));
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := StrToFloat(FormatFloat('0.00',fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat));
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := StrToFloat(FormatFloat('0.00##',vPerc_Interno));
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+            ICMS.vICMSDeson := 0;
+          end
           else
           if (vCodCST = '101') then
-            prc_Monta_ICMSSN101(fDMNFCe,vCodCST,0)
+          begin
+            ICMS.CSOSN := csosn101;
+            ICMS.pCredSN := vPerc_Interno;
+            ICMS.VCredICMSSN := 0;
+          end
           else
           if (vCodCST = '102') or (vCodCST = '103') or (vCodCST = '300') or (vCodCST = '400') then
-            prc_Monta_ICMSSN102(fDMNFCe,vCodCST)
+          begin
+            ICMS.CSOSN := csosn102;
+          end
           else
           if vCodCST = '201' then
-            prc_Monta_ICMSSN201(fDMNFCe,vCodCST,vPerc_Interno,0)
+          begin
+            ICMS.CSOSN := csosn201;
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := vPerc_Interno;
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+            ICMS.pCredSN := vPerc_Interno;
+            ICMS.vCredICMSSN := 0
+          end
           else
           if (vCodCST = '202') or (vCodCST = '203') then
-            prc_Monta_ICMSSN202(fDMNFCe,vCodCST,vPerc_Interno)
+          begin
+            ICMS.CSOSN := csosn202;
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := vPerc_Interno;
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+            ICMS.vCredICMSSN := 0
+          end
           else
           if vCodCST = '500' then
-            prc_Monta_ICMSSN500(fDMNFCe,vCodCST)
+          begin
+            ICMS.CSOSN := csosn500;
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.vBCSTRet := fDMCupomFiscal.cdsCupom_ItensBASE_ICMSSUBST_RET.AsFloat;
+            ICMS.pST := fDMCupomFiscal.cdsCupom_ItensPERC_ST.AsFloat;
+            ICMS.vICMSSTRet := fDMNFCe.mItensNFeVlr_ST_Ret.AsFloat + fDMCupomFiscal.cdscupom_ItensVLR_ICMSSUBST_RET.AsFloat;
+            if fDMCupomFiscal.cdsCupom_ItensVLR_ICMS_EFE.AsFloat > 0 then
+            begin
+              ICMS.VICMSEfet := fDMCupomFiscal.cdsCupom_ItensVLR_ICMS_EFE.AsFloat;
+              ICMS.vBCEfet := fDMCupomFiscal.cdsCupom_ItensVLR_BASE_EFET.AsFloat;
+              ICMS.pICMSEfet := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS_EFET.AsFloat;
+              ICMS.pRedBCEfet := fDMCupomFiscal.cdsCupom_ItensPERC_BASE_RED_EFET.AsFloat;
+            end;
+          end
           else
           if vCodCST = '900' then
-            prc_Monta_ICMSSN900(fDMNFCe,vCodCST,vPerc_Interno,0);
+          begin
+            ICMS.CSOSN := csosn900;
+            ICMS.modBCST := dbisListaPositiva;
+            ICMS.vBCSTRet := fDMCupomFiscal.cdsCupom_ItensBASE_ICMSSUBST_RET.AsFloat;
+            ICMS.vBC := fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
+            if fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat > 0 then
+            begin
+              ICMS.pRedBC := 100 - fDMCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat;
+              if ICMS.pRedBC = 100 then
+                ICMS.pRedBC := 0;
+            end
+            else
+            begin
+              if fDMCupomFiscal.cdsTab_CSTICMSPERCENTUAL.AsFloat > 0 then
+                ICMS.pRedBC := 100 - fDMCupomFiscal.cdsTab_CSTICMSPERCENTUAL.AsFloat;
+            end;
+            ICMS.pICMS := fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat;
+            ICMS.vICMS := fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
+            ICMS.modBCST := dbisMargemValorAgregado;
+            ICMS.pMVAST := 0;
+            ICMS.pRedBCST := 0;
+            ICMS.pICMSST := vPerc_Interno;
+            ICMS.vBCST := 0;
+            ICMS.vICMSST := 0;
+            ICMS.PCredSN := vPerc_Interno;
+            ICMS.VCredICMSSN := 0;
+          end;
           //Cofins
           fDMCupomFiscal.cdsTab_Cofins.FindKey([fDMCupomFiscal.cdsCupom_ItensID_COFINS.AsInteger]);
           if fDMCupomFiscal.cdsTab_CofinsCODIGO.AsString = '01' then
@@ -356,7 +513,7 @@ begin
           PIS.vBC := vValorTotal;
           PIS.pPIS := fDMCupomFiscal.cdsCupom_ItensPERC_PIS.AsFloat;
           PIS.vPIS := fDMCupomFiscal.cdsCupom_ItensVLR_PIS.AsFloat;
-
+          vTotTrib := fDMCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat;
         end;
       end;
       fDMCupomFiscal.cdsCupom_Itens.Next;
@@ -388,6 +545,8 @@ begin
     Total.ISSQNTot.vPIS := 0;
     Total.ISSQNTot.vCOFINS := 0;
     Transp.modFrete := mfSemFrete; // NFC-e não pode ter FRETE
+
+
 
     if fDMCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'V' then
     begin
@@ -483,18 +642,15 @@ begin
     fDMNFCe.ACBrNFe.DANFE.vTribFed := fDMCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat;
 
   end;
+
   try
     fDMNFCe.ACBrNFe.NotasFiscais.GerarNFe;
   except
 
   end;
-  if DirectoryExists('c:\temp') then
-    if fDMNFCe.ACBrNFe.NotasFiscais.Count > 0 then
-      fDMNFCe.ACBrNFe.NotasFiscais[0].GravarXML('nfe.xml', 'c:\temp');
-
-  if (FileExists('COMUNICACAO_OFFLINE.TXT')) then //or (Imprimir_Nfce) then
-    fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
-
+  if DirectoryExists('c:\a') then
+    if (fDMNFCe.ACBrNFe.NotasFiscais.Count > 0) then //and (chkGravarXml.Checked) then
+      fDMNFCe.ACBrNFe.NotasFiscais[0].GravarXML('nfe.xml', 'c:\a');
 
 end;
 
@@ -759,8 +915,114 @@ begin
 end;
 
 procedure TfNFCE_ACBR.btEnviarNovoClick(Sender: TObject);
+var
+  chave, vMSGNFCe : String;
+  Tentativa, RetornoStatus : Integer;
+  ID: TTransactionDesc;
+  sds: TSQLDataSet;
+  Flag: Boolean;  
 begin
   sXML := fnc_Gerar_NFCe(vID_Cupom_Novo);
+  chave := copy(fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID, (length(fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) - 44) + 1, 44);
+  if chave = '' then
+  begin
+    ShowMessage('O sistema nao conseguiu gerar a Chave Eletronica! Tente Novamente');
+    Exit;
+  end;
+
+  fDMNFCe.ACBrNFe.NotasFiscais.Assinar;
+  Flag := True;
+  try
+    fDMNFCe.ACBrNFe.NotasFiscais.Validar;
+  except
+    on e: Exception do
+    begin
+      MessageDlg('Nota não Enviada ' + #13 + e.Message,mtError,[mbOK],0);
+      fdmCupomFiscal.cdsCupomFiscal.Close;
+      Flag := False;
+    end;
+  end;
+
+  if not Flag then
+    exit;
+
+  vMSGNFCe := '';
+  sds := TSQLDataSet.Create(nil);
+  ID.TransactionID  := 71;
+  ID.IsolationLevel := xilREADCOMMITTED;
+  dmDatabase.scoDados.StartTransaction(ID);
+  try
+    try
+      sds.SQLConnection := dmDatabase.scoDados;
+      sds.NoMetadata    := True;
+      sds.GetMetadata   := False;
+      sds.CommandText   := ' UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('CUPOMFISCAL');
+      Flag := False;
+      while not Flag do
+      begin
+        try
+          sds.Close;
+          sds.ExecSQL;
+          Flag := True;
+        except
+          on E: Exception do
+          begin
+            Flag := False;
+          end;
+        end;
+      end;
+    except
+      raise
+    end;
+    lbChaveAcesso.Caption  := chave;
+
+    fDMNFCe.ACBrNFe.Enviar('1', False, False);
+    try
+
+    finally
+
+    end;
+    RetornoStatus := fDMNFCe.ACBrNFe.WebServices.Retorno.cStat;
+    if (RetornoStatus = 302) or (RetornoStatus = 301) then
+    begin
+      fdmCupomFiscal.Gravar_Envio_Nota(fDMNFCe.ACBrNFe.WebServices.Retorno.Recibo,
+                                       fDMNFCe.ACBrNFe.WebServices.Retorno.Protocolo,
+                                       chave,
+                                       1,
+                                       fnc_Buscar_Finalidade,
+                                       RetornoStatus,
+                                       fDMNFCe.ACBrNFe.WebServices.Retorno.xMotivo);
+      lbErro.Visible := (fDMCupomFiscal.cdsCupomFiscalNFEDENEGADA.AsString = 'S');
+      lbErro.Caption := 'CUPOM DENEGADO: ' + fDMCupomFiscal.cdsCupomFiscalMOTIVO_DENEGADO.AsString;
+      vMSGNFCe := '*** CUPOM FISCAL - DENEGADO:  ' + fDMCupomFiscal.cdsCupomFiscalMOTIVO_DENEGADO.AsString
+                 +#13 + #13 + ' Verificar esta ocorrência, venda não realizada!'
+    end
+    else
+    if (RetornoStatus = 100) then
+    begin
+      fdmCupomFiscal.Gravar_Envio_Nota(fDMNFCe.ACBrNFe.WebServices.Retorno.Recibo,
+                                       fDMNFCe.ACBrNFe.WebServices.Retorno.Protocolo,
+                                       fDMNFCe.ACBrNFe.WebServices.Retorno.ChaveNFe,
+                                       1,
+                                       fnc_Buscar_Finalidade,RetornoStatus,
+                                       fDMNFCe.ACBrNFe.WebServices.Retorno.xMotivo);
+      Tentativa := 6;
+    end;
+    lbRecibo.Caption       := fDMNFCe.ACBrNFe.WebServices.Retorno.Recibo;
+    lbNroProtocolo.Caption := fDMNFCe.ACBrNFe.WebServices.Retorno.Protocolo;
+    dmDatabase.scoDados.Commit(ID);
+  except
+    on e: Exception do
+    begin
+      dmDatabase.scoDados.Rollback(ID);
+      vMSGNFCe := 'Não foi possível enviar o NFCe!' + #13 + E.Message + #13+ '  Clique para continuar!';
+    end;
+  end;
+
+//  fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
+
+  fDMNFCe.ACBrNFe.NotasFiscais.Clear;
+
 end;
 
 procedure TfNFCE_ACBR.Inicia_NFe;
@@ -792,7 +1054,6 @@ begin
   fDMNFCe.ACBrPosPrinter.Device.Porta      := vPorta;
   fDMNFCe.ACBrPosPrinter.Device.Baud       := StrToInt(vVelocidade);
 
-  fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeEmUmaLinha := False;
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeDescAcrescItem := True;
 end;
 
@@ -804,6 +1065,21 @@ end;
 procedure TfNFCE_ACBR.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   FreeAndNil(fDMNFCe);
+end;
+
+function TfNFCE_ACBR.fnc_Buscar_Finalidade : Integer;
+var
+  Tipo : tEnumAmbiente;
+begin
+  Tipo := tEnumAmbiente(ComboAmbiente.ItemIndex);
+  Result := Ord(Tipo);
+end;
+
+procedure TfNFCE_ACBR.FormKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  if (Shift = [ssCtrl]) and (Key = 87) then
+    chkGravarXml.Visible := not(chkGravarXml.Visible);
 end;
 
 end.

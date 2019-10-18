@@ -69,6 +69,7 @@ type
     Label10: TLabel;
     DBEdit5: TDBEdit;
     ACBrBAL1: TACBrBAL;
+    pnlCaixaLivre: TPanel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Edit1Exit(Sender: TObject);
@@ -511,6 +512,21 @@ begin
 
   if (Shift = [ssCtrl]) and (Key = 87) then
   begin
+  end;
+
+  if key = 27 then
+  begin
+    if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
+    begin
+      if MessageDlg('Deseja cancelar o cupom?',mtConfirmation,[mbYes, mbNo],0) = mrNo then
+        exit;
+      fDmCupomFiscal.Excluir_Duplicata;
+      fDmCupomFiscal.Excluir_ExtComissao;
+      fDmCupomFiscal.prc_Excluir_Financeiro;
+      fDmCupomFiscal.prc_Excluir_Movimento;
+      fDmCupomFiscal.prcExcluir;
+      pnlCaixaLivre.Visible := True;
+    end;
   end;
 
   if (Key = Vk_F12) and not(fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
@@ -1137,6 +1153,7 @@ begin
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
   fDmCupomFiscal.cdsCupomFiscal.Close;
   fNFCE_ACBr.btEnviarNovoClick(Sender);
+  pnlCaixaLivre.Visible := True;
   ///////////////////////////////////////////////
 end;
 
@@ -1201,6 +1218,7 @@ begin
     exit;
   if Edit1.Text = '' then
     exit;
+  pnlCaixaLivre.Visible := False;  
   if not(fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
     prc_Inserir;
 
