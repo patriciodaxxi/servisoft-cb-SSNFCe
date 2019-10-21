@@ -155,7 +155,7 @@ type
     { Public declarations }
     fDmEstoque: TDmEstoque;
     fDmMovimento: TDmMovimento;
-
+    vSerieCupom : String; //Serie Cupom NFCe
     vTeste: Boolean;
     vSacolaSelecionada: Boolean;
     vItem_original: Integer;
@@ -201,11 +201,12 @@ begin
   Tag := 0;
   if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
   begin
-    fDmCupomFiscal.Excluir_Duplicata;
-    fDmCupomFiscal.Excluir_ExtComissao;
-    fDmCupomFiscal.prc_Excluir_Financeiro;
-    fDmCupomFiscal.prc_Excluir_Movimento;
-    fDmCupomFiscal.prcExcluir;
+    fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+//    fDmCupomFiscal.Excluir_Duplicata;
+//    fDmCupomFiscal.Excluir_ExtComissao;
+//    fDmCupomFiscal.prc_Excluir_Financeiro;
+//    fDmCupomFiscal.prc_Excluir_Movimento;
+//    fDmCupomFiscal.prcExcluir;
   end;
 
   FreeAndNil(fDmEstoque);
@@ -508,7 +509,7 @@ begin
   if not (Panel4.Enabled) then
     Exit;
 
-  if (Key = Vk_F10) and not(fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
+ if (Key = Vk_F10) and (fDmCupomFiscal.cdsCupomFiscal.Active) and not(fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
     btFinalizarClick(Sender);
 
   if (Shift = [ssCtrl]) and (Key = 87) then
@@ -532,7 +533,7 @@ begin
     end;
   end;
 
-  if key = vk_F10 then //Ctrl + C
+  if key = vk_F11 then //F11
   begin
     if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
     begin
@@ -558,6 +559,7 @@ begin
       finally
         FreeAndNil(ffrmConsCupom);
       end;
+      fDmCupomFiscal.cdsCupomFiscal.Close;
     end;
   end;
 
@@ -1184,9 +1186,11 @@ begin
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
   fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-  fDmCupomFiscal.cdsCupomFiscal.Close;
   fNFCE_ACBr.btEnviarNovoClick(Sender);
+  if fDmCupomFiscal.cdsCupomFiscal.Active then
+    fDmCupomFiscal.cdsCupomFiscal.Close;
   pnlCaixaLivre.Visible := True;
+  DBEdit1.Update;
   ///////////////////////////////////////////////
 end;
 
@@ -1972,6 +1976,8 @@ begin
 
   fDmCupomFiscal.prcInserir(0,fDmCupomFiscal.vClienteID);
 
+  vSerieCupom  := fDmCupomFiscal.lerIni('IMPRESSORA','Serie');
+
   if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
   begin
     fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'NFC';
@@ -1981,7 +1987,10 @@ begin
     fDmCupomFiscal.cdsCupomFiscalTIPO_DESTINO_OPERACAO.AsInteger := 1;
     fDMCupomFiscal.cdsCupomFiscalTIPO_ATENDIMENTO.AsInteger      := 1;
     fDMCupomFiscal.cdsCupomFiscalTIPO_ENVIONFE.AsString          := '1-NORMAL';
-    fDmCupomFiscal.cdsCupomFiscalSERIE.AsString                  := fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString;
+    if vSerieCupom <> EmptyStr then
+      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString                  := vSerieCupom
+    else
+      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString                  := fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString;
   end
   else
   begin

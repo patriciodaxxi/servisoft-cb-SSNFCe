@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr, UDMCadExtComissao, UDMGravarFinanceiro, StdConvs, StrUtils,
   Printers, logTypes, uUtilPadrao, Graphics, ACBrBarCode, frxClass, frxDBSet, frxBarcode, Windows, Messages, ACBrBase, ACBrBAL,
-  ACBrDevice, Dialogs, ExtCtrls;
+  ACBrDevice, Dialogs, ExtCtrls, IniFiles;
 
 type
   TdmCupomFiscal = class(TDataModule)
@@ -1624,6 +1624,7 @@ type
     procedure Abrir_cdsDuplicata(ID: Integer);
     procedure prc_Gravar_Comissao(Prazo: String = '');
     procedure prc_Gravar_Financeiro_Cupom(vParc: Byte; vValor: Currency);
+    function lerIni(Tabela, Campo: String): String;
 
     procedure prc_Excluir_Financeiro;
     procedure prc_Excluir_Movimento;
@@ -3433,6 +3434,15 @@ begin
   sds_prc_Exluir_Cupom.Close;
   sds_prc_Exluir_Cupom.ParamByName('ID_CUPOM').AsInteger := ID_Cupom;
   sds_prc_Exluir_Cupom.ExecSQL;
+end;
+
+function TdmCupomFiscal.lerIni(Tabela, Campo: String): String;
+var
+  ServerIni: TIniFile;
+begin
+  ServerIni := TIniFile.Create('c:\$Servisoft\Impressora.ini');
+  result    := ServerIni.ReadString(Tabela,Campo,'');
+  ServerIni.Free;
 end;
 
 end.

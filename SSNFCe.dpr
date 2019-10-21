@@ -93,7 +93,8 @@ uses
   UNFCe_Log in 'nfce\UNFCe_Log.pas' {frmNFCe_Log},
   uRelDanfe_NFCe in 'nfce\URelDanfe_NFCe.pas' {fRelDanfe_NFCe},
   uXMLNFCe4_00 in 'nfce\uXMLNFCe4_00.pas',
-  uNFCE_ACBr in 'nfce\uNFCE_ACBr.pas' {fNFCE_ACBR};
+  uNFCE_ACBr in 'nfce\uNFCE_ACBr.pas' {fNFCE_ACBR},
+  uConsCupom in 'uConsCupom.pas' {frmConsCupom};
 
 {$R *.res}
 

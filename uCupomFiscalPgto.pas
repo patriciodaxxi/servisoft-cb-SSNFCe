@@ -497,13 +497,10 @@ end;
 
 procedure TfCupomFiscalPgto.btConfirmarClick(Sender: TObject);
 var
-  ID: TTransactionDesc;
-  sds: TSQLDataSet;
   vGravar_Aux: Boolean;
   vGeraNFCe: Boolean;
   vAux: Integer;
   vIdCupom: Integer;
-  Flag: Boolean;
   vMSGAux: String;
 begin
   if RxDBLookupCombo3.Value = '' then
@@ -620,34 +617,7 @@ begin
 
   fDmCupomFiscal.vNome_Consumidor := '';
 
-  sds := TSQLDataSet.Create(nil);
-  ID.TransactionID  := 1;
-  ID.IsolationLevel := xilREADCOMMITTED;
-  dmDatabase.scoDados.StartTransaction(ID);
   try
-    try
-      sds.SQLConnection := dmDatabase.scoDados;
-      sds.NoMetadata    := True;
-      sds.GetMetadata   := False;
-      sds.CommandText   := 'UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('CUPOMFISCAL');
-      Flag := False;
-      while not Flag do
-      begin
-        try
-          sds.Close;
-          sds.ExecSQL;
-          Flag := True;
-        except
-          on E: Exception do
-          begin
-            Flag := False;
-          end;
-        end;
-      end;
-    except
-      raise
-    end;
-
     vGeraNFCe := False;
     if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') and
        (fDmCupomFiscal.cdsTipoCobranca.Locate('ID',fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger,[loCaseInsensitive])) then
@@ -662,14 +632,14 @@ begin
 
       if vGeraNFCe then
       begin
-        vAux := dmDatabase.ProximaSequencia('NUM_NFC',vFilial);
+        vAux := dmDatabase.ProximaSequencia('NUM_NFC',vFilial, IntToStr(fDmCupomFiscal.cdsCupomFiscalSERIE.AsInteger));
         fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger := vAux;
-        fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString;
+        fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := fDmCupomFiscal.cdsCupomFiscalSERIE.AsString;
         fDmCupomFiscal.cdsCupomFiscalTIPO.AsString  := 'NFC';
       end
       else
       begin
-        vAux := dmDatabase.ProximaSequencia('NUM_CNF',vFilial);
+        vAux := dmDatabase.ProximaSequencia('NUM_CNF',vFilial,IntToStr(fDmCupomFiscal.cdsCupomFiscalSERIE.AsInteger));
         fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger := vAux;
         fDmCupomFiscal.cdsCupomFiscalSERIE.Clear;
         fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
@@ -684,11 +654,9 @@ begin
 
     if fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S' then
       fDmCupomFiscal.cdsCupomFiscal_ProdPrincipal.ApplyUpdates(0);
-    dmDatabase.scoDados.Commit(ID);
   except
     on e: Exception do
     begin
-      dmDatabase.scoDados.Rollback(ID);
       raise Exception.Create('Erro ao gravar cupom: ' + #13 + e.Message +
                              //#13 + #13 'Feche o programa e abra novamente!');
                              #13 + #13 + 'Favor confirmar novamente e verificar se o cupom foi enviado corretamente!');
@@ -727,7 +695,6 @@ begin
   end;
   //**********************************
 
-  FreeAndNil(sds);
   Close;
   //***********
 end;

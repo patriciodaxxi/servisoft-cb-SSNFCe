@@ -183,6 +183,8 @@ type
     RxDBComboBox44: TRxDBComboBox;
     Label75: TLabel;
     RxDBComboBox45: TRxDBComboBox;
+    Label77: TLabel;
+    edtSerieCupom: TEdit;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -236,6 +238,8 @@ begin
     RxDBLookupCombo8.KeyValue := StrToInt(lerIni('IMPRESSORA','Filial'));
   Edit1.Text             := lerIni('IMPRESSORA','Porta');
   Edit2.Text             := lerIni('IMPRESSORA','Boud');
+  edtSerieCupom.Text     := lerIni('IMPRESSORA','Serie');
+
   RxDBLookupCombo2.Value := lerIni('IMPRESSORA','Terminal');
   if lerIni('IMPRESSORA','IdEstoque') <> '' then
     RxDBLookupCombo7.KeyValue := StrToInt(lerIni('IMPRESSORA','IdEstoque'));
@@ -310,6 +314,8 @@ begin
     vMsg := vMsg + ('Filial deve ser definida!') + #13;
   if Edit1.Text = '' then
     vMsg := vMsg + 'Porta deve ser definida!' + #13;
+  if edtSerieCupom.Text = '' then
+    vMsg := vMsg + 'Série deve ser definida!' + #13;
   if RxDBLookupCombo2.Text = '' then
     vMsg := vMsg + ('Terminal deve ser definido!') + #13;
   if RxDBLookupCombo7.Text = '' then
@@ -363,6 +369,7 @@ begin
   gravarIni('IMPRESSORA','Filial',RxDBLookupCombo8.Value);
   gravarIni('IMPRESSORA','Impressora',RxDBComboBox5.Text);
   gravarIni('IMPRESSORA','Porta',Edit1.Text);
+  gravarIni('IMPRESSORA','Serie',edtSerieCupom.Text);
   gravarIni('IMPRESSORA','Boud',Edit2.Text);
   gravarIni('IMPRESSORA','Terminal',RxDBLookupCombo2.Value);
   gravarIni('IMPRESSORA','IdEstoque',RxDBLookupCombo7.Value);
@@ -377,7 +384,7 @@ begin
        end;
     1: begin
          gravarIni('IMPRESSORA','Gaveta','S');
-         vUsaGaveta := True;                                 
+         vUsaGaveta := True;
        end;
   end;
   if RxDBLookupCombo8.KeyValue > 0 then

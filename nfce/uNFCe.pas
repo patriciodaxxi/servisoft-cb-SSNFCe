@@ -8,8 +8,7 @@ uses
   IdTCPConnection, IdTCPClient, RzTabs, ExtCtrls, IdCoder, IdCoder3to4, IdCoderMIME, IdSSLOpenSSL, IdMessageClient, RzSndMsg,
   //IdSMTP, IdMessage, JvComponent, JvMail, Mapi, ShellApi, RLMetaFile, DBTables, UDMCupomFiscal, UCBase, UDMCadNFe_Inutilizacao, UDMNFCe,
   IdSMTP, IdMessage, JvComponent, JvMail, Mapi, ShellApi, RLMetaFile, DBTables, UDMCupomFiscal, UCBase, UDMNFCe, dbXPress,
-  UDMConsNotaEletronica, SqlExpr, pcnConversaoNFe, ACBrPosPrinter, uDmParametros,
-  IdExplicitTLSClientServerBase, IdSMTPBase;
+  UDMConsNotaEletronica, SqlExpr, pcnConversaoNFe, ACBrPosPrinter, uDmParametros, UDMRel;
 
   //UDMRel, RzSndMsg, ;
 
@@ -23,6 +22,7 @@ type
     TCPClient: TIdTCPClient;
     IOHandlerSocket: TIdIOHandlerSocket;
     OpenDialog: TOpenDialog;
+    IdSSLIOHandlerSocket1: TIdSSLIOHandlerSocket;
     RzPageControl1: TRzPageControl;
     tsEnvio: TRzTabSheet;
     GroupBox1: TGroupBox;
@@ -171,7 +171,8 @@ type
     //fDMCadNFe_Inutilizacao: TDMCadNFe_Inutilizacao;
     fDMConsNotaEletronica: TDMConsNotaEletronica;
     fDMNFCe: TDMNFCe;
-
+    fDMRel: TDMRel;
+    
     vNomeArquivo, vNomeArqPdf: String;
     vPessoaTransp: String;
     vGerar_Chave_Antiga: String;
@@ -192,7 +193,7 @@ var
 implementation
 
 //uses nfe_v110, DateUtils, uNFeConsts, uNFeComandos, ComObj, uUtilPadrao, UMenu, uXMLNFCe3_10, StrUtils, URelDanfe_NFCe,
-uses nfe_v110, DateUtils, uNFeConsts, ComObj, uUtilPadrao, UMenu, StrUtils, URelDanfe_NFCe,
+uses nfe_v110, DateUtils, uNFeConsts, ComObj, uUtilPadrao, uNFeComandos, UMenu, StrUtils, URelDanfe_NFCe,
   UNFCe_Log, DmdDatabase, uXMLNFCe4_00, Math, pcnAuxiliar, ACBrDFeUtil;
 
 {$R *.dfm}
@@ -209,8 +210,8 @@ var
   vCnpjRem: String;
   vCnpjDest: String;
   vVlrNota: String;
-//  vDestaqueICMS: TICMS;
-//  vDestaqueICMSSubst: TICMS;
+  vDestaqueICMS: TICMS;
+  vDestaqueICMSSubst: TICMS;
   vCodBarraAux: String;
 begin
   { Informações retidas da página  4 do link:
@@ -291,7 +292,7 @@ end;
 function TfNFCe.Verifica_ConexaoInternet: Boolean;
 begin
   texto  := Monta_Texto(fDMNFCe.qFilialCNPJ_CPF.AsString,14);
-//  Result := ConectadoInternet(fDMNFCe.qParametrosLOCALSERVIDORNFE.AsString,texto);
+  Result := ConectadoInternet(fDMNFCe.qParametrosLOCALSERVIDORNFE.AsString,texto);
 end;
 
 function TfNFCe.Monta_Diretorio(Tipo, Diretorio: string): string;
@@ -339,7 +340,7 @@ end;
 
 procedure TfNFCe.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
-//  FreeAndNil(fDMRel);
+  FreeAndNil(fDMRel);
   FreeAndNil(fDMNFCe);
   FreeAndNil(fDMParametros);
   Tag := 0;
@@ -380,15 +381,15 @@ begin
 
   oNFeStream := TMemoryStream.Create;
   try
-//
-//    CancelaNFe(Trim( fDMNFCe.qParametrosLOCALSERVIDORNFE.AsString),
-//                texto,
-//                Copy(lbNroProtocolo.Caption,1,15),
-//                lbChaveAcesso.Caption,
-//                fDMCupomFiscal.vMotivoCancelamento,
-//                NroProtocolo,
-//                oNFeStream,
-//                vContigencia,True);
+
+    CancelaNFe(Trim( fDMNFCe.qParametrosLOCALSERVIDORNFE.AsString),
+                texto,
+                Copy(lbNroProtocolo.Caption,1,15),
+                lbChaveAcesso.Caption,
+                fDMCupomFiscal.vMotivoCancelamento,
+                NroProtocolo,
+                oNFeStream,
+                vContigencia,True);
 
     lbNroProtocoloCancelamento.Caption := NroProtocolo;
     oNFeStream.Position                := 0;

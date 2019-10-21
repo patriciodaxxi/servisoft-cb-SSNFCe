@@ -1,6 +1,6 @@
 object fCupomParametros: TfCupomParametros
-  Left = 331
-  Top = 69
+  Left = 281
+  Top = 54
   Width = 881
   Height = 632
   BorderIcons = [biSystemMenu, biMaximize]
@@ -699,6 +699,14 @@ object fCupomParametros: TfCupomParametros
             Alignment = taRightJustify
             Caption = 'Filial:'
           end
+          object Label77: TLabel
+            Left = 472
+            Top = 44
+            Width = 58
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'S'#233'rie (PDV):'
+          end
           object RxDBComboBox9: TRxDBComboBox
             Left = 214
             Top = 58
@@ -765,6 +773,14 @@ object fCupomParametros: TfCupomParametros
             LookupDisplay = 'NOME_INTERNO'
             LookupSource = dmCupomFiscal.dsFilial
             TabOrder = 0
+          end
+          object edtSerieCupom: TEdit
+            Left = 537
+            Top = 36
+            Width = 88
+            Height = 21
+            TabOrder = 5
+            Text = 'S'#233'rie'
           end
         end
         object GroupBox9: TGroupBox

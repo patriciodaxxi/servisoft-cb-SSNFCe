@@ -82,14 +82,14 @@ object fNFCE_ACBR: TfNFCE_ACBR
     Left = 0
     Top = 80
     Width = 963
-    Height = 404
+    Height = 403
     Align = alClient
     TabOrder = 1
     object RzPageControl1: TRzPageControl
       Left = 1
       Top = 1
       Width = 961
-      Height = 402
+      Height = 401
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
@@ -262,32 +262,12 @@ object fNFCE_ACBR: TfNFCE_ACBR
             OnClick = btCancelarClick
           end
         end
-        object mmResposta: TMemo
-          Left = 0
-          Top = 120
-          Width = 185
-          Height = 89
-          TabOrder = 2
-        end
-        object WBResposta: TWebBrowser
-          Left = 184
-          Top = 120
-          Width = 581
-          Height = 259
-          TabOrder = 3
-          ControlData = {
-            4C000000FB390000E81B00000000000000000000000000000000000000000000
-            000000004C000000000000000000000001000000E0D057007335CF11AE690800
-            2B2E126200000000000000004C0000000114020000000000C000000000000046
-            8000000000000000000000000000000000000000000000000000000000000000
-            00000000000000000100000000000000000000000000000000000000}
-        end
       end
     end
   end
   object pnlBotton: TPanel
     Left = 0
-    Top = 484
+    Top = 483
     Width = 963
     Height = 41
     Align = alBottom

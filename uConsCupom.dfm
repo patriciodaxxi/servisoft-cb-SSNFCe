@@ -20,14 +20,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 65
     Width = 987
-    Height = 377
+    Height = 376
     Align = alClient
     TabOrder = 0
     object GridCupom: TSMDBGrid
       Left = 1
       Top = 1
       Width = 985
-      Height = 375
+      Height = 374
       Align = alClient
       DataSource = dmCupomFiscal.dsCupom_Cons
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgMultiSelect]

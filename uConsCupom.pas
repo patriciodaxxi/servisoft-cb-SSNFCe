@@ -71,8 +71,13 @@ var
 begin
   if vCancelar then
   begin
+    if trim(fDMCupomFiscal.cdsCupomFiscalNFEPROTOCOLO_CANCELADA.AsString) <> EmptyStr then
+    begin
+      MessageDlg('*** Cupom já cancelado!', mtInformation, [mbOk], 0);
+      exit;
+    end;
     NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
-    if MessageDlg('Tem certeza que deseja cancelar o Cupom nº:' + NumCupom,mtConfirmation,[mbYes,mbNo],0) = mrNo then
+    if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom,mtConfirmation,[mbYes,mbNo],0) = mrNo then
       Exit;
     fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
     fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
@@ -85,7 +90,7 @@ begin
         ShowMessage('Erro: ' + e.Message);
       end;
     end;
-
+    btnConsultarClick(Sender);
   end
   else
   begin
@@ -126,7 +131,7 @@ begin
   begin
     cbNEnviados.Checked := False;
     cbNEnviados.Enabled := False;
-    vComando := vComando + ' AND NFEPROTOCOLO IS NOT NULL';
+    vComando := vComando + ' AND NFEPROTOCOLO IS NOT NULL AND NFEPROTOCOLO_CANCELADA IS NULL';
   end;
   if cbNEnviados.Checked then
     vComando := vComando + ' AND NFECHAVEACESSO IS NULL';

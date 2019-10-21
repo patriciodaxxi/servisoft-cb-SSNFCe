@@ -1,6 +1,6 @@
 object fNFCe: TfNFCe
-  Left = 361
-  Top = 213
+  Left = 331
+  Top = 137
   BorderIcons = [biSystemMenu]
   BorderStyle = bsSingle
   Caption = 'Cupom Eletr'#244'nica'
