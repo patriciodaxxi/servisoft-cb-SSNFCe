@@ -1,6 +1,6 @@
 object fNFCE_ACBR: TfNFCE_ACBR
-  Left = 262
-  Top = 147
+  Left = 142
+  Top = 105
   Width = 979
   Height = 563
   Caption = 'Cupom Eletr'#244'nico'
@@ -82,14 +82,14 @@ object fNFCE_ACBR: TfNFCE_ACBR
     Left = 0
     Top = 80
     Width = 963
-    Height = 403
+    Height = 404
     Align = alClient
     TabOrder = 1
     object RzPageControl1: TRzPageControl
       Left = 1
       Top = 1
       Width = 961
-      Height = 401
+      Height = 402
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
@@ -199,7 +199,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
             Top = 14
             Width = 89
             Height = 50
-            Caption = 'Enviar Novo'
+            Caption = 'Enviar'
             Font.Charset = DEFAULT_CHARSET
             Font.Color = clBlue
             Font.Height = -11
@@ -259,14 +259,35 @@ object fNFCE_ACBR: TfNFCE_ACBR
             Font.Style = [fsBold]
             ParentFont = False
             TabOrder = 0
+            OnClick = btCancelarClick
           end
+        end
+        object mmResposta: TMemo
+          Left = 0
+          Top = 120
+          Width = 185
+          Height = 89
+          TabOrder = 2
+        end
+        object WBResposta: TWebBrowser
+          Left = 184
+          Top = 120
+          Width = 581
+          Height = 259
+          TabOrder = 3
+          ControlData = {
+            4C000000FB390000E81B00000000000000000000000000000000000000000000
+            000000004C000000000000000000000001000000E0D057007335CF11AE690800
+            2B2E126200000000000000004C0000000114020000000000C000000000000046
+            8000000000000000000000000000000000000000000000000000000000000000
+            00000000000000000100000000000000000000000000000000000000}
         end
       end
     end
   end
   object pnlBotton: TPanel
     Left = 0
-    Top = 483
+    Top = 484
     Width = 963
     Height = 41
     Align = alBottom

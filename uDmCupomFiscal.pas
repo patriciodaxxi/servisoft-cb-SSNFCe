@@ -1552,6 +1552,7 @@ type
     cdsCupomParametrosUSA_CANAL_VENDA: TStringField;
     sdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
     cdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
+    sds_prc_Exluir_Cupom: TSQLDataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1570,6 +1571,7 @@ type
     { Public declarations }
     ctCondPgto, ctProduto: String;
     ctCupomFiscal_ProdPrincipal: String;
+    ctConsCupom : String;
     ctPedido, ctDuplicata: String;
     ctTotais: string;
     vPgtoEditado: Boolean;
@@ -1612,6 +1614,7 @@ type
 
     procedure prcInserir(vId, vClienteId: Integer);
     procedure prcExcluir;
+    procedure prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
     procedure prcNumNaoFiscal;
     procedure prcLocalizar(vId: Integer);
     function Gravar_Duplicata(Tipo, TransfICMS: String; Parcela: Integer; Valor: Real; Data: TDateTime; Prazo: String = ''): Integer;
@@ -1776,6 +1779,7 @@ begin
   ctProduto     := sdsProduto.CommandText;
   ctDuplicata   := sdsDuplicata.CommandText;
   ctTotais      := sdsTotais.CommandText;
+  ctConsCupom   := sdsCupom_Cons.CommandText;
 
   cdsFilial.Open;
   cdsTipoCobranca.Open;
@@ -3422,6 +3426,13 @@ begin
     sdsPessoa.CommandText := sdsPessoa.CommandText
                          + ' WHERE CODIGO = ' + IntToStr(vId);
   cdsPessoa.Open;
+end;
+
+procedure TdmCupomFiscal.prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
+begin
+  sds_prc_Exluir_Cupom.Close;
+  sds_prc_Exluir_Cupom.ParamByName('ID_CUPOM').AsInteger := ID_Cupom;
+  sds_prc_Exluir_Cupom.ExecSQL;
 end;
 
 end.

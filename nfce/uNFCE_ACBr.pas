@@ -4,9 +4,9 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ExtCtrls, RzTabs, Buttons, StdCtrls, UDMNFCe, uDmParametros,
+  Dialogs, ExtCtrls, RzTabs, Buttons, StdCtrls, UDMNFCe, uDmParametros, SHDocVw,
   uDmCupomFiscal, ACBrDFeUtil, pcnConversao, pcnConversaoNFe, ACBrPosPrinter,
-  SqlExpr, dbXPress;
+  SqlExpr, dbXPress, ACBrUtil, OleCtrls;
 
 type
   tEnumAmbiente = (tpProducao = 1, tpHomologacao = 2);
@@ -36,11 +36,14 @@ type
     pnlErro: TPanel;
     lbErro: TLabel;
     chkGravarXml: TCheckBox;
+    mmResposta: TMemo;
+    WBResposta: TWebBrowser;
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btCancelarClick(Sender: TObject);
   private
     { Private declarations }
     sXML: string;
@@ -60,6 +63,7 @@ type
     procedure prc_Monta_ICMSSN500(fDMNFCe: TDMNFCe; CodSitTrib: String);
     procedure prc_Monta_ICMSSN900(fDMNFCe: TDMNFCe; CodSitTrib: String; Perc_Interno, Perc_Simples: Real);
     procedure Inicia_NFe();
+    procedure LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
   public
     fDMNFCe: TDMNFCe;
     fdmCupomFiscal: TdmCupomFiscal;
@@ -72,10 +76,12 @@ type
 
 var
   fNFCE_ACBR: TfNFCE_ACBR;
+  Form : TForm;
 
 implementation
 
-uses DB, uUtilPadrao, pcnNFe, ACBrNFe, DmdDatabase, ACBrNFeWebServices;
+uses DB, uUtilPadrao, pcnNFe, ACBrNFe, DmdDatabase, ACBrNFeWebServices,
+  pcnEnvEventoNFe;
 
 {$R *.dfm}
 
@@ -244,7 +250,12 @@ begin
             ICMS.orig := oeEstrangeiraImportacaoDireta
           else
             ICMS.orig := oeEstrangeiraAdquiridaBrasil;
-
+          if not fdmCupomFiscal.qUF.Active then
+          begin
+            fdmCupomFiscal.qUF.Close;
+            fdmCupomFiscal.qUF.ParamByName('UF').AsString := fdmCupomFiscal.cdsFilialUF.AsString;
+            fdmCupomFiscal.qUF.Open;
+          end;
           vPerc_Interno := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.qUFPERC_ICMS_INTERNO.AsFloat));
 
           if vCodCST = '00' then
@@ -920,9 +931,16 @@ var
   Tentativa, RetornoStatus : Integer;
   ID: TTransactionDesc;
   sds: TSQLDataSet;
-  Flag: Boolean;  
+  Flag: Boolean;
 begin
-  sXML := fnc_Gerar_NFCe(vID_Cupom_Novo);
+  Form := TForm.Create(Application);
+  try
+    prc_Form_Aguarde(Form,'..Gerando Cupom..');
+
+    sXML := fnc_Gerar_NFCe(vID_Cupom_Novo);
+  finally
+    FreeAndNil(Form);
+  end;
   chave := copy(fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID, (length(fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) - 44) + 1, 44);
   if chave = '' then
   begin
@@ -930,18 +948,33 @@ begin
     Exit;
   end;
 
-  fDMNFCe.ACBrNFe.NotasFiscais.Assinar;
-  Flag := True;
+  Form := TForm.Create(Application);
   try
-    fDMNFCe.ACBrNFe.NotasFiscais.Validar;
-  except
-    on e: Exception do
-    begin
-      MessageDlg('Nota não Enviada ' + #13 + e.Message,mtError,[mbOK],0);
-      fdmCupomFiscal.cdsCupomFiscal.Close;
-      Flag := False;
-    end;
+    prc_Form_Aguarde(Form,'..Assinando Cupom..');
+    fDMNFCe.ACBrNFe.NotasFiscais.Assinar;
+  finally
+    FreeAndNil(Form);
   end;
+
+
+  Form := TForm.Create(Application);
+  try
+    Flag := True;
+    try
+      prc_Form_Aguarde(Form,'..Validando Cupom..');
+      fDMNFCe.ACBrNFe.NotasFiscais.Validar;
+    except
+      on e: Exception do
+      begin
+        MessageDlg('Nota não Enviada ' + #13 + e.Message,mtError,[mbOK],0);
+        fdmCupomFiscal.cdsCupomFiscal.Close;
+        Flag := False;
+      end;
+    end;
+  finally
+    FreeAndNil(Form);
+  end;
+
 
   if not Flag then
     exit;
@@ -976,12 +1009,14 @@ begin
     end;
     lbChaveAcesso.Caption  := chave;
 
-    fDMNFCe.ACBrNFe.Enviar('1', False, False);
+    Form := TForm.Create(Application);
     try
-
+      prc_Form_Aguarde(Form,'..Enviando Cupom..');
+      fDMNFCe.ACBrNFe.Enviar('1', False, False);
     finally
-
+      FreeAndNil(Form);
     end;
+
     RetornoStatus := fDMNFCe.ACBrNFe.WebServices.Retorno.cStat;
     if (RetornoStatus = 302) or (RetornoStatus = 301) then
     begin
@@ -1018,7 +1053,8 @@ begin
       vMSGNFCe := 'Não foi possível enviar o NFCe!' + #13 + E.Message + #13+ '  Clique para continuar!';
     end;
   end;
-
+  if vMSGNFCe <> EmptyStr then
+    MessageDlg(vMSGNFCe,mtWarning,[mbOK],0);
 //  fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
 
   fDMNFCe.ACBrNFe.NotasFiscais.Clear;
@@ -1080,6 +1116,67 @@ procedure TfNFCE_ACBR.FormKeyDown(Sender: TObject; var Key: Word;
 begin
   if (Shift = [ssCtrl]) and (Key = 87) then
     chkGravarXml.Visible := not(chkGravarXml.Visible);
+end;
+
+procedure TfNFCE_ACBR.btCancelarClick(Sender: TObject);
+var
+  ChaveAcesso, Protocolo : string;
+  RetornoStatus : Integer;
+begin
+  Form := TForm.Create(Application);
+  prc_Form_Aguarde(Form,'..Gerando Cupom..');
+  try
+    try
+      fdmCupomFiscal.prcLocalizar(vID_Cupom_Novo);
+      Inicia_NFe;
+      ChaveAcesso := fdmCupomFiscal.cdsCupomFiscalNFECHAVEACESSO.AsString;
+      Protocolo := fdmCupomFiscal.cdsCupomFiscalNFEPROTOCOLO.AsString;
+      if (ChaveAcesso <> EmptyStr) and (Protocolo <> EmptyStr) then
+      begin
+        fDMNFCe.ACBrNFe.NotasFiscais.Clear;
+        fDMNFCe.ACBrNFe.Consultar(ChaveAcesso);
+        if fDMNFCe.ACBrNFe.WebServices.Consulta.cStat = 100 then
+        begin
+          fDMNFCe.ACBrNFe.EventoNFe.Evento.Clear;
+          with fDMNFCe.ACBrNFe.EventoNFe.Evento.Add do
+          begin
+            InfEvento.chNFe := ChaveAcesso;
+            InfEvento.CNPJ := fdmCupomFiscal.cdsFilialCNPJ_CPF.AsString;
+            InfEvento.dhEvento := Now;
+            InfEvento.tpEvento := teCancelamento;
+            InfEvento.detEvento.xJust := 'Cancelamento por erro no preenchimento dos dados da nfce.';
+            InfEvento.detEvento.nProt := Protocolo;
+          end;
+          fDMNFCe.ACBrNFe.EnviarEvento(1);
+        end;
+        LoadXML(fDMNFCe.ACBrNFe.WebServices.EnvEvento.RetornoWS, WBResposta);
+        RetornoStatus := fDMNFCe.ACBrNFe.WebServices.EnvEvento.EventoRetorno.cStat;
+        ShowMessage(IntToStr(fDMNFCe.ACBrNFe.WebServices.EnvEvento.cStat));
+        if RetornoStatus = 501 then
+          MessageDlg('*** Prazo de Cancelamento Superior ao Previsto na Legislacao',mtError,[mbOK],0);
+
+      end;
+
+    except
+      on E : Exception do
+      begin
+        MessageDlg('Erro no cancelamento: ' + E.Message,mtError,[mbOK],0);
+      end;
+    end;
+  finally
+    FreeAndNil(Form);
+  end;
+end;
+
+procedure TfNFCE_ACBR.LoadXML(RetWS: String; MyWebBrowser: TWebBrowser);
+begin
+  ACBrUtil.WriteToTXT( PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml',
+                        ACBrUtil.ConverteXMLtoUTF8( RetWS ), False, False);
+  MyWebBrowser.Navigate(PathWithDelim(ExtractFileDir(application.ExeName))+'temp.xml');
+
+//  if ACBrNFe1.NotasFiscais.Count > 0then
+//    MemoResp.Lines.Add('Empresa: '+ACBrNFe1.NotasFiscais.Items[0].NFe.Emit.xNome);
+
 end;
 
 end.

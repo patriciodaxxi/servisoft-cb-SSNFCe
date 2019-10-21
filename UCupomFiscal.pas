@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, Grids, DBGrids, SMDBGrid,
   StdCtrls, RxLookup, DBFilter, Mask, ToolEdit, CurrEdit, FMTBcd, DB, Provider, DBClient, SqlExpr, DBCtrls, Buttons, jpeg,
   DBTables, uDmCupomFiscal, uDmEstoque, uDmMovimento, rsDBUtils, uDmParametros, NxCollection, UCupomFiscalImposto, StrUtils,
-  ValEdit, UCBase, ACBrBase, ACBrBAL, ACBrDevice, uNFCE_ACBr;
+  ValEdit, UCBase, ACBrBase, ACBrBAL, ACBrDevice, uNFCE_ACBr, uConsCupom;
 
 type
   TfCupomFiscal = class(TForm)
@@ -128,6 +128,7 @@ type
     fDmParametros: TDmParametros;
     fDmCupomFiscal: TDmCupomFiscal;
     fNFCE_ACBr : TfNFCE_ACBR;
+    ffrmConsCupom : TfrmConsCupom; 
     
     vAliqIcms: Real;
     vTipoDesc: String;
@@ -514,20 +515,52 @@ begin
   begin
   end;
 
-  if key = 27 then
+  if key = 27 then // Esc
   begin
     if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
     begin
       if MessageDlg('Deseja cancelar o cupom?',mtConfirmation,[mbYes, mbNo],0) = mrNo then
         exit;
-      fDmCupomFiscal.Excluir_Duplicata;
-      fDmCupomFiscal.Excluir_ExtComissao;
-      fDmCupomFiscal.prc_Excluir_Financeiro;
-      fDmCupomFiscal.prc_Excluir_Movimento;
-      fDmCupomFiscal.prcExcluir;
+      fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+//      fDmCupomFiscal.Excluir_Duplicata;
+//      fDmCupomFiscal.Excluir_ExtComissao;
+//      fDmCupomFiscal.prc_Excluir_Financeiro;
+//      fDmCupomFiscal.prc_Excluir_Movimento;
+//      fDmCupomFiscal.prcExcluir;
       pnlCaixaLivre.Visible := True;
+      fDmCupomFiscal.cdsCupomFiscal.Close;
     end;
   end;
+
+  if key = vk_F10 then //Ctrl + C
+  begin
+    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
+    begin
+      ffrmConsCupom := TfrmConsCupom.Create(nil);
+      ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+      try
+        ffrmConsCupom.ShowModal;
+      finally
+        FreeAndNil(ffrmConsCupom);
+      end;
+    end;
+  end;
+
+  if key = 67 then //Ctrl + C
+  begin
+    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
+    begin
+      ffrmConsCupom := TfrmConsCupom.Create(nil);
+      ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+      ffrmConsCupom.vCancelar := True;
+      try
+        ffrmConsCupom.ShowModal;
+      finally
+        FreeAndNil(ffrmConsCupom);
+      end;
+    end;
+  end;
+
 
   if (Key = Vk_F12) and not(fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
   begin

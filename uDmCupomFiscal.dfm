@@ -1202,21 +1202,26 @@ object dmCupomFiscal: TdmCupomFiscal
       Required = True
     end
     object cdsCupom_ConsNUMCUPOM: TIntegerField
+      DisplayLabel = 'N'#186' Cupom'
       FieldName = 'NUMCUPOM'
     end
     object cdsCupom_ConsDTEMISSAO: TDateField
+      DisplayLabel = 'Dt.Emiss'#227'o'
       FieldName = 'DTEMISSAO'
     end
     object cdsCupom_ConsVLR_TOTAL: TFloatField
+      DisplayLabel = 'Valor Total'
       FieldName = 'VLR_TOTAL'
       DisplayFormat = '0.00'
     end
     object cdsCupom_ConsCANCELADO: TStringField
+      DisplayLabel = 'Cancelado'
       FieldName = 'CANCELADO'
       FixedChar = True
       Size = 1
     end
     object cdsCupom_ConsFILIAL: TIntegerField
+      DisplayLabel = 'Filial'
       FieldName = 'FILIAL'
     end
     object cdsCupom_ConsCPF: TStringField
@@ -1224,69 +1229,85 @@ object dmCupomFiscal: TdmCupomFiscal
       Size = 14
     end
     object cdsCupom_ConsID_TIPOCOBRANCA: TIntegerField
+      DisplayLabel = 'ID Tipo Cobran'#231'a'
       FieldName = 'ID_TIPOCOBRANCA'
     end
     object cdsCupom_ConsNUM_CARTAO: TSmallintField
+      DisplayLabel = 'N'#186' Cart'#227'o'
       FieldName = 'NUM_CARTAO'
     end
     object cdsCupom_ConsTIPO: TStringField
+      DisplayLabel = 'Tipo'
       FieldName = 'TIPO'
       Size = 3
     end
     object cdsCupom_ConsNFEAMBIENTE: TStringField
+      DisplayLabel = 'Ambiente'
       FieldName = 'NFEAMBIENTE'
       FixedChar = True
       Size = 1
     end
     object cdsCupom_ConsNFECHAVEACESSO: TStringField
+      DisplayLabel = 'Chave Acesso'
       FieldName = 'NFECHAVEACESSO'
       Size = 44
     end
     object cdsCupom_ConsNFEPROTOCOLO: TStringField
+      DisplayLabel = 'Protocolo'
       FieldName = 'NFEPROTOCOLO'
-      Size = 45
-    end
-    object cdsCupom_ConsNFERECIBO: TStringField
-      FieldName = 'NFERECIBO'
       Size = 45
     end
     object cdsCupom_ConsNFEVERSAO: TStringField
       FieldName = 'NFEVERSAO'
       Size = 10
     end
+    object cdsCupom_ConsNFERECIBO: TStringField
+      DisplayLabel = 'Recibo'
+      FieldName = 'NFERECIBO'
+      Size = 45
+    end
     object cdsCupom_ConsTIPO_ATENDIMENTO: TSmallintField
+      DisplayLabel = 'Tipo Atendimento'
       FieldName = 'TIPO_ATENDIMENTO'
     end
     object cdsCupom_ConsTIPO_IMPRESSAO_NFCE: TSmallintField
+      DisplayLabel = 'Tipo Impress'#227'o'
       FieldName = 'TIPO_IMPRESSAO_NFCE'
     end
     object cdsCupom_ConsTIPO_ENVIONFE: TStringField
+      DisplayLabel = 'Tipo Envio'
       FieldName = 'TIPO_ENVIONFE'
       Size = 25
     end
     object cdsCupom_ConsNFEPROTOCOLO_CANCELADA: TStringField
+      DisplayLabel = 'Protocolo Cancelamento'
       FieldName = 'NFEPROTOCOLO_CANCELADA'
       Size = 45
     end
+    object cdsCupom_ConsNFEFINALIDADE: TStringField
+      DisplayLabel = 'Finalidade'
+      FieldName = 'NFEFINALIDADE'
+      Size = 1
+    end
     object cdsCupom_ConsNFEDENEGADA: TStringField
+      DisplayLabel = 'Denegada'
       FieldName = 'NFEDENEGADA'
       FixedChar = True
       Size = 1
     end
-    object cdsCupom_ConsNFEFINALIDADE: TStringField
-      FieldName = 'NFEFINALIDADE'
-      Size = 1
-    end
     object cdsCupom_ConsSERIE: TStringField
+      DisplayLabel = 'S'#233'rie'
       FieldName = 'SERIE'
       Size = 3
     end
     object cdsCupom_ConsDINHEIRO: TStringField
+      DisplayLabel = 'Dinheiro'
       FieldName = 'DINHEIRO'
       FixedChar = True
       Size = 1
     end
     object cdsCupom_ConsNOME_TIPOCOBRANCA: TStringField
+      DisplayLabel = 'Nome Tipo Cobran'#231'a'
       FieldName = 'NOME_TIPOCOBRANCA'
       Size = 30
     end
@@ -1300,6 +1321,7 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'DTFECHAMENTO'
     end
     object cdsCupom_ConsCLIENTE_NOME: TStringField
+      DisplayLabel = 'Nome Cliente'
       FieldName = 'CLIENTE_NOME'
       Size = 30
     end
@@ -1316,9 +1338,11 @@ object dmCupomFiscal: TdmCupomFiscal
       Size = 120
     end
     object cdsCupom_ConsHREMISSAO: TTimeField
+      DisplayLabel = 'Hora Emiss'#227'o'
       FieldName = 'HREMISSAO'
     end
     object cdsCupom_ConsVENDEDOR: TStringField
+      DisplayLabel = 'Vendedor'
       FieldName = 'VENDEDOR'
       Size = 60
     end
@@ -1333,6 +1357,7 @@ object dmCupomFiscal: TdmCupomFiscal
       Size = 1
     end
     object cdsCupom_ConsDTORIGINAL: TDateField
+      DisplayLabel = 'Data Original'
       FieldName = 'DTORIGINAL'
     end
   end
@@ -7256,5 +7281,19 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSet = cdsTotais
     Left = 920
     Top = 272
+  end
+  object sds_prc_Exluir_Cupom: TSQLDataSet
+    CommandText = 'PRC_EXCLUIR_CUPOM'
+    CommandType = ctStoredProc
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID_CUPOM'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 425
+    Top = 600
   end
 end
