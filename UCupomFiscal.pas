@@ -116,6 +116,7 @@ type
     procedure DBEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SMDBGrid1DblClick(Sender: TObject);
     procedure ACBrBAL1LePeso(Peso: Double; Resposta: string);
+    procedure FormShortCut(var Msg: TWMKey; var Handled: Boolean);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -493,8 +494,8 @@ begin
   if not (Panel4.Enabled) then
     Exit;
 
-  if (Key = Vk_F10) and (fDmCupomFiscal.cdsCupomFiscal.Active) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
-    btFinalizarClick(Sender);
+//  if (Key = Vk_F10) and (fDmCupomFiscal.cdsCupomFiscal.Active) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
+//    btFinalizarClick(Sender);
 
   if (Shift = [ssCtrl]) and (Key = 87) then
   begin
@@ -2266,6 +2267,16 @@ begin
   fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
   fDmCupomFiscal.cdsTipoCobranca.FindKey([vID]);
 end;
+
+procedure TfCupomFiscal.FormShortCut(var Msg: TWMKey;
+  var Handled: Boolean);
+begin
+   if Msg.CharCode = VK_F10 then
+   begin
+     Handled := True;
+     btFinalizar.Click;
+   end;
+end;   
 
 end.
 

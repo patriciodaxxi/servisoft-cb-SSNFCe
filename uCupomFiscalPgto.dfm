@@ -1,6 +1,6 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 301
-  Top = 17
+  Left = 380
+  Top = 51
   Width = 822
   Height = 697
   BorderIcons = [biSystemMenu]
@@ -16,6 +16,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
   Position = poScreenCenter
   OnClose = FormClose
   OnKeyDown = FormKeyDown
+  OnShortCut = FormShortCut
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -50,7 +51,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Width = 187
       Height = 30
       Hint = 'Grava e finaliza a venda'
-      Caption = '&Confirmar (F9)'
+      Caption = '&Confirmar (F10)'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlue
       Font.Height = -16

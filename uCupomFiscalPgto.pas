@@ -132,6 +132,7 @@ type
     procedure DBEdit4Click(Sender: TObject);
     procedure CurrencyEdit1Click(Sender: TObject);
     procedure ceJurosExit(Sender: TObject);
+    procedure FormShortCut(var Msg: TWMKey; var Handled: Boolean);
   private
     { Private declarations }
     vPercJuros, vVlrDesconto_Ant: Real;
@@ -462,10 +463,8 @@ begin
     SpeedButton1Click(Sender)
   else
   if (Key = Vk_F4) then
-    SpeedButton2Click(Sender)
-  else
-  if (Key = Vk_F9) then
-    btConfirmarClick(Sender);
+    SpeedButton2Click(Sender);
+//  else
 end;
 
 procedure TfCupomFiscalPgto.RxDBLookupCombo3KeyDown(Sender: TObject;
@@ -1483,6 +1482,16 @@ begin
     fDmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsCurrency := fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency;
   end;
 
+end;
+
+procedure TfCupomFiscalPgto.FormShortCut(var Msg: TWMKey;
+  var Handled: Boolean);
+begin
+   if Msg.CharCode = VK_F10 then
+   begin
+      Handled := True;
+      btConfirmar.Click;
+   end;
 end;
 
 end.

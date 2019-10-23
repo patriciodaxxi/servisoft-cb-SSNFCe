@@ -1,6 +1,6 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 61
-  Top = 37
+  Left = 185
+  Top = 46
   Width = 1292
   Height = 727
   ActiveControl = Edit1
@@ -18,6 +18,7 @@ object fCupomFiscal: TfCupomFiscal
   OnClose = FormClose
   OnCloseQuery = FormCloseQuery
   OnKeyDown = FormKeyDown
+  OnShortCut = FormShortCut
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
