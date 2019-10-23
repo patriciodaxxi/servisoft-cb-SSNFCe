@@ -102,6 +102,8 @@ begin
       begin
         fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
         fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+        fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+        fNFCE_ACBr.chkGravarXml.Checked := True;
         fDmCupomFiscal.cdsCupomFiscal.Close;
         try
           fNFCE_ACBr.btEnviarNovoClick(Sender);
@@ -114,6 +116,7 @@ begin
       end;
       fDmCupomFiscal.cdsCupom_Cons.Next;
     end;
+    btnConsultarClick(Sender);
   end;
 end;
 
