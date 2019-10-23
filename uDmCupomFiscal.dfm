@@ -2582,6 +2582,11 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object cdsFilialNFCEPRODUCAO: TStringField
+      FieldName = 'NFCEPRODUCAO'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dsFilial: TDataSource
     DataSet = cdsFilial

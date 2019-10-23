@@ -1553,6 +1553,7 @@ type
     sdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
     cdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
     sds_prc_Exluir_Cupom: TSQLDataSet;
+    cdsFilialNFCEPRODUCAO: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -2917,7 +2918,7 @@ begin
   if CodigoErro = 302 then
     cdsCupomFiscalMOTIVO_DENEGADO.AsString := 'Irregularidade do Destinatário';
   cdsCupomFiscalDADOS_ADICIONAIS.Value := DadosAdicionais;
-  cdsCupomFiscalHREMISSAO.AsDateTime   := vHrEmissaoNFe;
+  cdsCupomFiscalHREMISSAO.AsDateTime   := Now;
   cdsCupomFiscal.Post;
   cdsCupomFiscal.ApplyUpdates(0);
 end;
