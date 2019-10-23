@@ -81,6 +81,7 @@ begin
       Exit;
     fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
     fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
     fDmCupomFiscal.cdsCupomFiscal.Close;
     try
       fNFCE_ACBr.btCancelarClick(Sender);

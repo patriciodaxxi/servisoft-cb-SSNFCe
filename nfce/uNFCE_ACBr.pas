@@ -79,11 +79,12 @@ var
   vPerc_Interno: Real;
   vValorTotal, vVlr_Desconto_NFCe : Real;
   vDocumento : String;
+  ok : Boolean;  
 begin
   fdmCupomFiscal.prcLocalizar(ID);
   fdmCupomFiscal.prc_Localizar_Pessoa(fdmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger);
   Inicia_NFe;
-  
+
   fDMNFCe.Posiciona_CidadeUF(fDMNFCe.qFilialID_CIDADE.AsInteger, -1);
   fDMNFCe.ACBrNFe.DANFE.vTribFed := 0;
   fDMNFCe.ACBrNFe.DANFE.vTribEst := 0;
@@ -111,6 +112,7 @@ begin
     Ide.hSaiEnt := now;
     Ide.tpNF := tnSaida;
     Ide.tpEmis := teNormal;
+    Ide.tpAmb := StrToTpAmb(Ok,IntToStr(ComboAmbiente.ItemIndex + 1));
     Ide.cUF := fDMNFCe.qUFCODUF.AsInteger;
     Ide.cMunFG := fDMNFCe.qCidadeCODMUNICIPIO.AsInteger;
     Ide.finNFe := fnNormal;
@@ -656,8 +658,6 @@ procedure TfNFCE_ACBR.btEnviarNovoClick(Sender: TObject);
 var
   chave, vMSGNFCe : String;
   Tentativa, RetornoStatus : Integer;
-  ID: TTransactionDesc;
-  sds: TSQLDataSet;
   Flag: Boolean;
 begin
   Form := TForm.Create(Application);
@@ -707,10 +707,6 @@ begin
     exit;
 
   vMSGNFCe := '';
-  sds := TSQLDataSet.Create(nil);
-  ID.TransactionID  := 71;
-  ID.IsolationLevel := xilREADCOMMITTED;
-  dmDatabase.scoDados.StartTransaction(ID);
   try
     {try
       sds.SQLConnection := dmDatabase.scoDados;
@@ -739,7 +735,7 @@ begin
     Form := TForm.Create(Application);
     try
       prc_Form_Aguarde(Form,'..Enviando Cupom..');
-      fDMNFCe.ACBrNFe.Enviar('1', True, False);
+      fDMNFCe.ACBrNFe.Enviar('1', False, False);
     finally
       FreeAndNil(Form);
     end;
@@ -776,7 +772,6 @@ begin
   except
     on e: Exception do
     begin
-      dmDatabase.scoDados.Rollback(ID);
       vMSGNFCe := 'Não foi possível enviar o NFCe!' + #13 + E.Message + #13+ '  Clique para continuar!';
     end;
   end;
@@ -789,6 +784,8 @@ begin
 end;
 
 procedure TfNFCE_ACBR.Inicia_NFe;
+var
+  ok : Boolean;
 begin
 
   fDMNFCe.prc_Abrir_Filial(fdmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger);
@@ -800,6 +797,7 @@ begin
 {$ELSE}
   fDMNFCe.ACBrNFe.Configuracoes.Certificados.NumeroSerie := fDMNFCe.qFilial_CertificadoNUMERO_SERIE.AsString;
   fDMNFCe.ACBrNFe.Configuracoes.Certificados.Senha := fDMNFCe.qFilial_CertificadoSENHA.AsString;
+  fDMNFCe.ACBrNFe.Configuracoes.WebServices.Ambiente := StrToTpAmb(Ok,IntToStr(ComboAmbiente.ItemIndex + 1));
 {$ENDIF}
 
   fDMNFCe.ACBrNFe.Configuracoes.Geral.IdCSC := fDMNFCe.qFilial_NFCeCLDTOKEN.AsString;

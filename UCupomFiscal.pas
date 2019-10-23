@@ -1186,6 +1186,7 @@ begin
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
   fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+  fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
   fNFCE_ACBr.btEnviarNovoClick(Sender);
   if fDmCupomFiscal.cdsCupomFiscal.Active then
     fDmCupomFiscal.cdsCupomFiscal.Close;
