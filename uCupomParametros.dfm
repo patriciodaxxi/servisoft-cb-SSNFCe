@@ -1,6 +1,6 @@
 object fCupomParametros: TfCupomParametros
-  Left = 281
-  Top = 54
+  Left = 263
+  Top = 113
   Width = 881
   Height = 632
   BorderIcons = [biSystemMenu, biMaximize]
@@ -2027,15 +2027,15 @@ object fCupomParametros: TfCupomParametros
       object Panel5: TPanel
         Left = 0
         Top = 0
-        Width = 865
-        Height = 538
+        Width = 857
+        Height = 530
         Align = alClient
         TabOrder = 0
         object DBGrid1: TDBGrid
           Left = 1
           Top = 1
-          Width = 863
-          Height = 536
+          Width = 855
+          Height = 528
           Align = alClient
           DataSource = dmParametros.dsSequencial
           TabOrder = 0
@@ -2058,6 +2058,7 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
+              Width = 64
               Visible = True
             end>
         end

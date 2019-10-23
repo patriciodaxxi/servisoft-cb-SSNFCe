@@ -144,7 +144,6 @@ object fCupomFiscalC: TfCupomFiscalC
         Expanded = False
         FieldName = 'FILIAL'
         Title.Alignment = taCenter
-        Title.Caption = 'Filial'
         Width = 42
         Visible = True
       end
@@ -153,7 +152,6 @@ object fCupomFiscalC: TfCupomFiscalC
         Expanded = False
         FieldName = 'SERIE'
         Title.Alignment = taCenter
-        Title.Caption = 'S'#233'rie'
         Width = 42
         Visible = True
       end
@@ -162,7 +160,6 @@ object fCupomFiscalC: TfCupomFiscalC
         Expanded = False
         FieldName = 'TIPO'
         Title.Alignment = taCenter
-        Title.Caption = 'Tipo'
         Width = 46
         Visible = True
       end
@@ -170,7 +167,6 @@ object fCupomFiscalC: TfCupomFiscalC
         Expanded = False
         FieldName = 'VENDEDOR'
         Title.Alignment = taCenter
-        Title.Caption = 'Vendedor'
         Width = 120
         Visible = True
       end
@@ -186,7 +182,6 @@ object fCupomFiscalC: TfCupomFiscalC
         Expanded = False
         FieldName = 'DTORIGINAL'
         Title.Alignment = taCenter
-        Title.Caption = 'Data Original'
         Width = 76
         Visible = True
       end

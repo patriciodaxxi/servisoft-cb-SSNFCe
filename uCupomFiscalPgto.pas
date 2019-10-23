@@ -464,7 +464,7 @@ begin
   if (Key = Vk_F4) then
     SpeedButton2Click(Sender)
   else
-  if (Key = Vk_F10) then
+  if (Key = Vk_F9) then
     btConfirmarClick(Sender);
 end;
 

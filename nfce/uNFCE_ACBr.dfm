@@ -1,6 +1,6 @@
 object fNFCE_ACBR: TfNFCE_ACBR
-  Left = 298
-  Top = 108
+  Left = 277
+  Top = 148
   Width = 979
   Height = 563
   Caption = 'Cupom Eletr'#244'nico'
@@ -82,14 +82,14 @@ object fNFCE_ACBR: TfNFCE_ACBR
     Left = 0
     Top = 80
     Width = 963
-    Height = 404
+    Height = 403
     Align = alClient
     TabOrder = 1
     object RzPageControl1: TRzPageControl
       Left = 1
       Top = 1
       Width = 961
-      Height = 402
+      Height = 401
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
@@ -209,6 +209,21 @@ object fNFCE_ACBR: TfNFCE_ACBR
             TabOrder = 1
             OnClick = btEnviarNovoClick
           end
+          object btImprimir: TButton
+            Left = 714
+            Top = 14
+            Width = 89
+            Height = 50
+            Caption = 'Imprimir'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlue
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 2
+            OnClick = btImprimirClick
+          end
         end
         object GroupBox2: TGroupBox
           Left = 0
@@ -267,7 +282,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
   end
   object pnlBotton: TPanel
     Left = 0
-    Top = 484
+    Top = 483
     Width = 963
     Height = 41
     Align = alBottom

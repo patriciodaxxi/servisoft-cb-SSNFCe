@@ -1238,6 +1238,7 @@ begin
     MessageDlg('*** Não existe cupom selecionado!', mtError, [mbOk], 0);
     exit;
   end;
+//  if fdm
 
   vIDAux := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
 

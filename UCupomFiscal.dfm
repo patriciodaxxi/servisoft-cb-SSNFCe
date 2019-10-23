@@ -1,8 +1,9 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 56
-  Top = 2
+  Left = 61
+  Top = 37
   Width = 1292
   Height = 727
+  ActiveControl = Edit1
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'Emiss'#227'o Cupom Fiscal'
   Color = clBtnFace
@@ -24,14 +25,14 @@ object fCupomFiscal: TfCupomFiscal
     Left = 388
     Top = 0
     Width = 888
-    Height = 689
+    Height = 688
     Align = alClient
     TabOrder = 1
     object SMDBGrid1: TSMDBGrid
       Left = 1
       Top = 1
       Width = 886
-      Height = 470
+      Height = 469
       Align = alClient
       Color = 12633514
       Ctl3D = False
@@ -177,7 +178,7 @@ object fCupomFiscal: TfCupomFiscal
     end
     object SMDBGrid2: TSMDBGrid
       Left = 1
-      Top = 525
+      Top = 524
       Width = 886
       Height = 110
       Align = alBottom
@@ -251,7 +252,7 @@ object fCupomFiscal: TfCupomFiscal
     end
     object Panel3: TPanel
       Left = 1
-      Top = 471
+      Top = 470
       Width = 886
       Height = 54
       Align = alBottom
@@ -262,9 +263,9 @@ object fCupomFiscal: TfCupomFiscal
       Enabled = False
       TabOrder = 2
       object Label7: TLabel
-        Left = 1
+        Left = 4
         Top = 24
-        Width = 239
+        Width = 236
         Height = 25
         Alignment = taRightJustify
         Caption = 'Valor Total do Cupom:'
@@ -334,7 +335,7 @@ object fCupomFiscal: TfCupomFiscal
     end
     object Panel5: TPanel
       Left = 1
-      Top = 635
+      Top = 634
       Width = 886
       Height = 53
       Align = alBottom
@@ -347,7 +348,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 60
+        Width = 59
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -442,7 +443,7 @@ object fCupomFiscal: TfCupomFiscal
       Left = 1
       Top = 1
       Width = 886
-      Height = 470
+      Height = 469
       Align = alClient
       Caption = 'CAIXA LIVRE'
       Font.Charset = DEFAULT_CHARSET
@@ -458,14 +459,14 @@ object fCupomFiscal: TfCupomFiscal
     Left = 0
     Top = 0
     Width = 388
-    Height = 689
+    Height = 688
     Align = alLeft
     BevelOuter = bvNone
     Constraints.MinWidth = 380
     TabOrder = 0
     object Panel7: TPanel
       Left = 0
-      Top = 635
+      Top = 634
       Width = 388
       Height = 54
       Align = alBottom
@@ -983,7 +984,7 @@ object fCupomFiscal: TfCupomFiscal
       Left = 0
       Top = 401
       Width = 388
-      Height = 234
+      Height = 233
       Align = alClient
       Anchors = [akLeft, akTop, akBottom]
       Color = clBlack
@@ -993,7 +994,7 @@ object fCupomFiscal: TfCupomFiscal
       TabOrder = 3
       DesignSize = (
         388
-        234)
+        233)
       object Image1: TImage
         Left = 34
         Top = 5

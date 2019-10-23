@@ -21,10 +21,12 @@ type
     ComboTerminal: TRxDBLookupCombo;
     cbNEnviados: TCheckBox;
     btnEnviar: TNxButton;
+    btnReimprimir: TNxButton;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnEnviarClick(Sender: TObject);
+    procedure btnReimprimirClick(Sender: TObject);
   private
     { Private declarations }
     fNFCE_ACBr : TfNFCE_ACBR;
@@ -51,7 +53,7 @@ begin
   dtFinal.Date := Date;
   ComboTerminal.KeyValue := vTerminal;
   if vCancelar then
-    btnEnviar.Caption := 'Cancelar';
+    btnEnviar.Caption := 'Cancelar NFCe';
   btnConsultarClick(Sender);
 end;
 
@@ -63,6 +65,7 @@ end;
 procedure TfrmConsCupom.FormClose(Sender: TObject; var Action: TCloseAction);
 begin
   Close;
+  FreeAndNil(fNFCE_ACBr);  
 end;
 
 procedure TfrmConsCupom.btnEnviarClick(Sender: TObject);
@@ -141,6 +144,21 @@ begin
     vComando := vComando + ' AND NFECHAVEACESSO IS NULL';
   fDmCupomFiscal.sdsCupom_Cons.CommandText := vComando;
   fDmCupomFiscal.cdsCupom_Cons.Open;
+end;
+
+procedure TfrmConsCupom.btnReimprimirClick(Sender: TObject);
+begin
+  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+  fDmCupomFiscal.cdsCupomFiscal.Close;
+  try
+    fNFCE_ACBr.btImprimirClick(Sender);
+  except
+    on E : Exception do
+    begin
+      ShowMessage('Erro: ' + e.Message);
+    end;
+  end;
 end;
 
 end.

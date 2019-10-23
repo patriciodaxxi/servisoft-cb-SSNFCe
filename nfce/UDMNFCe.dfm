@@ -3553,6 +3553,7 @@ object DMNFCe: TDMNFCe
     ConfigQRCode.LarguraModulo = 4
     ConfigQRCode.ErrorLevel = 0
     LinhasEntreCupons = 3
+    ControlePorta = True
     Left = 664
     Top = 16
   end

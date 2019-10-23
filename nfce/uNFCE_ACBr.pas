@@ -36,12 +36,14 @@ type
     pnlErro: TPanel;
     lbErro: TLabel;
     chkGravarXml: TCheckBox;
+    btImprimir: TButton;
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btCancelarClick(Sender: TObject);
+    procedure btImprimirClick(Sender: TObject);
   private
     { Private declarations }
     vNomeArquivo, vNomeArqPdf: string;
@@ -55,6 +57,7 @@ type
     vID_Cupom_Novo: Integer;
     function fnc_Gerar_NFCe(ID: Integer): string;
     function fnc_Buscar_Finalidade: Integer;
+    procedure prc_Reimprimir(ID : integer);
 
     { Public declarations }
   end;
@@ -96,7 +99,7 @@ begin
     tpProducao: vTipo_Ambiente_NFe := 1;
     tpHomologacao: vTipo_Ambiente_NFe := 2;
   end;
-  vTipo_Ambiente_NFe := 2;
+//  vTipo_Ambiente_NFe := 2;
   fDMCupomFiscal.vDescricao_Operacao := fDMCupomFiscal.cdsCFOPNOME.AsString;
   fdmCupomFiscal.cdsCupomFiscal.First;
   fDMNFCe.ACBrNFe.NotasFiscais.Clear;
@@ -155,10 +158,10 @@ begin
     if copy(vDocumento, 1, 8) <> '00000000' then
       Dest.CNPJCPF := vDocumento;
 
-    if vTipo_Ambiente_NFe = 2 then
-      Dest.xNome := 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
-    else
-      Dest.xNome := TirarAcento(fDMCupomFiscal.cdsPessoaNOME.AsString);
+//    if vTipo_Ambiente_NFe = 2 then
+//      Dest.xNome := 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
+//    else
+    Dest.xNome := TirarAcento(fDMCupomFiscal.cdsPessoaNOME.AsString);
 
     Dest.indIEDest := inNaoContribuinte; {Pq NFCe nao informa Destinatario}
 
@@ -185,10 +188,10 @@ begin
         if fDMNFCe.qProdutoCOD_BARRA2.AsString <> EmptyStr then
           Prod.cEANTrib := trim(fDMNFCe.qProdutoCOD_BARRA2.AsString);
 
-        if (vItemNFe = 1) and (vTipo_Ambiente_NFe = 2) then
-          Prod.XProd :=
-            'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
-        else
+//        if (vItemNFe = 1) and (vTipo_Ambiente_NFe = 2) then
+//          Prod.XProd :=
+//            'NOTA FISCAL EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
+//        else
           Prod.XProd :=
             TirarAcento(fDMCupomFiscal.cdsCupom_ItensNOME_PRODUTO.AsString);
 
@@ -209,10 +212,9 @@ begin
 
         Prod.vUnCom := StrToFloat(FormatFloat('0.0000000000',
           fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat));
-        Prod.vProd := strToFloat(FormatFloat('0.00',
-          (fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat +
-          fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat +
-          fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat)));
+        Prod.vProd := strToFloat(FormatFloat('0.00',(fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat
+                    + fdmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat
+                    + fdmCupomFiscal.cdsCupom_ItensVLR_DESCONTORATEIO.AsFloat)));
         Prod.uTrib := fDMCupomFiscal.cdsCupom_ItensUNIDADE.AsString;
         Prod.qTrib := StrToFloat(FormatFloat('0.0000',
           fDMCupomFiscal.cdsCupom_ItensQTD.AsFloat *
@@ -557,8 +559,8 @@ begin
     end;
 
     //Total ICMS
-    Total.ICMSTot.vProd := fDMCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat +
-      vVlr_Desconto_NFCe;
+    //Total.ICMSTot.vProd := fDMCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat + vVlr_Desconto_NFCe;
+    Total.ICMSTot.vProd := fDMCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat;
     Total.ICMSTot.vDesc := vVlr_Desconto_NFCe;
     Total.ICMSTot.vBC := fDMCupomFiscal.cdsCupomFiscalBASE_ICMS.AsFloat;
     Total.ICMSTot.vICMS := fDMCupomFiscal.cdsCupomFiscalVLR_ICMS.AsFloat;
@@ -739,7 +741,6 @@ begin
       on e: Exception do
       begin
         MessageDlg('Nota não Enviada ' + #13 + e.Message, mtError, [mbOK], 0);
-        fdmCupomFiscal.cdsCupomFiscal.Close;
         Flag := False;
       end;
     end;
@@ -824,7 +825,7 @@ begin
   end;
   if vMSGNFCe <> EmptyStr then
     MessageDlg(vMSGNFCe, mtWarning, [mbOK], 0);
-    fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
+//  fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
 
   fDMNFCe.ACBrNFe.NotasFiscais.Clear;
 
@@ -861,6 +862,7 @@ begin
   fDMNFCe.ACBrNFeDANFeESCPOS.ViaConsumidor := True;
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeItens := True;
   fDMNFCe.ACBrNFeDANFeESCPOS.QuebraLinhaEmDetalhamentos := False;
+  fDMNFCe.ACBrPosPrinter.ControlePorta := True;
   if vModeloImpressora = 'DR700' then
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscDaruma;
   if vModeloImpressora = 'DR800' then
@@ -877,6 +879,8 @@ begin
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeDescAcrescItem := True;
   fDMNFCe.ACBrNFe.Configuracoes.Arquivos.PathNFe :=
     fDMNFCe.qParametrosENDXMLNFCE.AsString;
+  fDMNFCe.ACBrPosPrinter.Desativar;
+  fDMNFCe.ACBrPosPrinter.Ativar;
 end;
 
 procedure TfNFCE_ACBR.FormCreate(Sender: TObject);
@@ -1042,6 +1046,24 @@ begin
       fDMCupomFiscal.cdsCupomFiscalFILIAL.AsFloat) + '_S' + vSerieAux + '_' +
       FormatFloat('000000', fDMCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger);
   end;
+end;
+
+procedure TfNFCE_ACBR.prc_Reimprimir(ID: integer);
+var
+  vAnoMes : String;
+begin
+  fdmCupomFiscal.prcLocalizar(ID);
+  Inicia_NFe;
+  vAnoMes := FormatFloat('0000', YearOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime)) +
+             FormatFloat('00', MonthOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime));
+  vNomeArquivo := fDMNFCe.ACBrNFe.Configuracoes.Arquivos.PathNFe + '\' + vAnoMes + '\' +fdmCupomFiscal.cdsCupomFiscalNFECHAVEACESSO.AsString + '-nfe.xml';
+  fDMNFCe.ACBrNFe.NotasFiscais.LoadFromFile(vNomeArquivo);
+  fDMNFCe.ACBrNFE.NotasFiscais.Imprimir;
+end;
+
+procedure TfNFCE_ACBR.btImprimirClick(Sender: TObject);
+begin
+  prc_Reimprimir(vID_Cupom_Novo);
 end;
 
 end.

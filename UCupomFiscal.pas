@@ -214,7 +214,7 @@ begin
   if (fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'S') then
     if vBalanca = 'URANO' then
       fim := _FechaPortaSerial();
-
+  FreeAndNil(fNFCE_ACBr);
   Action := Cafree;
 end;
 
@@ -1143,30 +1143,32 @@ begin
     fDmCupomFiscal.cdsCupomFiscal.Post;
     fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
   end;
+  try
+    fDmCupomFiscal.mPedidoAux.EmptyDataSet;
+    fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+    fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
+    fNFCE_ACBr.btEnviarNovoClick(Sender);
+  finally
+    //23/10/2019  Estoque e Movimento
+    {if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
+      prc_Controle_Gravar_Diversos(True, True)
+    else if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
+      prc_Controle_Gravar_Diversos(False, False)
+    else
+      prc_Controle_Gravar_Diversos(False, True);}
+    //******************
+    if fDmCupomFiscal.cdsCupomFiscal.Active then
+      fDmCupomFiscal.cdsCupomFiscal.Close;
+    pnlCaixaLivre.Visible := True;
 
-  fDmCupomFiscal.mPedidoAux.EmptyDataSet;
-  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-  fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
-  fNFCE_ACBr.btEnviarNovoClick(Sender);
+    Edit1.SelectAll;
+    Edit1.Clear;
+    Edit1.SetFocus;
+  end;
 
-  //23/10/2019  Estoque e Movimento
-  {if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
-    prc_Controle_Gravar_Diversos(True, True)
-  else if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
-    prc_Controle_Gravar_Diversos(False, False)
-  else
-    prc_Controle_Gravar_Diversos(False, True);}
-  //******************
 
-  if fDmCupomFiscal.cdsCupomFiscal.Active then
-    fDmCupomFiscal.cdsCupomFiscal.Close;
 
-  pnlCaixaLivre.Visible := True;
-
-  Edit1.SelectAll;
-  Edit1.Clear;
-  Edit1.SetFocus;
   ///////////////////////////////////////////////
 end;
 
