@@ -3,10 +3,12 @@ unit uCupomFiscal;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, Grids, DBGrids, SMDBGrid,
-  StdCtrls, RxLookup, DBFilter, Mask, ToolEdit, CurrEdit, FMTBcd, DB, Provider, DBClient, SqlExpr, DBCtrls, Buttons, jpeg,
-  DBTables, uDmCupomFiscal, uDmEstoque, uDmMovimento, rsDBUtils, uDmParametros, NxCollection, UCupomFiscalImposto, StrUtils,
-  ValEdit, UCBase, ACBrBase, ACBrBAL, ACBrDevice, uNFCE_ACBr, uConsCupom;
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, ExtCtrls, Grids, DBGrids, SMDBGrid, StdCtrls, RxLookup, DBFilter,
+  Mask, ToolEdit, CurrEdit, FMTBcd, DB, Provider, DBClient, SqlExpr, DBCtrls,
+  Buttons, jpeg, DBTables, uDmCupomFiscal, uDmEstoque, uDmMovimento, rsDBUtils,
+  uDmParametros, NxCollection, UCupomFiscalImposto, StrUtils, ValEdit, UCBase,
+  ACBrBase, ACBrBAL, ACBrDevice, uNFCE_ACBr, uConsCupom, dbXPress;
 
 type
   TfCupomFiscal = class(TForm)
@@ -76,8 +78,7 @@ type
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
     procedure CurrencyEdit1Exit(Sender: TObject);
     procedure RxDBLookupCombo2Exit(Sender: TObject);
-    procedure SMDBGrid1GetCellParams(Sender: TObject; Field: TField;
-      AFont: TFont; var Background: TColor; Highlight: Boolean);
+    procedure SMDBGrid1GetCellParams(Sender: TObject; Field: TField; AFont: TFont; var Background: TColor; Highlight: Boolean);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure CurrencyEdit6Exit(Sender: TObject);
@@ -85,18 +86,14 @@ type
     procedure btConfirmarItClick(Sender: TObject);
     procedure btCancelarClick(Sender: TObject);
     procedure btFinalizarClick(Sender: TObject);
-    procedure CurrencyEdit2KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure CurrencyEdit1KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure CurrencyEdit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure CurrencyEdit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit1Enter(Sender: TObject);
     procedure btPrecoClick(Sender: TObject);
     procedure btnCopiarSacolaClick(Sender: TObject);
     procedure btnCopiarPedidoClick(Sender: TObject);
-    procedure Edit3KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure ValueListEditor1KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure Edit3KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure ValueListEditor1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure btComandaClick(Sender: TObject);
     procedure btOrcamentoClick(Sender: TObject);
     procedure btPedidoClick(Sender: TObject);
@@ -112,30 +109,26 @@ type
     procedure btnCopiarComandaClick(Sender: TObject);
     procedure SMDBGrid2DblClick(Sender: TObject);
     procedure CurrencyEdit1Enter(Sender: TObject);
-    procedure CurrencyEdit6KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure CurrencyEdit4KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure CurrencyEdit7KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure CurrencyEdit6KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure CurrencyEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure CurrencyEdit7KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit3Exit(Sender: TObject);
-    procedure DBEdit4KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure DBEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SMDBGrid1DblClick(Sender: TObject);
-    procedure ACBrBAL1LePeso(Peso: Double; Resposta: String);
+    procedure ACBrBAL1LePeso(Peso: Double; Resposta: string);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
     fDmCupomFiscal: TDmCupomFiscal;
-    fNFCE_ACBr : TfNFCE_ACBR;
-    ffrmConsCupom : TfrmConsCupom; 
-    
+    fNFCE_ACBr: TfNFCE_ACBR;
+    ffrmConsCupom: TfrmConsCupom;
     vAliqIcms: Real;
-    vTipoDesc: String;
+    vTipoDesc: string;
     vSitTrib: Integer;
     vCalcula_IPI, vFinaliza: Boolean;
     vID_Produto: Integer;
-    vFilial_Loc : Integer;
+    vFilial_Loc: Integer;
+    vEstoqueOK, vFinanceiroOK: String;
     
     procedure Limpa_Campos;
     function posicionaProduto: Boolean;
@@ -144,40 +137,42 @@ type
     procedure prc_Calcular_IPI;
     procedure prc_ImprimeComanda;
     procedure prc_EnterCodigo;
-    function fnc_VerficaFracionado(vUnidade: String): Boolean;
-    procedure FinalizaParcial(vTipo: String);
+    function fnc_VerficaFracionado(vUnidade: string): Boolean;
+    procedure FinalizaParcial(vTipo: string);
     procedure prc_CorTamanho;
     procedure prcPesa;
-
+    procedure Le_CupomFiscalParc;
+    procedure prc_Controle_Gravar_Diversos(Financeiro, Estoque: Boolean);
     procedure prc_Inserir;
+    procedure Gravar_Estoque(vFinanceiro: Boolean);
+    procedure prc_PosicionaFormaPgto(vId: Integer);
+    procedure Gravar_CReceber;
 
   public
     { Public declarations }
     fDmEstoque: TDmEstoque;
     fDmMovimento: TDmMovimento;
-    vSerieCupom : String; //Serie Cupom NFCe
+    vSerieCupom: string; //Serie Cupom NFCe
     vTeste: Boolean;
     vSacolaSelecionada: Boolean;
     vItem_original: Integer;
-    vUnidade, vFormaQtd: String;
+    vUnidade, vFormaQtd: string;
     vPerc_Ipi: Real;
-    vNome_Complementar: String;
+    vNome_Complementar: string;
     vID_Pedido: Integer;
     vItem_Pedido: Integer;
-    vNumero_OC: String;
-    vNumero_OS: String;
+    vNumero_OC: string;
+    vNumero_OS: string;
     vItem_Cliente: Integer;
     vNum_Pedido: Integer;
     vPedidoSelecionado: Boolean;
     vPreco_Ori: Real;
     vGeraIcms: Boolean;
     vCopiandoComanda: Boolean;
-
-    procedure Excluir_Estoque(Filial,NumMov: Integer);
+    procedure Excluir_Estoque(Filial, NumMov: Integer);
     procedure prc_Move_Itens;
-    function fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: String; Qtd: Real): Boolean;
-
-    function fnc_Validacao_OK : Boolean;
+    function fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
+    function fnc_Validacao_OK: Boolean;
     //procedure prc_Busca_IBPT;
   end;
 
@@ -187,19 +182,21 @@ var
 implementation
 
 //---------------TROCAR IMPRESSORA
-uses UCupomFiscalPgto, UCupomFiscalCanc, USel_Produto, uUtilPadrao, uComandaR, uCupomCliente, uCalculo_CupomFiscal, Math,
-  USenha, uUtilCupom, UConsPreco, USel_Sacola_CF, USel_Pedido_CF, DmdDatabase, uMenu, UCupomFiscalCli, USel_Comanda_CF,
-  uCupomFiscalParcela, uSel_CorTamanho, uBalanca;
+uses
+  UCupomFiscalPgto, UCupomFiscalCanc, USel_Produto, uUtilPadrao, uComandaR,
+  uCupomCliente, uCalculo_CupomFiscal, Math, USenha, uUtilCupom, UConsPreco,
+  USel_Sacola_CF, USel_Pedido_CF, DmdDatabase, uMenu, UCupomFiscalCli,
+  USel_Comanda_CF, uCupomFiscalParcela, uSel_CorTamanho, uBalanca,
+  uGrava_Erro;
 
 {$R *.dfm}
 
-procedure TfCupomFiscal.FormClose(Sender: TObject;
-  var Action: TCloseAction);
+procedure TfCupomFiscal.FormClose(Sender: TObject; var Action: TCloseAction);
 var
   fim: Integer; //balança Urano
 begin
   Tag := 0;
-  if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
+  if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
   begin
     fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
 //    fDmCupomFiscal.Excluir_Duplicata;
@@ -212,7 +209,7 @@ begin
   FreeAndNil(fDmEstoque);
   FreeAndNil(fDmMovimento);
 
-  prc_Grava_Grid(SMDBGrid1,Name,fDmCupomFiscal.qParametros_GeralENDGRIDS.AsString);
+  prc_Grava_Grid(SMDBGrid1, Name, fDmCupomFiscal.qParametros_GeralENDGRIDS.AsString);
 
   if (fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'S') then
     if vBalanca = 'URANO' then
@@ -226,16 +223,16 @@ var
   i: Integer;
 begin
   fDmCupomFiscal := TDmCupomFiscal.Create(Self);
-  oDBUtils.SetDataSourceProperties(Self,fDmCupomFiscal);
+  oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 //  oDBUtils.OpenTables(True,Self);
   fNFCE_ACBr := TfNFCE_ACBR.Create(nil);
 
   fDmCupomFiscal.cdsPessoa.Open;
 
   fDmParametros := TdmParametros.Create(Self);
-  vFilial_Loc   := vFilial;
+  vFilial_Loc := vFilial;
   if fDmCupomFiscal.cdsFilialID.AsInteger <> vFilial_Loc then
-    fDmCupomFiscal.cdsFilial.Locate('ID',fDmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsInteger,[loCaseInsensitive]);
+    fDmCupomFiscal.cdsFilial.Locate('ID', fDmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsInteger, [loCaseInsensitive]);
 
   fDmCupomFiscal.prc_Abrir_CSTICMS(fDmCupomFiscal.cdsFilialSIMPLES.AsString);
   if not fnc_Validacao_OK then
@@ -250,14 +247,11 @@ begin
   fDmEstoque := TDmEstoque.Create(Self);
   fDmMovimento := TdmMovimento.Create(Self);
 
-  pnlDesconto.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'I') or
-                         (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'A');
+  pnlDesconto.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'I') or (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'A');
   vFormaQtd := '0.000';
 
-  prc_le_Grid(SMDBGrid1,Name,fDmCupomFiscal.qParametros_GeralENDGRIDS.AsString);
-  PnlParcial.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S') or
-                        (fDmCupomFiscal.cdsCupomParametrosUSA_ORCAMENTO.AsString = 'S') or
-                        (fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S');
+  prc_le_Grid(SMDBGrid1, Name, fDmCupomFiscal.qParametros_GeralENDGRIDS.AsString);
+  PnlParcial.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S') or (fDmCupomFiscal.cdsCupomParametrosUSA_ORCAMENTO.AsString = 'S') or (fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S');
 
   if fDmCupomFiscal.cdsCupomParametrosPRODUTO_PADRAO.AsInteger > 0 then
   begin
@@ -268,39 +262,44 @@ begin
   CurrencyEdit1.Value := fDmCupomFiscal.cdsCupomParametrosQTD_PADRAO.AsCurrency;
   if Panel2.Enabled then
     case fDmCupomFiscal.cdsCupomParametrosPRIMEIRO_CAMPO.AsInteger of
-      1: begin
-           CurrencyEdit1.SetFocus;
-           CurrencyEdit1.SelectAll;
-         end;
-      2: Edit1.SetFocus;
-      3: Edit3.SetFocus;
+      1:
+        begin
+          CurrencyEdit1.SetFocus;
+          CurrencyEdit1.SelectAll;
+        end;
+      2:
+        Edit1.SetFocus;
+      3:
+        Edit3.SetFocus;
     end;
 
-  btComanda.Visible   := fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S';
+  btComanda.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S';
   btOrcamento.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_ORCAMENTO.AsString = 'S';
-  btPedido.Visible    := fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S';
+  btPedido.Visible := fDmCupomFiscal.cdsCupomParametrosUSA_PEDIDO.AsString = 'S';
 
   case fDmCupomFiscal.cdsCupomParametrosORDEM_CAMPOS.AsInteger of
-    1: begin //Qtd primeiro
-         Label3.Top := 20;
-         CurrencyEdit1.Top := 3;
+    1:
+      begin //Qtd primeiro
+        Label3.Top := 20;
+        CurrencyEdit1.Top := 3;
 
-         Label1.Top := 53;
-         Edit1.Top  := 35;
+        Label1.Top := 53;
+        Edit1.Top := 35;
 
-         CurrencyEdit1.TabOrder := 0;
-         Edit1.TabOrder := 1;
-       end;
-    2: begin //Cod primeiro
-         Label3.Top := 53;
-         CurrencyEdit1.Top := 35;
+        CurrencyEdit1.TabOrder := 0;
+        Edit1.TabOrder := 1;
+      end;
+    2:
+      begin //Cod primeiro
+        Label3.Top := 53;
+        CurrencyEdit1.Top := 35;
 
-         Label1.Top := 20;
-         Edit1.Top  := 3;
+        Label1.Top := 20;
+        Edit1.Top := 3;
 
-         CurrencyEdit1.TabOrder := 1;
-         Edit1.TabOrder := 0;
-       end;
+        CurrencyEdit1.TabOrder := 1;
+        Edit1.TabOrder := 0;
+      end;
   end;
 
   if FileExists(fDmCupomFiscal.cdsFilialENDLOGO.AsString) then
@@ -314,8 +313,8 @@ begin
     Label12.Caption := Label12.Caption + 'Referência'
   else
     Label12.Caption := Label12.Caption + 'Código do cadastro';
-  Label2.Visible    := (fDmCupomFiscal.cdsCupomParametrosMOSTRA_NOME_PRODUTO.AsString = 'S');
-  Edit3.Enabled     := (fDmCupomFiscal.cdsCupomParametrosMOSTRA_NOME_PRODUTO.AsString = 'S');
+  Label2.Visible := (fDmCupomFiscal.cdsCupomParametrosMOSTRA_NOME_PRODUTO.AsString = 'S');
+  Edit3.Enabled := (fDmCupomFiscal.cdsCupomParametrosMOSTRA_NOME_PRODUTO.AsString = 'S');
 
   for i := 0 to SMDBGrid1.ColCount - 2 do
   begin
@@ -325,15 +324,13 @@ begin
       SMDBGrid1.Columns[i].FieldName := 'NOME_PRODUTO';
   end;
   if fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S' then
-    fDmCupomFiscal.prc_Abrir_Cupom_ProdPrincipal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,0);
+    fDmCupomFiscal.prc_Abrir_Cupom_ProdPrincipal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 0);
 
-  pnlCopiar.Visible := ((fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S') or
-                       (fDmCupomFiscal.cdsCupomParametrosUSA_COPIA_PEDIDO_CF.AsString = 'S') or
-                       (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S'));
+  pnlCopiar.Visible := ((fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S') or (fDmCupomFiscal.cdsCupomParametrosUSA_COPIA_PEDIDO_CF.AsString = 'S') or (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S'));
   if pnlCopiar.Visible then
   begin
-    btnCopiarSacola.Visible  := (fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S');
-    btnCopiarPedido.Visible  := (fDmCupomFiscal.cdsCupomParametrosUSA_COPIA_PEDIDO_CF.AsString = 'S');
+    btnCopiarSacola.Visible := (fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S');
+    btnCopiarPedido.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_COPIA_PEDIDO_CF.AsString = 'S');
     btnCopiarComanda.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_CARTAO_COMANDA.AsString = 'S');
   end;
 
@@ -342,30 +339,26 @@ begin
   begin
     if vBalanca = 'URANO' then
     begin
-      _AlteraModeloBalanca(3);//US POP
-      _AlteraModoOperacao(0);//Computador Requisita
-
+      _AlteraModeloBalanca(3); //US POP
+      _AlteraModoOperacao(0); //Computador Requisita
       if _AbrePortaSerial(vPortaBalanca) < 1 then
         ShowMessage('Não foi possivel conectar na porta da balança ' + vPortaBalanca + '!');
     end
-    else
-    if vBalanca = 'ACBR' then
+    else if vBalanca = 'ACBR' then
     begin
-    end;  
+    end;
   end;
 //////////////////////////////////
-
-
   vPedidoSelecionado := False;
-  vUnidade           := '';
-  vPerc_Ipi          := 0;
+  vUnidade := '';
+  vPerc_Ipi := 0;
   vNome_Complementar := '';
-  vID_Pedido         := 0;
-  vItem_Pedido       := 0;
-  vNumero_OC         := '';
-  vNumero_OS         := '';
-  vItem_Cliente      := 0;
-  vNum_Pedido        := 0;
+  vID_Pedido := 0;
+  vItem_Pedido := 0;
+  vNumero_OC := '';
+  vNumero_OS := '';
+  vItem_Cliente := 0;
+  vNum_Pedido := 0;
 end;
 
 procedure TfCupomFiscal.Edit1Exit(Sender: TObject);
@@ -375,21 +368,20 @@ begin
 
   if Edit1.Text = '0' then  //cai no campo para procura por nome
   begin
-    Edit3.ReadOnly := False;
-    Edit3.TabStop  := True;
+    Edit3.readonly := False;
+    Edit3.TabStop := True;
     Edit3.SetFocus;
     Exit;
   end
-  else
-  if Edit1.Text = fDmCupomFiscal.cdsCupomParametrosID_PRODUTO_GENERICO.AsString then
+  else if Edit1.Text = fDmCupomFiscal.cdsCupomParametrosID_PRODUTO_GENERICO.AsString then
   begin
-    Edit3.ReadOnly := False;
-    Edit3.TabStop  := True;
+    Edit3.readonly := False;
+    Edit3.TabStop := True;
   end
   else
   begin
-    Edit3.ReadOnly := True;
-    Edit3.TabStop  := False;
+    Edit3.readonly := True;
+    Edit3.TabStop := False;
   end;
 
   if not posicionaProduto then
@@ -399,30 +391,25 @@ begin
   begin
     Edit3.Text := fDmCupomFiscal.cdsProdutoNOME.AsString;
     //11/01/2017  Cleomar
-    if StrToFloat(FormatFloat('0.0000',vPreco_Pos)) > 0 then
+    if StrToFloat(FormatFloat('0.0000', vPreco_Pos)) > 0 then
       CurrencyEdit2.Value := vPreco_Pos
     else
       CurrencyEdit2.Value := fDmCupomFiscal.cdsProdutoPRECO_VENDA.AsCurrency;
     //*************
-    if (not vCopiandoComanda) and (Length(Edit1.Text) < 5) and
-       ((fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'S') and
-       ((fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'KG') or
-       (fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'Kg') or
-       (fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'kg'))) then
+    if (not vCopiandoComanda) and (Length(Edit1.Text) < 5) and ((fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'S') and ((fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'KG') or (fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'Kg') or (fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'kg'))) then
     begin
-       if acbrBal1.Ativo then
-          ACBrBAL1.Desativar;
-       prcPesa;
+      if acbrBal1.Ativo then
+        ACBrBAL1.Desativar;
+      prcPesa;
     end;
 
-    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00',CurrencyEdit2.Value * CurrencyEdit1.Value));
+    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00', CurrencyEdit2.Value * CurrencyEdit1.Value));
     prc_Move_Itens;
     CurrencyEdit1Exit(Sender);
   end;
 end;
 
-procedure TfCupomFiscal.FormCloseQuery(Sender: TObject;
-  var CanClose: Boolean);
+procedure TfCupomFiscal.FormCloseQuery(Sender: TObject; var CanClose: Boolean);
 begin
   CanClose := fnc_Encerrar_Tela(fDmCupomFiscal.cdsCupomFiscal);
 end;
@@ -432,7 +419,7 @@ begin
   if (CurrencyEdit2.Value > 0) and (CurrencyEdit1.Value > 0) then
   begin
     prc_Calcular_IPI;
-    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00',CurrencyEdit2.Value * CurrencyEdit1.Value));
+    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00', CurrencyEdit2.Value * CurrencyEdit1.Value));
   end;
 end;
 
@@ -452,7 +439,7 @@ begin
   CurrencyEdit4.Clear;
   CurrencyEdit7.Clear;
   vPreco_Pos := 0;
-  vAliqIcms  := 0;
+  vAliqIcms := 0;
 
   if fDmCupomFiscal.cdsCupomParametrosPRODUTO_PADRAO.AsInteger > 0 then
   begin
@@ -462,39 +449,37 @@ begin
 
   vCalcula_IPI := True;
   vPedidoSelecionado := False;
-  vUnidade           := '';
-  vPerc_Ipi          := 0;
+  vUnidade := '';
+  vPerc_Ipi := 0;
   vNome_Complementar := '';
-  vID_Pedido         := 0;
-  vItem_Pedido       := 0;
-  vNumero_OC         := '';
-  vNumero_OS         := '';
-  vItem_Cliente      := 0;
-  vNum_Pedido        := 0;
+  vID_Pedido := 0;
+  vItem_Pedido := 0;
+  vNumero_OC := '';
+  vNumero_OS := '';
+  vItem_Cliente := 0;
+  vNum_Pedido := 0;
 end;
 
-procedure TfCupomFiscal.SMDBGrid1GetCellParams(Sender: TObject;
-  Field: TField; AFont: TFont; var Background: TColor; Highlight: Boolean);
+procedure TfCupomFiscal.SMDBGrid1GetCellParams(Sender: TObject; Field: TField; AFont: TFont; var Background: TColor; Highlight: Boolean);
 begin
   if fDmCupomFiscal.cdsCupom_ItensCANCELADO.AsString = 'S' then
     AFont.Color := clRed;
 end;
 
-procedure TfCupomFiscal.Excluir_Estoque(Filial,NumMov: Integer);
+procedure TfCupomFiscal.Excluir_Estoque(Filial, NumMov: Integer);
 begin
   fDmCupomFiscal.cdsEstoqueMov.IndexFieldNames := 'Filial;NumMov';
-  if fDmCupomFiscal.cdsEstoqueMov.FindKey([Filial,NumMov]) then
+  if fDmCupomFiscal.cdsEstoqueMov.FindKey([Filial, NumMov]) then
     fDmCupomFiscal.cdsEstoqueMov.Delete;
 end;
 
-procedure TfCupomFiscal.Edit1KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfCupomFiscal.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
   begin
-    if Copy(Edit1.Text,Length(Edit1.Text),1) = '*' then
+    if Copy(Edit1.Text, Length(Edit1.Text), 1) = '*' then
     begin
-      CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text,1,Length(Edit1.Text) - 1));
+      CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text, 1, Length(Edit1.Text) - 1));
       Edit1.Clear;
       Exit;
     end;
@@ -503,13 +488,12 @@ begin
   end;
 end;
 
-procedure TfCupomFiscal.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfCupomFiscal.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if not (Panel4.Enabled) then
     Exit;
 
- if (Key = Vk_F10) and (fDmCupomFiscal.cdsCupomFiscal.Active) and not(fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
+  if (Key = Vk_F10) and (fDmCupomFiscal.cdsCupomFiscal.Active) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
     btFinalizarClick(Sender);
 
   if (Shift = [ssCtrl]) and (Key = 87) then
@@ -518,9 +502,9 @@ begin
 
   if key = 27 then // Esc
   begin
-    if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
+    if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
     begin
-      if MessageDlg('Deseja cancelar o cupom?',mtConfirmation,[mbYes, mbNo],0) = mrNo then
+      if MessageDlg('Deseja cancelar o cupom?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
         exit;
       fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
 //      fDmCupomFiscal.Excluir_Duplicata;
@@ -535,7 +519,7 @@ begin
 
   if key = vk_F11 then //F11
   begin
-    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
+    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     begin
       ffrmConsCupom := TfrmConsCupom.Create(nil);
       ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
@@ -549,7 +533,7 @@ begin
 
   if key = 67 then //Ctrl + C
   begin
-    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
+    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     begin
       ffrmConsCupom := TfrmConsCupom.Create(nil);
       ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
@@ -563,32 +547,26 @@ begin
     end;
   end;
 
-
-  if (Key = Vk_F12) and not(fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
+  if (Key = Vk_F12) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
   begin
     if btComanda.Visible then
       btComandaClick(Sender);
   end
-  else
-  if (Key = Vk_F4) then
+  else if (Key = Vk_F4) then
     btPrecoClick(Sender)
-  else
-  if (Key = Vk_F6) then
+  else if (Key = Vk_F6) then
     btClienteClick(Sender)
-  else
-  if (Key = Vk_F7) then
+  else if (Key = Vk_F7) then
   begin
     btConfirmarIt.SetFocus;
     btConfirmarItClick(Sender)
   end
-  else
-  if (Key = Vk_F8) then
+  else if (Key = Vk_F8) then
   begin
     if btOrcamento.Visible then
       btOrcamentoClick(Sender);
   end
-  else
-  if (Key = Vk_F9) then
+  else if (Key = Vk_F9) then
   begin
     if btPedido.Visible then
       btPedidoClick(Sender);
@@ -628,12 +606,12 @@ end;
 
 function TfCupomFiscal.posicionaProduto: Boolean;
 var
-  vCampoPesquisa: String;
+  vCampoPesquisa: string;
   vTamCod: Byte;
 begin
-  Result      := False;
+  Result := False;
   vID_Produto := 0;
-  vTamCod     := 4;
+  vTamCod := 4;
   if not fDmCupomFiscal.cdsCupomParametrosTAMANHO_COD_ETIQUETA.IsNull then
     vTamCod := fDmCupomFiscal.cdsCupomParametrosTAMANHO_COD_ETIQUETA.AsInteger;
 
@@ -649,18 +627,18 @@ begin
 //  if (Length(Edit1.Text) > 7) and (vCampoPesquisa = 'ID') then  //juca 01/10/2018
 //  if Length(Edit1.Text) > 7 then //juca 18/05/2018
   begin
-    if copy(Edit1.Text,1,1) = '2' then
+    if copy(Edit1.Text, 1, 1) = '2' then
     begin
-      fDmCupomFiscal.prc_Abrir_Produto(vCampoPesquisa,Copy(Edit1.Text,2,vTamCod)); //aqui criar um parametro, pode ser 4
+      fDmCupomFiscal.prc_Abrir_Produto(vCampoPesquisa, Copy(Edit1.Text, 2, vTamCod)); //aqui criar um parametro, pode ser 4
       if fDmCupomFiscal.cdsProduto.IsEmpty then
       begin
-        ShowMessage('Código do produto lido: ' + Copy(Edit1.Text,2,vTamCod));
+        ShowMessage('Código do produto lido: ' + Copy(Edit1.Text, 2, vTamCod));
         Result := False;
       end
       else
       begin
         //11/01/2017   Cleomar
-        if StrToFloat(FormatFloat('0.00000',vPreco_Pos)) > 0 then
+        if StrToFloat(FormatFloat('0.00000', vPreco_Pos)) > 0 then
           CurrencyEdit2.Value := vPreco_Pos
         else
         begin
@@ -676,15 +654,18 @@ begin
         end;
         //**************
         case fDmCupomFiscal.cdsCupomParametrosETIQUETA_INFO.AsInteger of
-        0: ;
-        1: begin //peso
-             CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text,7,6)) / 1000;
-             CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00',CurrencyEdit2.Value * CurrencyEdit1.Value));
-           end;
-        2: begin //preço
-             CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text,7,6)) / 100 / fDmCupomFiscal.cdsProdutoPRECO_VENDA.AsFloat;
-             CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00',CurrencyEdit2.Value * CurrencyEdit1.Value));
-           end;
+          0:
+            ;
+          1:
+            begin //peso
+              CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text, 7, 6)) / 1000;
+              CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00', CurrencyEdit2.Value * CurrencyEdit1.Value));
+            end;
+          2:
+            begin //preço
+              CurrencyEdit1.Value := StrToFloat(Copy(Edit1.Text, 7, 6)) / 100 / fDmCupomFiscal.cdsProdutoPRECO_VENDA.AsFloat;
+              CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00', CurrencyEdit2.Value * CurrencyEdit1.Value));
+            end;
         end;
         vID_Produto := fDmCupomFiscal.cdsProdutoID.AsInteger;
         Result := True;
@@ -713,7 +694,7 @@ begin
 
     end;
 
-    fDmCupomFiscal.prc_Abrir_Produto('CB',Edit1.Text);
+    fDmCupomFiscal.prc_Abrir_Produto('CB', Edit1.Text);
     if not fDmCupomFiscal.cdsProduto.IsEmpty then
     begin
       vID_Produto := fDmCupomFiscal.cdsProdutoID.AsInteger;
@@ -721,7 +702,7 @@ begin
     end
     else
     begin
-      MessageDlg('*** Código de Barra ' + Edit1.Text + ' não encontrado!' , mtInformation, [mbOk], 0);
+      MessageDlg('*** Código de Barra ' + Edit1.Text + ' não encontrado!', mtInformation, [mbOk], 0);
       Edit1.SelectAll;
       Result := False;
       Exit;
@@ -730,7 +711,7 @@ begin
   end
   else
   begin
-    fDmCupomFiscal.prc_Abrir_Produto(vCampoPesquisa,Edit1.Text);
+    fDmCupomFiscal.prc_Abrir_Produto(vCampoPesquisa, Edit1.Text);
     if not fDmCupomFiscal.cdsProduto.IsEmpty then
     begin
       vID_Produto := fDmCupomFiscal.cdsProdutoID.AsInteger;
@@ -738,7 +719,7 @@ begin
     end
     else
     begin
-      MessageDlg('*** Código / Referência ' + Edit1.Text + ' não encontrado!' , mtInformation, [mbOk], 0);
+      MessageDlg('*** Código / Referência ' + Edit1.Text + ' não encontrado!', mtInformation, [mbOk], 0);
       Edit1.SelectAll;
       Result := False;
       Exit;
@@ -748,13 +729,13 @@ begin
   if Result then
   begin
     //11/01/2017 Cleomar
-    if StrToFloat(FormatFloat('0.0000',vPreco_Pos)) > 0 then
+    if StrToFloat(FormatFloat('0.0000', vPreco_Pos)) > 0 then
       CurrencyEdit2.Value := vPreco_Pos
     else
       CurrencyEdit2.Value := fDmCupomFiscal.cdsProdutoPRECO_VENDA.AsFloat;
     //***************
-    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00',CurrencyEdit2.Value * CurrencyEdit1.Value));
-    vID_Produto         := fDmCupomFiscal.cdsProdutoID.AsInteger;
+    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00', CurrencyEdit2.Value * CurrencyEdit1.Value));
+    vID_Produto := fDmCupomFiscal.cdsProdutoID.AsInteger;
   end
   else
   begin
@@ -832,46 +813,38 @@ procedure TfCupomFiscal.prc_Calcular_Tributos_Transparencia;
 var
   vAux: Real;
 begin
-  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat           := 0;
-  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat   := 0;
-  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat  := 0;
+  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat := 0;
+  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat := 0;
+  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat := 0;
   fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat := 0;
 
-  if (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_FEDERAL.AsFloat)) > 0) then
+  if (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_FEDERAL.AsFloat)) > 0) then
   begin
     if fDmCupomFiscal.cdsParametrosARREDONDAR_5.AsString = 'B' then
-      vAux := StrToCurr(FormatCurr('0.00',(fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat *
-              fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_FEDERAL.AsFloat) / 100))
+      vAux := StrToCurr(FormatCurr('0.00', (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_FEDERAL.AsFloat) / 100))
     else
-      vAux := StrToFloat(FormatFloat('0.00',(fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat *
-              fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_FEDERAL.AsFloat) / 100));
-    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat := StrToFloat(FormatFloat('0.00',vAux));
+      vAux := StrToFloat(FormatFloat('0.00', (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_FEDERAL.AsFloat) / 100));
+    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat := StrToFloat(FormatFloat('0.00', vAux));
   end;
 
-  if (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_ESTADUAL.AsFloat)) > 0) then
+  if (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_ESTADUAL.AsFloat)) > 0) then
   begin
     if fDmCupomFiscal.cdsParametrosARREDONDAR_5.AsString = 'B' then
-      vAux := StrToCurr(FormatCurr('0.00',(fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat *
-              fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_ESTADUAL.AsFloat) / 100))
+      vAux := StrToCurr(FormatCurr('0.00', (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_ESTADUAL.AsFloat) / 100))
     else
-      vAux := StrToFloat(FormatFloat('0.00',(fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat *
-              fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_ESTADUAL.AsFloat) / 100));
-    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat := StrToFloat(FormatFloat('0.00',vAux));
+      vAux := StrToFloat(FormatFloat('0.00', (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_ESTADUAL.AsFloat) / 100));
+    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat := StrToFloat(FormatFloat('0.00', vAux));
   end;
 
-  if (StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_MUNICIPAL.AsFloat)) > 0) then
+  if (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_MUNICIPAL.AsFloat)) > 0) then
   begin
     if fDmCupomFiscal.cdsParametrosARREDONDAR_5.AsString = 'B' then
-      vAux := StrToCurr(FormatCurr('0.00',(fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat *
-              fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_MUNICIPAL.AsFloat) / 100))
+      vAux := StrToCurr(FormatCurr('0.00', (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_MUNICIPAL.AsFloat) / 100))
     else
-      vAux := StrToFloat(FormatFloat('0.00',(fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat *
-              fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_MUNICIPAL.AsFloat) / 100));
-    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat := StrToFloat(FormatFloat('0.00',vAux));
+      vAux := StrToFloat(FormatFloat('0.00', (fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBUTO_MUNICIPAL.AsFloat) / 100));
+    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat := StrToFloat(FormatFloat('0.00', vAux));
   end;
-  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat := fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat +
-                                                      fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat +
-                                                      fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat;
+  fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat := fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat;
 end;
 
 function TfCupomFiscal.prc_Calcular_Media_Tributos: Currency;
@@ -893,7 +866,7 @@ end;
 procedure TfCupomFiscal.btConfirmarItClick(Sender: TObject);
 var
   vItemAux: Integer;
-  vUni: String;
+  vUni: string;
 begin
   if (Edit1.Text = '') or (Edit1.Text = '0') or (Edit3.Text = '') then
   begin
@@ -901,7 +874,7 @@ begin
     Edit1.SetFocus;
     Exit;
   end;
-  fDmCupomFiscal.cdsProduto.Locate('ID',vID_Produto,[loCaseInsensitive]);
+  fDmCupomFiscal.cdsProduto.Locate('ID', vID_Produto, [loCaseInsensitive]);
   if CurrencyEdit1.Value <= 0 then
   begin
     ShowMessage('Quantidade não informada!');
@@ -922,8 +895,7 @@ begin
       Exit;
     end;
   end
-  else
-  if not fnc_VerficaFracionado(fDmCupomFiscal.cdsProdutoUnidade.AsString) then
+  else if not fnc_VerficaFracionado(fDmCupomFiscal.cdsProdutoUnidade.AsString) then
   begin
     ShowMessage('Produto não pode ser vendido fracionado!');
     Exit;
@@ -932,8 +904,7 @@ begin
   //Controle do estoque  11/05/2015
   if (fDmCupomFiscal.cdsParametrosCONTROLAR_ESTOQUE_SAIDA.AsString = 'S') then
   begin
-    if not fnc_Estoque_OK(fDmCupomFiscal.cdsProdutoID.AsInteger,0,
-                          '',CurrencyEdit1.Value) then
+    if not fnc_Estoque_OK(fDmCupomFiscal.cdsProdutoID.AsInteger, 0, '', CurrencyEdit1.Value) then
       Exit;
   end;
 
@@ -941,18 +912,18 @@ begin
   vItemAux := fDmCupomFiscal.cdsCupom_ItensItem.AsInteger;
   try
     fDmCupomFiscal.cdsCupom_Itens.Insert;
-    fDmCupomFiscal.cdsCupom_ItensID.AsInteger       := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-    fDmCupomFiscal.cdsCupom_ItensITEM.AsInteger     := vItemAux + 1;
+    fDmCupomFiscal.cdsCupom_ItensID.AsInteger := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+    fDmCupomFiscal.cdsCupom_ItensITEM.AsInteger := vItemAux + 1;
     fDmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsInteger := vID_Produto;
-    fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat        := StrToFloat(FormatFloat(vFormaQtd,CurrencyEdit1.Value));
+    fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat := StrToFloat(FormatFloat(vFormaQtd, CurrencyEdit1.Value));
     fDmCupomFiscal.cdsCupom_ItensTAMANHO.AsString := '';
-    fDmCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat      := CurrencyEdit2.Value;
+    fDmCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat := CurrencyEdit2.Value;
     fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsFloat := CurrencyEdit2.Value;
     fDmCupomFiscal.vSomaOriginal := fDmCupomFiscal.vSomaOriginal + CurrencyEdit3.Value;
 
     if CurrencyEdit6.Value > 0 then
     begin
-      fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat  := CurrencyEdit4.Value;
+      fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat := CurrencyEdit4.Value;
       vTipoDesc := '$';
       fDmCupomFiscal.cdsCupomFiscalTIPO_DESCONTO.AsString := 'I';
     end;
@@ -961,21 +932,20 @@ begin
     //NFCe
     if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString <> 'S' then
     begin
-      fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat   := 0;
-      fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat    := 0;
-      if StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat)) > 0 then
+      fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat := 0;
+      fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat := 0;
+      if StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat)) > 0 then
       begin
         fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat := CurrencyEdit3.Value;
-        if StrToFloat(FormatFloat('0.0000',fDmCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat)) > 0 then
-          fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat := StrToFloat(FormatFloat('0.00',(fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat / 100)));
-        fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat  := StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat *
-                                                          fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat / 100));
+        if StrToFloat(FormatFloat('0.0000', fDmCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat)) > 0 then
+          fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat := StrToFloat(FormatFloat('0.00', (fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat / 100)));
+        fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat := StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat * fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat / 100));
       end;
       fDmCupomFiscal.cdsCupom_ItensID_CFOP.AsInteger := 0;
     end;
-    fDmCupomFiscal.cdsCupom_ItensREFERENCIA.AsString  := fDmCupomFiscal.cdsProdutoREFERENCIA.AsString;
+    fDmCupomFiscal.cdsCupom_ItensREFERENCIA.AsString := fDmCupomFiscal.cdsProdutoREFERENCIA.AsString;
     fDmCupomFiscal.cdsCupom_ItensORIGEM_PROD.AsString := fDmCupomFiscal.cdsProdutoORIGEM_PROD.AsString;
-    fDmCupomFiscal.cdsCupom_ItensID_NCM.AsString      := fDmCupomFiscal.cdsProdutoID_NCM.AsString;
+    fDmCupomFiscal.cdsCupom_ItensID_NCM.AsString := fDmCupomFiscal.cdsProdutoID_NCM.AsString;
 
     fDmCupomFiscal.cdsCupom_ItensID_MOVESTOQUE.AsInteger := 0;
     if (vPedidoSelecionado) and (trim(vUnidade) <> '') then
@@ -983,7 +953,7 @@ begin
     else
       fDmCupomFiscal.cdsCupom_ItensUNIDADE.AsString := fDmCupomFiscal.cdsProdutoUnidade.AsString;
     fDmCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString := fDmCupomFiscal.cdsProdutoNome.AsString;
-    fDmCupomFiscal.cdsCupom_ItensCANCELADO.AsString   := 'N';
+    fDmCupomFiscal.cdsCupom_ItensCANCELADO.AsString := 'N';
     if fDmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsInteger = fDmCupomFiscal.cdsCupomParametrosID_PRODUTO_GENERICO.AsInteger then
       fDmCupomFiscal.cdsCupom_ItensNOME_PRODUTO.AsString := Edit3.Text
     else
@@ -1009,20 +979,18 @@ begin
         fDmCupomFiscal.cdsCupom_ItensID_COFINS.AsInteger := fDmCupomFiscal.vID_Cofins;
       if fDmCupomFiscal.vID_CSTICMS > 0 then
         fDmCupomFiscal.cdsCupom_ItensID_CSTICMS.AsInteger := fDmCupomFiscal.vID_CSTICMS;
-      fDmCupomFiscal.cdsCupom_ItensTIPO_PIS.AsString     := fDmCupomFiscal.vTipo_Pis;
-      fDmCupomFiscal.cdsCupom_ItensTIPO_COFINS.AsString  := fDmCupomFiscal.vTipo_Cofins;
-      fDmCupomFiscal.cdsCupom_ItensPERC_PIS.AsFloat      := fDmCupomFiscal.vPerc_Pis;
-      fDmCupomFiscal.cdsCupom_ItensPERC_COFINS.AsFloat   := fDmCupomFiscal.vPerc_Cofins;
+      fDmCupomFiscal.cdsCupom_ItensTIPO_PIS.AsString := fDmCupomFiscal.vTipo_Pis;
+      fDmCupomFiscal.cdsCupom_ItensTIPO_COFINS.AsString := fDmCupomFiscal.vTipo_Cofins;
+      fDmCupomFiscal.cdsCupom_ItensPERC_PIS.AsFloat := fDmCupomFiscal.vPerc_Pis;
+      fDmCupomFiscal.cdsCupom_ItensPERC_COFINS.AsFloat := fDmCupomFiscal.vPerc_Cofins;
       fDmCupomFiscal.cdsCupom_ItensPERC_TRIBICMS.AsFloat := fDmCupomFiscal.vPerc_TribICMS;
-      fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat     := fDmCupomFiscal.vPerc_ICMS;
+      fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat := fDmCupomFiscal.vPerc_ICMS;
       if (vPedidoSelecionado) then
-        fDmCupomFiscal.cdsCupom_ItensPERC_IPI.AsFloat    := vPerc_Ipi
+        fDmCupomFiscal.cdsCupom_ItensPERC_IPI.AsFloat := vPerc_Ipi
       else
-        fDmCupomFiscal.cdsCupom_ItensPERC_IPI.AsFloat    := fDmCupomFiscal.vPerc_IPI;
+        fDmCupomFiscal.cdsCupom_ItensPERC_IPI.AsFloat := fDmCupomFiscal.vPerc_IPI;
 
-      prc_Calculo_GeralItem(fDmCupomFiscal,fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat,fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsFloat,
-                                           fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat,fDmCupomFiscal.cdsCupom_ItensPERC_DESCONTO.AsFloat,
-                                           fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat,fDmCupomFiscal.cdsCupom_ItensVLR_ACRESCIMO.AsFloat,'S',0);
+      prc_Calculo_GeralItem(fDmCupomFiscal, fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat, fDmCupomFiscal.cdsCupom_ItensPERC_DESCONTO.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat, fDmCupomFiscal.cdsCupom_ItensVLR_ACRESCIMO.AsFloat, 'S', 0);
     end;
 
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CFI') then
@@ -1035,39 +1003,30 @@ begin
 
     if vPedidoSelecionado then
     begin
-      fDmCupomFiscal.cdsCupom_ItensID_PEDIDO.AsInteger    := vID_Pedido;
-      fDmCupomFiscal.cdsCupom_ItensITEM_PEDIDO.AsInteger  := vItem_Pedido;
-      fDmCupomFiscal.cdsCupom_ItensNUMERO_OC.AsString     := vNumero_OC;
-      fDmCupomFiscal.cdsCupom_ItensNUMERO_OS.AsString     := vNumero_OS;
+      fDmCupomFiscal.cdsCupom_ItensID_PEDIDO.AsInteger := vID_Pedido;
+      fDmCupomFiscal.cdsCupom_ItensITEM_PEDIDO.AsInteger := vItem_Pedido;
+      fDmCupomFiscal.cdsCupom_ItensNUMERO_OC.AsString := vNumero_OC;
+      fDmCupomFiscal.cdsCupom_ItensNUMERO_OS.AsString := vNumero_OS;
       fDmCupomFiscal.cdsCupom_ItensITEM_CLIENTE.AsInteger := vItem_Cliente;
-      fDmCupomFiscal.cdsCupom_ItensNUM_PEDIDO.AsInteger   := vNum_Pedido;
+      fDmCupomFiscal.cdsCupom_ItensNUM_PEDIDO.AsInteger := vNum_Pedido;
     end;
     fDmCupomFiscal.cdsCupom_Itens.Post;
 
     //Total
     if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString <> 'S' then
     begin
-      fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat    := fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat +
-                                                           fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat;
-      fDmCupomFiscal.cdsCupomFiscalVLR_ICMS.AsFloat     := fDmCupomFiscal.cdsCupomFiscalVLR_ICMS.AsFloat +
-                                                           fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
-      fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat +
-                                                           fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat;
-      fDmCupomFiscal.cdsCupomFiscalBASE_ICMS.AsFloat    := fDmCupomFiscal.cdsCupomFiscalBASE_ICMS.AsFloat +
-                                                           fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_ICMS.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_ICMS.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalBASE_ICMS.AsFloat := fDmCupomFiscal.cdsCupomFiscalBASE_ICMS.AsFloat + fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
 
-      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO.AsFloat  := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO.AsFloat +
-                                                           fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO.AsFloat;
 
-      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat   := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat +
-                                                                    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat;
-      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_ESTADUAL.AsFloat  := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_ESTADUAL.AsFloat +
-                                                                    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat;
-      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat +
-                                                                    fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_FEDERAL.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_FEDERAL.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_ESTADUAL.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_ESTADUAL.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_ESTADUAL.AsFloat;
+      fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat := fDmCupomFiscal.cdsCupomFiscalVLR_TRIBUTO_MUNICIPAL.AsFloat + fDmCupomFiscal.cdsCupom_ItensVLR_TRIBUTO_MUNICIPAL.AsFloat;
     end;
     //*****
-
     fDmCupomFiscal.cdsCupomFiscal.Post;
     fDmCupomFiscal.cdsCupomFiscal.Edit;
     fDmCupomFiscal.cdsCupom_Itens.Last;
@@ -1085,12 +1044,15 @@ begin
 
   Limpa_Campos;
   case fDmCupomFiscal.cdsCupomParametrosPRIMEIRO_CAMPO.AsInteger of
-    1: begin
-         CurrencyEdit1.SetFocus;
-         CurrencyEdit1.SelectAll;
-       end;
-    2: Edit1.SetFocus;
-    3: Edit3.SetFocus;
+    1:
+      begin
+        CurrencyEdit1.SetFocus;
+        CurrencyEdit1.SelectAll;
+      end;
+    2:
+      Edit1.SetFocus;
+    3:
+      Edit3.SetFocus;
   end;
 end;
 
@@ -1098,8 +1060,8 @@ procedure TfCupomFiscal.btCancelarClick(Sender: TObject);
 begin
   fCupomFiscalCanc := TfCupomFiscalCanc.Create(Self);
   fCupomFiscalCanc.fDmCupomFiscal := fDmCupomFiscal;
-  fCupomFiscalCanc.fDmParametros  := fDmParametros;
-  fCupomFiscalCanc.vTeste         := vTeste;
+  fCupomFiscalCanc.fDmParametros := fDmParametros;
+  fCupomFiscalCanc.vTeste := vTeste;
   if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
     fCupomFiscalCanc.CurrencyEdit1.AsInteger := fDmCupomFiscal.cdsCupom_ItensITEM.AsInteger;
   fCupomFiscalCanc.ShowModal;
@@ -1108,26 +1070,25 @@ end;
 
 procedure TfCupomFiscal.btFinalizarClick(Sender: TObject);
 var
-  vTextoFechamento: String;
+  vTextoFechamento: string;
   i: Byte;
   vVias: Byte;
   ffCupomFiscalPgto: TfCupomFiscalPgto;
 begin
   vFilial := vFilial_Loc;
 
-  if not(fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
+  if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     fDmCupomFiscal.cdsCupomFiscal.Edit;
 
   fDmCupomFiscal.vEncerrado := False;
   ffCupomFiscalPgto := TfCupomFiscalPgto.Create(Self);
   ffCupomFiscalPgto.fDmCupomFiscal := fDmCupomFiscal;
-  ffCupomFiscalPgto.fDmParametros  := fDmParametros;
+  ffCupomFiscalPgto.fDmParametros := fDmParametros;
   ffCupomFiscalPgto.ShowModal;
   FreeAndNil(ffCupomFiscalPgto);
 
   vTextoFechamento := '';
-  if (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '') and
-     (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '000.000.000-00') then
+  if (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '') and (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '000.000.000-00') then
     vTextoFechamento := 'Consumidor CPF: ' + fDmCupomFiscal.cdsCupomFiscalCPF.AsString + #13;
   if not fDmCupomFiscal.vEncerrado then
     exit;
@@ -1136,47 +1097,47 @@ begin
     fDmCupomFiscal.prc_Excluir_CupomFiscal_MP;
 
   case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of
-    5: begin
-         if fDmCupomFiscal.vEncerrado then
-         begin
-           if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') and
-              (fDmCupomFiscal.cdsCupomParametrosIMPRIME_FISCAL_NFISCAL.AsString = 'S') then
-             fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'modWrite');
-         end
-         else
-           Exit; //para cupom não fiscal, permite continuar vendendo
-       end;
-    6: begin
-         if fDmCupomFiscal.vEncerrado then
-         begin
-           if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') and
-              (fDmCupomFiscal.cdsCupomParametrosIMPRIME_FISCAL_NFISCAL.AsString = 'S') then
-           begin
-             vVias := fDmCupomFiscal.cdsCupomParametrosVIAS_CUPOM.AsInteger;
-             if vVias <= 0 then
-               vVias := 1;
-             fDmCupomFiscal.cdsTipoCobranca.Open;
-             fDmCupomFiscal.cdsTipoCobranca.FindKey([fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger]);
-             if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S' then
-               vVias := vVias - 1;
-             fDmCupomFiscal.cdsTipoCobranca.Close;
-             if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') then
-             begin
-                if (MessageDLg('Deseja imprimir o cupom?',mtConfirmation,[mbyes,mbNo],0) = mrYes) then
-                  for i := 1 to vVias do
-                    fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'modCanvas');
-             end
-             else
-               for i := 1 to vVias do
-                 fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'modCanvas')
-           end;
-         end
-         else
-            Exit; //para cupom não fiscal, permite continuar vendendo
-       end;
+    5:
+      begin
+        if fDmCupomFiscal.vEncerrado then
+        begin
+          if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') and (fDmCupomFiscal.cdsCupomParametrosIMPRIME_FISCAL_NFISCAL.AsString = 'S') then
+            fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modWrite');
+        end
+        else
+          Exit; //para cupom não fiscal, permite continuar vendendo
+      end;
+    6:
+      begin
+        if fDmCupomFiscal.vEncerrado then
+        begin
+          if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') and (fDmCupomFiscal.cdsCupomParametrosIMPRIME_FISCAL_NFISCAL.AsString = 'S') then
+          begin
+            vVias := fDmCupomFiscal.cdsCupomParametrosVIAS_CUPOM.AsInteger;
+            if vVias <= 0 then
+              vVias := 1;
+            fDmCupomFiscal.cdsTipoCobranca.Open;
+            fDmCupomFiscal.cdsTipoCobranca.FindKey([fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger]);
+            if fDmCupomFiscal.cdsTipoCobrancaIMPRIME_CARNE.AsString = 'S' then
+              vVias := vVias - 1;
+            fDmCupomFiscal.cdsTipoCobranca.Close;
+            if (fDmCupomFiscal.cdsCupomParametrosEXIBIR_DIALOGO_IMPRESSORA.AsString = 'S') then
+            begin
+              if (MessageDLg('Deseja imprimir o cupom?', mtConfirmation, [mbyes, mbNo], 0) = mrYes) then
+                for i := 1 to vVias do
+                  fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
+            end
+            else
+              for i := 1 to vVias do
+                fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas')
+          end;
+        end
+        else
+          Exit; //para cupom não fiscal, permite continuar vendendo
+      end;
   end;
 
-  if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
+  if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
   begin
     fDmCupomFiscal.vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
     fDmCupomFiscal.cdsCupomFiscal.Post;
@@ -1186,28 +1147,37 @@ begin
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
   fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
   fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-  fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+  fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
   fNFCE_ACBr.btEnviarNovoClick(Sender);
+
+  //23/10/2019  Estoque e Movimento
+  {if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
+    prc_Controle_Gravar_Diversos(True, True)
+  else if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
+    prc_Controle_Gravar_Diversos(False, False)
+  else
+    prc_Controle_Gravar_Diversos(False, True);}
+  //******************
+
   if fDmCupomFiscal.cdsCupomFiscal.Active then
     fDmCupomFiscal.cdsCupomFiscal.Close;
+
   pnlCaixaLivre.Visible := True;
   DBEdit1.Update;
   ///////////////////////////////////////////////
 end;
 
-procedure TfCupomFiscal.CurrencyEdit2KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfCupomFiscal.CurrencyEdit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (Key = Vk_Return) and (Trim(Edit1.Text) <> '') then
   begin
-    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00',CurrencyEdit2.Value * CurrencyEdit1.Value));
+    CurrencyEdit3.Value := StrToFloat(FormatFloat('0.00', CurrencyEdit2.Value * CurrencyEdit1.Value));
     btConfirmarIt.SetFocus;
     CurrencyEdit1Exit(Sender);
   end;
 end;
 
-procedure TfCupomFiscal.CurrencyEdit1KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfCupomFiscal.CurrencyEdit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = vk_F3 then
   begin
@@ -1226,8 +1196,7 @@ begin
         begin
           CurrencyEdit2.SetFocus;
         end
-        else
-        if CurrencyEdit6.Visible then
+        else if CurrencyEdit6.Visible then
           CurrencyEdit6.SetFocus
         else
         begin
@@ -1256,41 +1225,38 @@ begin
     exit;
   if Edit1.Text = '' then
     exit;
-  pnlCaixaLivre.Visible := False;  
-  if not(fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert]) then
+  pnlCaixaLivre.Visible := False;
+  if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
     prc_Inserir;
 
-  if fDmCupomFiscal.cdsProdutoID.AsInteger <> vID_Produto  then
-    fDmCupomFiscal.cdsProduto.Locate('ID',vID_Produto,[loCaseInsensitive]);
+  if fDmCupomFiscal.cdsProdutoID.AsInteger <> vID_Produto then
+    fDmCupomFiscal.cdsProduto.Locate('ID', vID_Produto, [loCaseInsensitive]);
 
   fDmCupomFiscal.vID_NCM := fDmCupomFiscal.cdsProdutoID_NCM.AsInteger;
   if fDmCupomFiscal.vID_NCM > 0 then
-    fDmCupomFiscal.cdsTab_NCM.Locate('ID',fDmCupomFiscal.vID_NCM,[loCaseInsensitive]);
+    fDmCupomFiscal.cdsTab_NCM.Locate('ID', fDmCupomFiscal.vID_NCM, [loCaseInsensitive]);
 
   if fDmCupomFiscal.cdsProdutoID_CFOP_NFCE.AsInteger > 0 then
     fDmCupomFiscal.vID_CFOP := fDmCupomFiscal.cdsProdutoID_CFOP_NFCE.AsInteger
-  else
-  if (fDmCupomFiscal.cdsTab_NCMID_CFOP.AsInteger > 0) and (fDmCupomFiscal.cdsTab_NCMID.AsInteger = fDmCupomFiscal.cdsCupom_ItensID_NCM.AsInteger) then
+  else if (fDmCupomFiscal.cdsTab_NCMID_CFOP.AsInteger > 0) and (fDmCupomFiscal.cdsTab_NCMID.AsInteger = fDmCupomFiscal.cdsCupom_ItensID_NCM.AsInteger) then
     fDmCupomFiscal.vID_CFOP := fDmCupomFiscal.cdsTab_NCMID_CFOP.AsInteger
-  else
-  if fDmCupomFiscal.cdsFilialID_CFOP_NFCE_PADRAO.AsInteger > 0 then
+  else if fDmCupomFiscal.cdsFilialID_CFOP_NFCE_PADRAO.AsInteger > 0 then
     fDmCupomFiscal.vID_CFOP := fDmCupomFiscal.cdsFilialID_CFOP_NFCE_PADRAO.AsInteger;
   if fDmCupomFiscal.vID_CFOP > 0 then
   begin
-    fDmCupomFiscal.cdsCFOP.Locate('ID',fDmCupomFiscal.vID_CFOP,[loCaseInsensitive]);
+    fDmCupomFiscal.cdsCFOP.Locate('ID', fDmCupomFiscal.vID_CFOP, [loCaseInsensitive]);
     vGeraIcms := fDmCupomFiscal.cdsCFOPGERAR_ICMS.AsString = 'S';
   end;
   fDmCupomFiscal.vID_Variacao := 0;
   if fDmCupomFiscal.vID_CFOP > 0 then
     fDmCupomFiscal.vID_Variacao := fDmCupomFiscal.fnc_Buscar_Regra_CFOP(fDmCupomFiscal.vID_CFOP);
   if fDmCupomFiscal.vID_Variacao = 0 then
-    ShowMessage('Variação da CFOP não localizada para a operação!' + #13 +
-                'Cupom fiscal não será validado!')
+    ShowMessage('Variação da CFOP não localizada para a operação!' + #13 + 'Cupom fiscal não será validado!')
   else
     fDmCupomFiscal.prc_Mover_CST;
 end;
 
-function TfCupomFiscal.fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: String; Qtd: Real): Boolean;
+function TfCupomFiscal.fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
 var
   ffrmSenha: TfrmSenha;
   vQtdAux: Real;
@@ -1298,11 +1264,11 @@ begin
   Result := True;
   if fDmCupomFiscal.cdsParametrosCONTROLAR_ESTOQUE_SAIDA.AsString <> 'S' then
     exit;
-  vQtdAux := fnc_Busca_Estoque2(fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger,ID_Produto,ID_Cor,Tamanho,1);
-  if StrToFloat(FormatFloat('0.0000',vQtdAux)) < StrToFloat(FormatFloat('0.0000',Qtd)) then
+  vQtdAux := fnc_Busca_Estoque2(fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger, ID_Produto, ID_Cor, Tamanho, 1);
+  if StrToFloat(FormatFloat('0.0000', vQtdAux)) < StrToFloat(FormatFloat('0.0000', Qtd)) then
   begin
     if trim(fDmCupomFiscal.cdsParametrosSENHA_LIBERA_ESTOQUE.AsString) = '' then
-      Result := (MessageDlg('Produto com quantidade menor no estoque, confirma inclusão do produto?',mtConfirmation,[mbYes,mbNo],0) = mrYes)
+      Result := (MessageDlg('Produto com quantidade menor no estoque, confirma inclusão do produto?', mtConfirmation, [mbYes, mbNo], 0) = mrYes)
     else
     begin
       ffrmSenha := TfrmSenha.Create(self);
@@ -1312,8 +1278,8 @@ begin
         ffrmSenha.Label4.Caption := 'Tamanho = ' + Tamanho
       else
         ffrmSenha.Label4.Caption := '';
-      ffrmSenha.Label4.Caption := ffrmSenha.Label4.Caption + '   Qtd Est. ' + FormatFloat('0.####',vQtdAux);
-      if StrToFloat(FormatFloat('0.0000',vQtdAux)) <= 0 then
+      ffrmSenha.Label4.Caption := ffrmSenha.Label4.Caption + '   Qtd Est. ' + FormatFloat('0.####', vQtdAux);
+      if StrToFloat(FormatFloat('0.0000', vQtdAux)) <= 0 then
         ffrmSenha.Label4.Font.Color := clRed
       else
         ffrmSenha.Label4.Font.Color := clBlue;
@@ -1322,11 +1288,10 @@ begin
       ffrmSenha.ShowModal;
       FreeAndNil(ffrmSenha);
       if vSenha <> fDmCupomFiscal.cdsParametrosSENHA_LIBERA_ESTOQUE.AsString then
-         Result := False;
+        Result := False;
     end;
   end;
 end;
-
 
 procedure TfCupomFiscal.prc_Calcular_IPI;
 begin
@@ -1337,7 +1302,7 @@ begin
   begin
     if (fDmCupomFiscal.vID_CFOP > 0) and (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') then
     begin
-      if (fDmCupomFiscal.cdsCFOP.Locate('ID',fDmCupomFiscal.vID_CFOP,[loCaseInsensitive])) then
+      if (fDmCupomFiscal.cdsCFOP.Locate('ID', fDmCupomFiscal.vID_CFOP, [loCaseInsensitive])) then
         if fDmCupomFiscal.cdsCFOPGERAR_IPI.AsString <> 'S' then
           exit;
     end;
@@ -1373,8 +1338,8 @@ procedure TfCupomFiscal.btnCopiarPedidoClick(Sender: TObject);
 var
   ffrmSel_Pedido_CF: TfrmSel_Pedido_CF;
 begin
-  vUnidade           := '';
-  vPerc_Ipi          := 0;
+  vUnidade := '';
+  vPerc_Ipi := 0;
   vNome_Complementar := '';
 
   ffrmSel_Pedido_CF := TfrmSel_Pedido_CF.Create(self);
@@ -1385,8 +1350,7 @@ begin
   FreeAndNil(ffrmSel_Pedido_CF);
 end;
 
-procedure TfCupomFiscal.Edit3KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfCupomFiscal.Edit3KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 var
   sds: TSQLDataSet;
 begin
@@ -1405,19 +1369,19 @@ begin
     sds := TSQLDataSet.Create(nil);
     try
       sds.SQLConnection := dmDatabase.scoDados;
-      sds.NoMetadata    := True;
-      sds.GetMetadata   := False;
-      sds.CommandText   := 'SELECT ID, NOME, REFERENCIA FROM PRODUTO ';
-      sds.CommandText   := sds.CommandText + 'WHERE NOME LIKE ''' + Edit3.Text + '%'' ';
-      sds.CommandText   := sds.CommandText + ' AND INATIVO = ' + QuotedStr('N');
-      sds.CommandText   := sds.CommandText + 'ORDER BY NOME';
+      sds.NoMetadata := True;
+      sds.GetMetadata := False;
+      sds.CommandText := 'SELECT ID, NOME, REFERENCIA FROM PRODUTO ';
+      sds.CommandText := sds.CommandText + 'WHERE NOME LIKE ''' + Edit3.Text + '%'' ';
+      sds.CommandText := sds.CommandText + ' AND INATIVO = ' + QuotedStr('N');
+      sds.CommandText := sds.CommandText + 'ORDER BY NOME';
       sds.Open;
       while not sds.Eof do
       begin
         if fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'R' then
-          ValueListEditor1.InsertRow(sds.FieldByName('REFERENCIA').AsString,sds.FieldByName('NOME').AsString,True)
+          ValueListEditor1.InsertRow(sds.FieldByName('REFERENCIA').AsString, sds.FieldByName('NOME').AsString, True)
         else
-          ValueListEditor1.InsertRow(sds.FieldByName('ID').AsString,sds.FieldByName('NOME').AsString,True);
+          ValueListEditor1.InsertRow(sds.FieldByName('ID').AsString, sds.FieldByName('NOME').AsString, True);
         sds.Next;
       end;
     finally
@@ -1428,8 +1392,7 @@ begin
   end;
 end;
 
-procedure TfCupomFiscal.ValueListEditor1KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfCupomFiscal.ValueListEditor1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
   begin
@@ -1441,8 +1404,7 @@ begin
     Edit1Exit(Sender);
     btConfirmarItClick(Sender);
   end
-  else
-  if (Key = 27) then
+  else if (Key = 27) then
   begin
     ValueListEditor1.Visible := False;
     Edit1.SetFocus;
@@ -1509,19 +1471,19 @@ begin
   end;
 end;
 
-procedure TfCupomFiscal.FinalizaParcial(vTipo: String);
+procedure TfCupomFiscal.FinalizaParcial(vTipo: string);
 begin
   if (fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger <= 0) then
   begin
     fDmCupomFiscal.qProximoCupom.Close;
     fDmCupomFiscal.qProximoCupom.ParamByName('FILIAL').AsInteger := fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger;
-    fDmCupomFiscal.qProximoCupom.ParamByName('TIPO').AsString    := vTipo;
+    fDmCupomFiscal.qProximoCupom.ParamByName('TIPO').AsString := vTipo;
     fDmCupomFiscal.qProximoCupom.Open;
-    fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger   := fDmCupomFiscal.qProximoCupomNUMCUPOM.AsInteger + 1;
+    fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger := fDmCupomFiscal.qProximoCupomNUMCUPOM.AsInteger + 1;
     fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger := fDmCupomFiscal.vClienteID;
   end;
 
-  if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
+  if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
   begin
     fDmCupomFiscal.vID_Cupom_Pos := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
     fDmCupomFiscal.cdsCupomFiscal.Post;
@@ -1534,12 +1496,13 @@ begin
     if (fDmCupomFiscal.cdsCupomParametrosUSA_COMANDA.AsString = 'S') then
       prc_ImprimeComanda;
   end
-  else
-    if MessageDLg('Deseja imprimir?',mtConfirmation,[mbyes,mbNo],0) = mrYes then
-      case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of
-        5: fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'modWrite');
-        6: fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'modCanvas');
-      end;
+  else if MessageDLg('Deseja imprimir?', mtConfirmation, [mbyes, mbNo], 0) = mrYes then
+    case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of
+      5:
+        fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modWrite');
+      6:
+        fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
+    end;
 
   if fDmCupomFiscal.cdsCupomFiscal.State in [dsBrowse] then
   begin
@@ -1574,23 +1537,22 @@ begin
 
     if Edit1.Text = '0' then  //cai no campo para procura por nome
     begin
-      Edit3.ReadOnly := False;
-      Edit3.TabStop  := True;
+      Edit3.readonly := False;
+      Edit3.TabStop := True;
       Edit3.SetFocus;
       Exit;
     end
     else
     begin
-      if (Length(Edit1.Text) < 9) and (fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'C' ) and
-         (StrToInt(Edit1.Text) = fDmCupomFiscal.cdsCupomParametrosID_PRODUTO_GENERICO.AsInteger) then
+      if (Length(Edit1.Text) < 9) and (fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'C') and (StrToInt(Edit1.Text) = fDmCupomFiscal.cdsCupomParametrosID_PRODUTO_GENERICO.AsInteger) then
       begin
-        Edit3.ReadOnly := False;
-        Edit3.TabStop  := True;
+        Edit3.readonly := False;
+        Edit3.TabStop := True;
       end
       else
       begin
-        Edit3.ReadOnly := True;
-        Edit3.TabStop  := False;
+        Edit3.readonly := True;
+        Edit3.TabStop := False;
       end;
     end;
 
@@ -1618,12 +1580,7 @@ begin
   fCupomFiscalCli.fDmCupomFiscal := fDmCupomFiscal;
   fCupomFiscalCli.ShowModal;
 
-  fDmCupomFiscal.SQLQuery1.SQL.Text := 'SELECT CF.ID, CF.DTEMISSAO, CF.ID_TIPOCOBRANCA, CF.TIPO ' +
-                                       'FROM CUPOMFISCAL CF ' +
-                                       'WHERE CF.ID_TIPOCOBRANCA IS NULL AND ' +
-                                       ' CF.TIPO IN (''PED'',''ORC'') AND ' +
-                                       ' CF.ID_CLIENTE = ' + IntToStr(fDmCupomFiscal.vClienteID) +
-                                       ' ORDER BY CF.DTEMISSAO';
+  fDmCupomFiscal.SQLQuery1.SQL.Text := 'SELECT CF.ID, CF.DTEMISSAO, CF.ID_TIPOCOBRANCA, CF.TIPO ' + 'FROM CUPOMFISCAL CF ' + 'WHERE CF.ID_TIPOCOBRANCA IS NULL AND ' + ' CF.TIPO IN (''PED'',''ORC'') AND ' + ' CF.ID_CLIENTE = ' + IntToStr(fDmCupomFiscal.vClienteID) + ' ORDER BY CF.DTEMISSAO';
   if not fDmCupomFiscal.SQLQuery1.IsEmpty then
   begin
     ShowMessage('Existe orçamento ou pedido aberto para este cliente em ' + fDmCupomFiscal.SQLQuery1.fieldByName('DTEMISSAO').AsString);
@@ -1668,10 +1625,9 @@ end;
 
 procedure TfCupomFiscal.CurrencyEdit2Exit(Sender: TObject);
 begin
-  if (fDmCupomFiscal.qParametros_FinCONTROLE_DIG_PRECO.AsString = 'S') and (fDmCupomFiscal.qParametros_UsuarioALT_PRECO_PED.AsString = 'C') and
-    (StrToFloat(FormatFloat('0.000000',CurrencyEdit2.Value)) < StrToFloat(FormatFloat('0.000000',vPreco_Ori))) then
+  if (fDmCupomFiscal.qParametros_FinCONTROLE_DIG_PRECO.AsString = 'S') and (fDmCupomFiscal.qParametros_UsuarioALT_PRECO_PED.AsString = 'C') and (StrToFloat(FormatFloat('0.000000', CurrencyEdit2.Value)) < StrToFloat(FormatFloat('0.000000', vPreco_Ori))) then
   begin
-    MessageDlg('*** Preço não pode ser menor que ' + FormatFloat('0.00####',vPreco_Ori), mtError, [mbOk], 0);
+    MessageDlg('*** Preço não pode ser menor que ' + FormatFloat('0.00####', vPreco_Ori), mtError, [mbOk], 0);
     CurrencyEdit2.Value := vPreco_Ori;
     CurrencyEdit2.SetFocus;
   end;
@@ -1682,7 +1638,7 @@ end;
 procedure TfCupomFiscal.btnCopiarComandaClick(Sender: TObject);
 begin
   frmSel_Comanda_CF := TfrmSel_Comanda_CF.Create(Self);
-  frmSel_Comanda_CF.WindowState    := wsMaximized;
+  frmSel_Comanda_CF.WindowState := wsMaximized;
   frmSel_Comanda_CF.fDmCupomFiscal := fDmCupomFiscal;
   frmSel_Comanda_CF.ShowModal;
   vCopiandoComanda := False;
@@ -1692,7 +1648,7 @@ procedure TfCupomFiscal.SMDBGrid2DblClick(Sender: TObject);
 begin
   fCupomFiscalParcela := TfCupomFiscalParcela.Create(Self);
   fCupomFiscalParcela.fdmCupomFiscal := fDmCupomFiscal;
-  fCupomFiscalParcela.Tag            := 1;
+  fCupomFiscalParcela.Tag := 1;
   fDmCupomFiscal.cdsCupom_Parc.Edit;
   fCupomFiscalParcela.ShowModal;
 
@@ -1702,22 +1658,19 @@ begin
   begin
     fDmCupomFiscal.cdsDuplicata.IndexFieldNames := 'ID_CUPOM;PARCELA';
     fDmCupomFiscal.cdsDuplicata.Active := False;
-    fDmCupomFiscal.sdsDuplicata.CommandText := fDmCupomFiscal.ctDuplicata + ' WHERE ID_CUPOM = ' + fDmCupomFiscal.cdsCupomFiscalID.AsString +
-                                               ' AND PARCELA = ' + fDmCupomFiscal.cdsCupom_ParcPARCELA.AsString;
+    fDmCupomFiscal.sdsDuplicata.CommandText := fDmCupomFiscal.ctDuplicata + ' WHERE ID_CUPOM = ' + fDmCupomFiscal.cdsCupomFiscalID.AsString + ' AND PARCELA = ' + fDmCupomFiscal.cdsCupom_ParcPARCELA.AsString;
     fDmCupomFiscal.cdsDuplicata.Active := True;
     if fDmCupomFiscal.cdsDuplicata.IsEmpty then
-      fDmCupomFiscal.Gravar_Duplicata('R','N',fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger,
-                                      fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat,
-                                      fDmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime,'')
+      fDmCupomFiscal.Gravar_Duplicata('R', 'N', fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat, fDmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime, '')
     else
     begin
       fDmCupomFiscal.cdsDuplicata.Edit;
       fDmCupomFiscal.cdsDuplicataDTVENCIMENTO.AsDateTime := fDmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime;
-      fDmCupomFiscal.cdsDuplicataVLR_RESTANTE.AsFloat    := StrToFloat(FormatFloat('0.00',fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat));
+      fDmCupomFiscal.cdsDuplicataVLR_RESTANTE.AsFloat := StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat));
       fDmCupomFiscal.cdsDuplicataID_TIPOCOBRANCA.AsInteger := fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger;
       fDmCupomFiscal.cdsDuplicata.Post;
       fDmCupomFiscal.cdsDuplicata.ApplyUpdates(0);
-      fDmCupomFiscal.cdsDuplicata.Active      := False;
+      fDmCupomFiscal.cdsDuplicata.Active := False;
       fDmCupomFiscal.sdsDuplicata.CommandText := fDmCupomFiscal.ctDuplicata;
     end;
   end;
@@ -1730,34 +1683,29 @@ end;
 
 procedure TfCupomFiscal.CurrencyEdit1Enter(Sender: TObject);
 begin
-  if (fDmCupomFiscal.cdsCupomParametrosQTD_AUTO.AsString = 'S') and (Edit1.Text <> '') and
-     ((fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'N') or (fDmCupomFiscal.cdsProdutoUNIDADE.AsString <> 'KG')) then
+  if (fDmCupomFiscal.cdsCupomParametrosQTD_AUTO.AsString = 'S') and (Edit1.Text <> '') and ((fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'N') or (fDmCupomFiscal.cdsProdutoUNIDADE.AsString <> 'KG')) then
   begin
     btConfirmarIt.SetFocus;
     btConfirmarIt.Click
   end;
-  if (fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'S') and (vBalanca = 'ACBR') and
-     (fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'KG') then
+  if (fDmCupomFiscal.cdsCupomParametrosUSA_BALANCA.AsString = 'S') and (vBalanca = 'ACBR') and (fDmCupomFiscal.cdsProdutoUNIDADE.AsString = 'KG') then
   begin
   end;
 end;
 
-procedure TfCupomFiscal.CurrencyEdit6KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfCupomFiscal.CurrencyEdit6KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = VK_RETURN then
     SelectNext(Sender as TWinControl, True, True);
 end;
 
-procedure TfCupomFiscal.CurrencyEdit4KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfCupomFiscal.CurrencyEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = VK_RETURN then
     SelectNext(Sender as TWinControl, True, True);
 end;
 
-procedure TfCupomFiscal.CurrencyEdit7KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
+procedure TfCupomFiscal.CurrencyEdit7KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if Key = VK_RETURN then
     SelectNext(Sender as TWinControl, True, True);
@@ -1773,7 +1721,7 @@ begin
   end;
 end;
 
-function TfCupomFiscal.fnc_VerficaFracionado(vUnidade: String): Boolean;
+function TfCupomFiscal.fnc_VerficaFracionado(vUnidade: string): Boolean;
 begin
   Result := True;
   fDmCupomFiscal.qUnidade.ParamByName('U1').AsString := vUnidade;
@@ -1804,16 +1752,15 @@ begin
 //seleciona cor/tamanho
   fSel_CorTamanho := TfSel_CorTamanho.Create(Self);
   fSel_CorTamanho.fDmCupomFiscal := fDmCupomFiscal;
-  fSel_CorTamanho.vProd          := fDmCupomFiscal.cdsProdutoID.AsInteger;
+  fSel_CorTamanho.vProd := fDmCupomFiscal.cdsProdutoID.AsInteger;
   fSel_CorTamanho.ShowModal;
 
-  Edit1.Text             := fDmCupomFiscal.cdsProdutoID.AsString;
+  Edit1.Text := fDmCupomFiscal.cdsProdutoID.AsString;
 //  RxDBLookupCombo1.Value := fDmCupomFiscal.vTamanho;
 //  pnlTamanho.Visible     := True;
 end;
 
-procedure TfCupomFiscal.DBEdit4KeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
+procedure TfCupomFiscal.DBEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
   begin
@@ -1831,15 +1778,15 @@ begin
   fCupomFiscalImposto.fDmCupomFiscal := fDmCupomFiscal;
   fDmCupomFiscal.vID_CFOP := fDmCupomFiscal.cdsCupom_ItensID_CFOP.AsInteger;
 
-  fDmCupomFiscal.vID_Pis         := fDmCupomFiscal.cdsCupom_ItensID_PIS.AsInteger;
-  fDmCupomFiscal.vID_Cofins      := fDmCupomFiscal.cdsCupom_ItensID_COFINS.AsInteger;
-  fDmCupomFiscal.vID_CSTICMS     := fDmCupomFiscal.cdsCupom_ItensID_CSTICMS.AsInteger;
-  fDmCupomFiscal.vID_CSTIPI      := fDmCupomFiscal.cdsCupom_ItensID_CSTIPI.AsInteger;
-  fDmCupomFiscal.vVlr_ICMS       := fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
-  fDmCupomFiscal.vBase_ICMS      := fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
-  fDmCupomFiscal.vVlr_ICMS_Ret   := fDmCupomFiscal.cdsCupom_ItensVLR_ICMSSUBST_RET.AsFloat;
-  fDmCupomFiscal.vBase_ICMS_Ret  := fDmCupomFiscal.cdsCupom_ItensBASE_ICMSSUBST_RET.AsFloat;
-  fDmCupomFiscal.vVlr_ICMS_Efet  := fDmCupomFiscal.cdsCupom_ItensVLR_ICMS_EFE.AsFloat;
+  fDmCupomFiscal.vID_Pis := fDmCupomFiscal.cdsCupom_ItensID_PIS.AsInteger;
+  fDmCupomFiscal.vID_Cofins := fDmCupomFiscal.cdsCupom_ItensID_COFINS.AsInteger;
+  fDmCupomFiscal.vID_CSTICMS := fDmCupomFiscal.cdsCupom_ItensID_CSTICMS.AsInteger;
+  fDmCupomFiscal.vID_CSTIPI := fDmCupomFiscal.cdsCupom_ItensID_CSTIPI.AsInteger;
+  fDmCupomFiscal.vVlr_ICMS := fDmCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat;
+  fDmCupomFiscal.vBase_ICMS := fDmCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat;
+  fDmCupomFiscal.vVlr_ICMS_Ret := fDmCupomFiscal.cdsCupom_ItensVLR_ICMSSUBST_RET.AsFloat;
+  fDmCupomFiscal.vBase_ICMS_Ret := fDmCupomFiscal.cdsCupom_ItensBASE_ICMSSUBST_RET.AsFloat;
+  fDmCupomFiscal.vVlr_ICMS_Efet := fDmCupomFiscal.cdsCupom_ItensVLR_ICMS_EFE.AsFloat;
   fDmCupomFiscal.vPerc_ICMS_Efet := fDmCupomFiscal.cdsCupom_ItensPERC_ICMS_EFET.AsFloat;
   fDmCupomFiscal.vBase_ICMS_Efet := fDmCupomFiscal.cdsCupom_ItensVLR_BASE_EFET.AsFloat;
 
@@ -1859,68 +1806,71 @@ end;
 
 procedure TfCupomFiscal.prcPesa;
 var
-  strPeso: String;
+  strPeso: string;
   TimeOut: Integer;
 begin
-    if vBalanca = 'URANO' then
+  if vBalanca = 'URANO' then
+  begin
+    StrPeso := _LePeso;
+    if StrPeso = 'Porta serial fechada!'#$D#$A then
     begin
-      StrPeso := _LePeso;
-      if StrPeso = 'Porta serial fechada!'#$D#$A then
-      begin
-        ShowMessage('Porta serial fechada!');
-        Exit;
-      end;
-      Edit2.Text := _LePeso;
-      CurrencyEdit1.Value := StrToFloat(Copy(Edit2.Text,20,6));
-    end
-    else
-    if vBalanca = 'ACBR' then
-    begin
+      ShowMessage('Porta serial fechada!');
+      Exit;
+    end;
+    Edit2.Text := _LePeso;
+    CurrencyEdit1.Value := StrToFloat(Copy(Edit2.Text, 20, 6));
+  end
+  else if vBalanca = 'ACBR' then
+  begin
        // se houver conecção aberta, Fecha a conecção
-       if acbrBal1.Ativo then
-          ACBrBAL1.Desativar;
+    if acbrBal1.Ativo then
+      ACBrBAL1.Desativar;
 
        // configura porta de comunicação
-       ACBrBAL1.Modelo           := TACBrBALModelo(2);
-       ACBrBAL1.Device.HandShake := TACBrHandShake(0);
-       ACBrBAL1.Device.Parity    := TACBrSerialParity(0);
-       ACBrBAL1.Device.Stop      := TACBrSerialStop(0);
-       ACBrBAL1.Device.Data      := StrToInt('8');
-       ACBrBAL1.Device.Baud      := StrToInt('2400');
-       ACBrBAL1.Device.Baud      := StrToInt('2400');
-       ACBrBAL1.Device.Porta     := 'COM2';                  
+    ACBrBAL1.Modelo := TACBrBALModelo(2);
+    ACBrBAL1.Device.HandShake := TACBrHandShake(0);
+    ACBrBAL1.Device.Parity := TACBrSerialParity(0);
+    ACBrBAL1.Device.Stop := TACBrSerialStop(0);
+    ACBrBAL1.Device.Data := StrToInt('8');
+    ACBrBAL1.Device.Baud := StrToInt('2400');
+    ACBrBAL1.Device.Baud := StrToInt('2400');
+    ACBrBAL1.Device.Porta := 'COM2';
+                  
 
        // Conecta com a balança
-       ACBrBAL1.Ativar;
-       TimeOut := 2000 ;
-       ACBrBAL1.LePeso( TimeOut );
-    end;
+    ACBrBAL1.Ativar;
+    TimeOut := 2000;
+    ACBrBAL1.LePeso(TimeOut);
+  end;
 end;
 
-procedure TfCupomFiscal.ACBrBAL1LePeso(Peso: Double; Resposta: String);
+procedure TfCupomFiscal.ACBrBAL1LePeso(Peso: Double; Resposta: string);
 var
   Valid: Integer;
 begin
-   CurrencyEdit1.Value := Peso;
+  CurrencyEdit1.Value := Peso;
 
-   if Peso > 0 then
-   else
-    begin
-      valid := Trunc(ACBrBAL1.UltimoPesoLido);
-      case valid of
-         0 : ShowMessage('TimeOut !'+sLineBreak+
-                         'Coloque o produto sobre a Balança!');
-        -1 : ShowMessage('Peso Instável ! ' +sLineBreak+
-                         'Tente Nova Leitura');
-        -2 : ShowMessage('Peso Negativo !');
-       -10 : ShowMessage('Sobrepeso !');
-      end;
-    end ;
+  if Peso > 0 then
+
+  else
+  begin
+    valid := Trunc(ACBrBAL1.UltimoPesoLido);
+    case valid of
+      0:
+        ShowMessage('TimeOut !' + sLineBreak + 'Coloque o produto sobre a Balança!');
+      -1:
+        ShowMessage('Peso Instável ! ' + sLineBreak + 'Tente Nova Leitura');
+      -2:
+        ShowMessage('Peso Negativo !');
+      -10:
+        ShowMessage('Sobrepeso !');
+    end;
+  end;
 end;
 
 function TfCupomFiscal.fnc_Validacao_OK: Boolean;
 var
-  vMSG : String;
+  vMSG: string;
 begin
   vMSG := '';
   Result := True;
@@ -1928,21 +1878,17 @@ begin
   begin
     fDmParametros.qCaixaAberto.Close;
     fDmParametros.qCaixaAberto.ParamByName('T1').AsInteger := vTerminal;
-    fDmParametros.qCaixaAberto.ParamByName('D1').AsDate    := Date;
+    fDmParametros.qCaixaAberto.ParamByName('D1').AsDate := Date;
     fDmParametros.qCaixaAberto.Open;
     if fDmParametros.qCaixaAberto.IsEmpty then
       vMSG := vMSG + #13 + 'Não existe caixa aberto para efetuar venda!'
-    else
-    if (fDmParametros.qCaixaAbertoDATA.AsDateTime < Date) then
+    else if (fDmParametros.qCaixaAbertoDATA.AsDateTime < Date) then
     begin
       if (fDmParametros.qCaixaAbertoDATA2.AsDateTime > fDmParametros.qCaixaAbertoDATA.AsDateTime) then
-        vMSG := vMSG + #13 + '*** Caixa aberto com data: ' + fDmParametros.qCaixaAbertoDATA.AsString
-                     + ', mas já existe caixa com data superior pendente de conferência ou já encerrado!'
-                     + #13 + ' FAVOR VERIFICAR!';
+        vMSG := vMSG + #13 + '*** Caixa aberto com data: ' + fDmParametros.qCaixaAbertoDATA.AsString + ', mas já existe caixa com data superior pendente de conferência ou já encerrado!' + #13 + ' FAVOR VERIFICAR!';
       if fDmCupomFiscal.vID_Fechamento <> fDmParametros.qCaixaAbertoID.AsInteger then
       begin
-        if (MessageDlg('Caixa aberto com data de ' + fDmParametros.qCaixaAbertoDATA.AsString +
-                       ', usar este mesmo caixa?',mtConfirmation,[mbYes,mbNo],0) = mrNo) then
+        if (MessageDlg('Caixa aberto com data de ' + fDmParametros.qCaixaAbertoDATA.AsString + ', usar este mesmo caixa?', mtConfirmation, [mbYes, mbNo], 0) = mrNo) then
           Result := False;
       end;
     end;
@@ -1966,8 +1912,8 @@ end;
 procedure TfCupomFiscal.prc_Inserir;
 var
   iRetorno: Integer;
-  NCupom, vEst: String;
-  vArq: String;
+  NCupom, vEst: string;
+  vArq: string;
 begin
   fDmCupomFiscal.mPedidoAux.EmptyDataSet;
 
@@ -1975,9 +1921,9 @@ begin
   fDmCupomFiscal.cdsFilial.FindKey([vFilial_Loc]);
   fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
 
-  fDmCupomFiscal.prcInserir(0,fDmCupomFiscal.vClienteID);
+  fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID);
 
-  vSerieCupom  := fDmCupomFiscal.lerIni('IMPRESSORA','Serie');
+  vSerieCupom := fDmCupomFiscal.lerIni('IMPRESSORA', 'Serie');
 
   if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
   begin
@@ -1986,29 +1932,31 @@ begin
       fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
     fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger := fDmCupomFiscal.vClienteID;
     fDmCupomFiscal.cdsCupomFiscalTIPO_DESTINO_OPERACAO.AsInteger := 1;
-    fDMCupomFiscal.cdsCupomFiscalTIPO_ATENDIMENTO.AsInteger      := 1;
-    fDMCupomFiscal.cdsCupomFiscalTIPO_ENVIONFE.AsString          := '1-NORMAL';
+    fDMCupomFiscal.cdsCupomFiscalTIPO_ATENDIMENTO.AsInteger := 1;
+    fDMCupomFiscal.cdsCupomFiscalTIPO_ENVIONFE.AsString := '1-NORMAL';
     if vSerieCupom <> EmptyStr then
-      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString                  := vSerieCupom
+      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := vSerieCupom
     else
-      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString                  := fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString;
+      fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString;
   end
   else
   begin
 //---------------TROCAR IMPRESSORA
     case fDmCupomFiscal.cdsParametrosIMPRESSORA_FISCAL.AsInteger of
-      5: begin
-           fDmCupomFiscal.prcNumNaoFiscal;
-           fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
-           if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
-             fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
-         end;
-      6: begin
-           fDmCupomFiscal.prcNumNaoFiscal;
-           fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
-           if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
-             fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
-         end;
+      5:
+        begin
+          fDmCupomFiscal.prcNumNaoFiscal;
+          fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
+          if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
+            fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
+        end;
+      6:
+        begin
+          fDmCupomFiscal.prcNumNaoFiscal;
+          fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
+          if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
+            fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
+        end;
     end;
   end;
 
@@ -2020,4 +1968,299 @@ begin
   end;
 end;
 
+procedure TfCupomFiscal.prc_Controle_Gravar_Diversos(Financeiro, Estoque: Boolean);
+var
+  ID: TTransactionDesc;
+  sds: TSQLDataSet;
+  Flag: Boolean;
+  vMSGAux: string;
+begin
+  sds := TSQLDataSet.Create(nil);
+  vMSGAux := '';
+  vFinanceiroOK := 'N';
+  vEstoqueOK := 'N';
+  if Financeiro then
+  begin
+    ID.TransactionID := 70;
+    ID.IsolationLevel := xilREADCOMMITTED;
+    dmDatabase.scoDados.StartTransaction(ID);
+    try
+      {try
+        sds.SQLConnection := dmDatabase.scoDados;
+        sds.NoMetadata := True;
+        sds.GetMetadata := False;
+        sds.CommandText := 'UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('FINANCEIRO');
+        Flag := False;
+        while not Flag do
+        begin
+          try
+            sds.Close;
+            sds.ExecSQL;
+            Flag := True;
+          except
+            on E: Exception do
+            begin
+              Flag := False;
+            end;
+          end;
+        end;
+      except
+        raise
+      end;}
+      if fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P' then
+      begin
+        Le_CupomFiscalParc;
+        if (fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger > 0) and (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat)) > 0) then
+        begin
+          fDmCupomFiscal.cdsVendedor.Locate('CODIGO', fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger, [loCaseInsensitive]);
+          if fDmCupomFiscal.cdsVendedorTIPO_COMISSAO.AsString = 'N' then
+            fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a prazo
+        end;
+      end
+      else
+      begin
+        fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
+        fDmCupomFiscal.cdsTipoCobranca.Open;
+        fDmCupomFiscal.cdsTipoCobranca.FindKey([fDmCupomFiscal.cdsCupomFiscalID_TIPOCOBRANCA.AsInteger]);
+        fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(0, fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency);
+        fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a vista
+      end;
+      dmDatabase.scoDados.Commit(ID);
+      vFinanceiroOK := 'S';
+    except
+      on e: Exception do
+      begin
+        vFinanceiroOK := 'N';
+        //vMSGAux := 'Erro ao gravar Comissão/Contas Receber: ' + #13 + e.Message;
+        uGrava_Erro.prc_Gravar('Financeiro,Estoque,Comissão', 'fCupomFiscal', vMSGAux, DateToStr(Date), TimeToStr(Now));
+        dmDatabase.scoDados.Rollback(ID);
+      end;
+    end;
+  end;
+
+  if Estoque then
+  begin
+    fDmEstoque := TDmEstoque.Create(Self);
+    fDmMovimento := TDMMovimento.Create(Self);
+    ID.TransactionID := 71;
+    ID.IsolationLevel := xilREADCOMMITTED;
+    dmDatabase.scoDados.StartTransaction(ID);
+    try
+      {try
+        sds.SQLConnection := dmDatabase.scoDados;
+        sds.NoMetadata := True;
+        sds.GetMetadata := False;
+        sds.CommandText := 'UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('ESTOQUE_MOV');
+        Flag := False;
+        while not Flag do
+        begin
+          try
+            sds.Close;
+            sds.ExecSQL;
+            Flag := True;
+          except
+            on E: Exception do
+            begin
+              Flag := False;
+            end;
+          end;
+        end;
+      except
+        raise
+      end;}
+      Gravar_Estoque(Financeiro);
+      dmDatabase.scoDados.Commit(ID);
+      vEstoqueOK := 'S';
+    except
+      on e: Exception do
+      begin
+        vEstoqueOK := 'N';
+        dmDatabase.scoDados.Rollback(ID);
+        //vMSGAux := vMSGAux + #13 + #13 + 'Erro ao gravar Estoque: ' + #13 + e.Message;
+      end;
+    end;
+    FreeAndNil(sds);
+    FreeAndNil(fDmEstoque);
+    FreeAndNil(fDmMovimento);
+  end;
+
+  fDmCupomFiscal.cdsCupomFiscal.Edit;
+  fDmCupomFiscal.cdsCupomFiscalESTOQUE_OK.AsString    := vEstoqueOK;
+  fDmCupomFiscal.cdsCupomFiscalFINANCEIRO_OK.AsString := vFinanceiroOK;
+  fDmCupomFiscal.cdsCupomFiscal.Post;
+  fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
+
+  if trim(vMSGAux) <> '' then
+    MessageDlg(vMSGAux, mtInformation, [mbOk], 0);
+
+end;
+
+procedure TfCupomFiscal.Le_CupomFiscalParc;
+begin
+  fDmCupomFiscal.cdsCupom_Parc.First;
+  while not fDmCupomFiscal.cdsCupom_Parc.Eof do
+  begin
+    prc_PosicionaFormaPgto(fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger);
+    if fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S' then
+      Gravar_CReceber
+    else
+      fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
+    fDmCupomFiscal.cdsCupom_Parc.Next;
+  end;
+
+end;
+
+procedure TfCupomFiscal.Gravar_Estoque(vFinanceiro: Boolean);
+var
+  vID_Estoque,
+  vID_Mov: Integer;
+  vDescAux: Real;
+  //fDMCadCupomFiscal_MP: TDMCadCupomFiscal_MP;
+begin
+  {if fDmCupomFiscal.cdsCupomParametrosBAIXAR_CONSUMO.AsString = 'S' then
+  begin
+    fDMCadCupomFiscal_MP := TDMCadCupomFiscal_MP.Create(Self);
+    fDMCadCupomFiscal_MP.mMaterial.EmptyDataSet;
+  end;}
+
+  SMDBGrid1.DisableScroll;
+  fDmCupomFiscal.cdsCupom_Itens.First;
+  while not fDmCupomFiscal.cdsCupom_Itens.Eof do
+  begin
+    vID_Mov  := 0;
+    vDescAux := StrToFloat(FormatFloat('0.0000',fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat));
+
+    if fDmCupomFiscal.cdsCupom_ItensCANCELADO.AsString = 'S' then
+    begin
+      fDmCupomFiscal.cdsCupom_Itens.Next;
+      Continue;
+    end;
+
+    fDmCupomFiscal.prc_Abrir_Produto('ID',fDmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsString);
+
+    vID_Estoque := fDMEstoque.fnc_Gravar_Estoque(fDmCupomFiscal.cdsCupom_ItensID_MOVESTOQUE.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger,
+                                                 vLocalEstoque,
+                                                 fDmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,
+                                                 fDmCupomFiscal.cdsCupom_ItensID_CFOP.AsInteger,
+                                                 fDmCupomFiscal.cdsCupomFiscalID.AsInteger,0,
+                                                 'S','CFI',
+                                                 fDmCupomFiscal.cdsCupom_ItensUNIDADE.AsString,
+                                                 fDmCupomFiscal.cdsCupom_ItensUNIDADE.AsString,
+                                                 fDmCupomFiscal.cdsCupomFiscalSERIE.AsString,
+                                                 fDmCupomFiscal.cdsCupom_ItensTAMANHO.AsString,
+                                                 fDmCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime,
+                                                 fDmCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat,
+                                                 fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat,
+                                                 fDmCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat,
+                                                 0,
+                                                 vDescAux,
+                                                 0,
+                                                 0,
+                                                 fDmCupomFiscal.cdsCupom_ItensQTD.AsFloat,
+                                                 fDmCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat,
+                                                 vDescAux,0,'',
+                                                 fDmCupomFiscal.cdsCupom_ItensID_COR_COMBINACO.AsInteger,'','N',0,0,0,0,0);
+
+    if (not fDmCupomFiscal.cdsProduto.IsEmpty) and
+       (fDmCupomFiscal.cdsProdutoTIPO_REG.AsString <> 'N') and (vFinanceiro) then
+    begin
+      vID_Mov := fDMMovimento.fnc_Gravar_Movimento(0,
+                                                   fDMCupomFiscal.cdsCupomFiscalFILIAL.AsInteger,
+                                                   fDMCupomFiscal.cdsCupom_ItensITEM.AsInteger,
+                                                   fDMCupomFiscal.cdsCupom_ItensID_PRODUTO.AsInteger,
+                                                   0,
+                                                   fDMCupomFiscal.cdsCupom_ItensID.AsInteger,
+                                                   fDMCupomFiscal.cdsCupom_ItensID_CFOP.AsInteger,
+                                                   fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,
+                                                   0,
+                                                   fDMCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger,0,
+                                                   'CFI',
+                                                   fDmCupomFiscal.cdsCupomFiscalSERIE.AsString,//Série
+                                                   'S','CFI',
+                                                   fDMCupomFiscal.cdsCupom_ItensVLR_UNITARIO.AsFloat,
+                                                   fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat,
+                                                   0,
+                                                   0,
+                                                   fDMCupomFiscal.cdsCupom_ItensVLR_ICMS.AsFloat,
+                                                   0,
+                                                   0,0,0,
+                                                   0,0,
+                                                   0,
+                                                   0,
+                                                   fDMCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat,0,
+                                                   0,
+                                                   0,
+                                                   0,
+                                                   0,
+                                                   0,0,0,0,fDMCupomFiscal.cdsCupom_ItensBASE_ICMS.AsFloat,
+                                                   0,
+                                                   0,
+                                                   fDMCupomFiscal.cdsCupom_ItensQTD.AsFloat,
+                                                   0,
+                                                   fDMCupomFiscal.cdsCupom_ItensPERC_ICMS.AsFloat,
+                                                   0,
+                                                   0,
+                                                   0,0,0,0,
+                                                   fDMCupomFiscal.cdsCupom_ItensCANCELADO.AsString,
+                                                   '',
+                                                   fDMCupomFiscal.cdsCupom_ItensUNIDADE.AsString,
+                                                   '',
+                                                   fDMCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString,
+                                                   fDmCupomFiscal.cdsProdutoREFERENCIA.AsString,
+                                                   fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime,
+                                                   fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime,
+                                                   fDMCupomFiscal.cdsCupom_ItensTAMANHO.AsString,
+                                                   '',
+                                                   fDMCupomFiscal.cdsCupomFiscalID_CONDPGTO.AsInteger,0,
+                                                   fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger,
+                                                   fDmCupomFiscal.cdsCupom_ItensID_COR_COMBINACO.AsInteger,
+                                                   fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat,0,0,vTerminal,0,'N',
+                                                   0,0,0,0,0,0,0,0,0,0);
+    end;
+    if (fDmCupomFiscal.cdsCupom_ItensID_MOVESTOQUE.AsInteger <> vID_Estoque) or (fDmCupomFiscal.cdsCupom_ItensID_MOVIMENTO.AsInteger <> vID_Mov) then
+    begin
+      fDmCupomFiscal.cdsCupom_Itens.Edit;
+      fDmCupomFiscal.cdsCupom_ItensID_MOVESTOQUE.AsInteger := vID_Estoque;
+      fDmCupomFiscal.cdsCupom_ItensID_MOVIMENTO.AsInteger  := vID_Mov;
+      fDmCupomFiscal.cdsCupom_Itens.Post;
+    end;
+
+    {if fdmCupomFiscal.cdsCupomParametrosBAIXAR_CONSUMO.AsString = 'S' then
+    begin
+      fDMCadCupomFiscal_MP.fDMCupomFiscal := fDMCupomFiscal;
+      fDMCadCupomFiscal_MP.prc_Abrir_CupomFiscal_MP(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+      fDMCadCupomFiscal_MP.fDMEstoque     := fDMEstoque;
+      fDMCadCupomFiscal_MP.prc_Le_Produto_Consumo;
+    end;}
+    fDmCupomFiscal.cdsCupom_Itens.Next;
+  end;
+  SMDBGrid1.EnableScroll;
+  {if fDmCupomFiscal.cdsCupomParametrosBAIXAR_CONSUMO.AsString = 'S' then
+  begin
+    fDMCadCupomFiscal_MP.prc_Le_mMaterial;
+    FreeAndNil(fDMCadCupomFiscal_MP);
+  end;}
+end;
+
+procedure TfCupomFiscal.Gravar_CReceber;
+begin
+  fDmCupomFiscal.cdsCupom_Parc.Edit;
+  fDmCupomFiscal.cdsCupom_ParcID_DUPLICATA.AsInteger := fDmCupomFiscal.Gravar_Duplicata('R','N',fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger,
+                                                                                        fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat,
+                                                                                        fDmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime,'');
+  fDmCupomFiscal.cdsCupom_Parc.Post;
+end;
+
+procedure TfCupomFiscal.prc_PosicionaFormaPgto(vId: Integer);
+begin
+  if not fDmCupomFiscal.cdsTipoCobranca.Active then
+    fDmCupomFiscal.cdsTipoCobranca.Open;
+  fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
+  fDmCupomFiscal.cdsTipoCobranca.FindKey([vID]);
+end;
+
 end.
+

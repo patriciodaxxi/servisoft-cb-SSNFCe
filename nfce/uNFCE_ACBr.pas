@@ -683,7 +683,6 @@ begin
     FreeAndNil(Form);
   end;
 
-
   Form := TForm.Create(Application);
   try
     Flag := True;
@@ -777,7 +776,7 @@ begin
   end;
   if vMSGNFCe <> EmptyStr then
     MessageDlg(vMSGNFCe,mtWarning,[mbOK],0);
-//  fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
+  fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
 
   fDMNFCe.ACBrNFe.NotasFiscais.Clear;
 
