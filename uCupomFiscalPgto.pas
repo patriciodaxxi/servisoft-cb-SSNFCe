@@ -734,6 +734,7 @@ begin
       ceCodCliente.Text := fDmCupomFiscal.qClienteCODIGO.AsString;
       ceCodClienteExit(Sender);
     end;
+    vCpfOk := True;
     fDmCupomFiscal.qCliente.Close;
   end;
 end;

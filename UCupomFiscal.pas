@@ -1163,7 +1163,10 @@ begin
     fDmCupomFiscal.cdsCupomFiscal.Close;
 
   pnlCaixaLivre.Visible := True;
-  DBEdit1.Update;
+
+  Edit1.SelectAll;
+  Edit1.Clear;
+  Edit1.SetFocus;
   ///////////////////////////////////////////////
 end;
 
