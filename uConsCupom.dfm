@@ -18,16 +18,16 @@ object frmConsCupom: TfrmConsCupom
   TextHeight = 13
   object pnlPrincipal: TPanel
     Left = 0
-    Top = 65
+    Top = 71
     Width = 987
-    Height = 376
+    Height = 370
     Align = alClient
     TabOrder = 0
     object GridCupom: TSMDBGrid
       Left = 1
       Top = 1
       Width = 985
-      Height = 374
+      Height = 368
       Align = alClient
       DataSource = dmCupomFiscal.dsCupom_Cons
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgMultiSelect]
@@ -500,13 +500,13 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 0
     Width = 987
-    Height = 65
+    Height = 71
     Align = alTop
     Color = clBtnShadow
     TabOrder = 1
     object Label1: TLabel
       Left = 10
-      Top = 41
+      Top = 34
       Width = 44
       Height = 13
       Alignment = taRightJustify
@@ -520,14 +520,14 @@ object frmConsCupom: TfrmConsCupom
     end
     object Label2: TLabel
       Left = 160
-      Top = 41
+      Top = 34
       Width = 25
       Height = 13
       Caption = 'Final:'
     end
     object Label20: TLabel
       Left = 11
-      Top = 18
+      Top = 12
       Width = 43
       Height = 13
       Alignment = taRightJustify
@@ -539,9 +539,23 @@ object frmConsCupom: TfrmConsCupom
       Font.Style = []
       ParentFont = False
     end
+    object Label3: TLabel
+      Left = 27
+      Top = 56
+      Width = 27
+      Height = 13
+      Alignment = taRightJustify
+      Caption = 'S'#233'rie:'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = []
+      ParentFont = False
+    end
     object dtInicial: TDateEdit
       Left = 57
-      Top = 33
+      Top = 26
       Width = 90
       Height = 21
       Ctl3D = False
@@ -551,7 +565,7 @@ object frmConsCupom: TfrmConsCupom
     end
     object dtFinal: TDateEdit
       Left = 188
-      Top = 33
+      Top = 26
       Width = 90
       Height = 21
       Ctl3D = False
@@ -633,7 +647,7 @@ object frmConsCupom: TfrmConsCupom
     end
     object ComboTerminal: TRxDBLookupCombo
       Left = 57
-      Top = 10
+      Top = 4
       Width = 221
       Height = 21
       DropDownCount = 8
@@ -647,7 +661,7 @@ object frmConsCupom: TfrmConsCupom
     end
     object cbNEnviados: TCheckBox
       Left = 288
-      Top = 10
+      Top = 4
       Width = 137
       Height = 17
       Caption = 'Somente N'#227'o Enviados'
@@ -807,7 +821,15 @@ object frmConsCupom: TfrmConsCupom
       ParentFont = False
       TabOrder = 6
       Transparent = True
+      Visible = False
       OnClick = btnReimprimirClick
+    end
+    object edtSerie: TEdit
+      Left = 57
+      Top = 48
+      Width = 89
+      Height = 21
+      TabOrder = 7
     end
   end
 end

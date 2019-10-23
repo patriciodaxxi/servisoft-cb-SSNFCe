@@ -22,6 +22,8 @@ type
     cbNEnviados: TCheckBox;
     btnEnviar: TNxButton;
     btnReimprimir: TNxButton;
+    edtSerie: TEdit;
+    Label3: TLabel;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -138,10 +140,13 @@ begin
   begin
     cbNEnviados.Checked := False;
     cbNEnviados.Enabled := False;
-    vComando := vComando + ' AND NFEPROTOCOLO IS NOT NULL AND NFEPROTOCOLO_CANCELADA IS NULL';
+    vComando := vComando + ' AND CF.NFEPROTOCOLO IS NOT NULL AND CF.NFEPROTOCOLO_CANCELADA IS NULL';
   end;
   if cbNEnviados.Checked then
-    vComando := vComando + ' AND NFECHAVEACESSO IS NULL';
+    vComando := vComando + ' AND CF.NFECHAVEACESSO IS NULL';
+  if edtSerie.Text <> EmptyStr then
+    vComando := vComando + ' AND CF.SERIE = ' + edtSerie.Text;
+  vComando := vComando + ' ORDER BY CF.HREMISSAO DESC';
   fDmCupomFiscal.sdsCupom_Cons.CommandText := vComando;
   fDmCupomFiscal.cdsCupom_Cons.Open;
 end;

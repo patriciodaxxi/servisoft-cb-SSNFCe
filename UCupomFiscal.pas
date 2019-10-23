@@ -524,6 +524,8 @@ begin
     begin
       ffrmConsCupom := TfrmConsCupom.Create(nil);
       ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+      ffrmConsCupom.btnReimprimir.Visible := True;
+      ffrmConsCupom.edtSerie.Text := vSerieCupom;
       try
         ffrmConsCupom.ShowModal;
       finally
