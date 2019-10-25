@@ -1,6 +1,6 @@
 object fMenu: TfMenu
-  Left = 306
-  Top = 73
+  Left = 206
+  Top = 71
   Width = 1000
   Height = 617
   Caption = 'Menu Principal'
@@ -25,7 +25,7 @@ object fMenu: TfMenu
     Left = 0
     Top = 0
     Width = 89
-    Height = 558
+    Height = 559
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -12
@@ -2554,6 +2554,10 @@ object fMenu: TfMenu
       object erminal1: TMenuItem
         Caption = 'Terminal'
         OnClick = erminal1Click
+      end
+      object ConfiguraoCertificado1: TMenuItem
+        Caption = 'Configura'#231#227'o Certificado'
+        OnClick = ConfiguraoCertificado1Click
       end
     end
     object Financeiro1: TMenuItem

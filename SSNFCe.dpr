@@ -94,7 +94,9 @@ uses
   uRelDanfe_NFCe in 'nfce\URelDanfe_NFCe.pas' {fRelDanfe_NFCe},
   uXMLNFCe4_00 in 'nfce\uXMLNFCe4_00.pas',
   uNFCE_ACBr in 'nfce\uNFCE_ACBr.pas' {fNFCE_ACBR},
-  uConsCupom in 'uConsCupom.pas' {frmConsCupom};
+  uConsCupom in 'uConsCupom.pas' {frmConsCupom},
+  UCadFilial_Certificado in '..\ssfacil\UCadFilial_Certificado.pas' {frmCadFilial_Certificado},
+  UDMCadFilial_Certificado in '..\ssfacil\UDMCadFilial_Certificado.pas' {DMFilial_Certificado: TDataModule};
 
 {$R *.res}
 

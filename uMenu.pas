@@ -57,6 +57,7 @@ type
     Ativas1: TMenuItem;
     N6: TMenuItem;
     btnRecebimento: TSpeedItem;
+    ConfiguraoCertificado1: TMenuItem;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure SpeedItem5Click(Sender: TObject);
@@ -84,6 +85,7 @@ type
     procedure Sair1Click(Sender: TObject);
     procedure erminal1Click(Sender: TObject);
     procedure btnRecebimentoClick(Sender: TObject);
+    procedure ConfiguraoCertificado1Click(Sender: TObject);
   private
     { Private declarations }
     fDmParametros: TDmParametros;
@@ -107,7 +109,7 @@ implementation
 
 uses DmdDatabase, uCupomFiscalC, uCupomParametros, LogProvider, uCadFechamento, AcbrEcf, uCupomTerminal, uUtilPadrao,
      uRelCartao, UCadFechamento_Sangria, UCadFechamento_Contagem, DateUtils, uPrevVendas, uCarnePgto, uCupomDevolucao,
-  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal;
+  DmdDatabase_NFeBD, uCarnePgtoC, UCupomFiscal, UCadFilial_Certificado;
 //  uImpFiscal_Bematech;
 //  UECF_DLLG32, DmdDatabase;
 //  , uImpFiscal_Daruma //DmdDatabase
@@ -663,5 +665,10 @@ end;
 
 //initialization
 //  RLConsts.SetVersion(3,72,'B');
+
+procedure TfMenu.ConfiguraoCertificado1Click(Sender: TObject);
+begin
+  OpenForm(TfrmCadFilial_Certificado,wsMaximized);
+end;
 
 end.
