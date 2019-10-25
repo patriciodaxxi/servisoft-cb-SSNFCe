@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RzTabs, Buttons, StdCtrls, UDMNFCe, uDmParametros, SHDocVw,
   uDmCupomFiscal, ACBrDFeUtil, pcnConversao, pcnConversaoNFe, ACBrPosPrinter,
-  SqlExpr, dbXPress, ACBrUtil, OleCtrls, DateUtils;
+  SqlExpr, dbXPress, ACBrUtil, OleCtrls, DateUtils, ACBrDevice;
 
 type
   tEnumAmbiente = (tpProducao = 1, tpHomologacao = 2);
@@ -862,7 +862,6 @@ begin
   fDMNFCe.ACBrNFeDANFeESCPOS.ViaConsumidor := True;
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeItens := True;
   fDMNFCe.ACBrNFeDANFeESCPOS.QuebraLinhaEmDetalhamentos := False;
-  fDMNFCe.ACBrPosPrinter.ControlePorta := True;
   if vModeloImpressora = 'DR700' then
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscDaruma;
   if vModeloImpressora = 'DR800' then
@@ -873,7 +872,19 @@ begin
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscPosEpson;
   if vModeloImpressora = 'ELGIN' then
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscPosEpson;
-  fDMNFCe.ACBrPosPrinter.Device.Porta := vPorta;
+
+  if vPorta <> 'USB' then
+  begin
+    fDMNFCe.ACBrPosPrinter.Device.Porta := vPorta;
+    fDMNFCe.ACBrPosPrinter.ControlePorta := True;
+  end
+  else
+  begin
+    fDMNFCe.ACBrPosPrinter.Device.Porta := ExtractFilePath(application.ExeName) + '\nfceOffline.txt';
+    fDMNFCe.ACBrPosPrinter.ControlePorta := False;
+    fDMNFCe.ACBrPosPrinter.Device.DeviceType := dtFile;
+  end;
+
   fDMNFCe.ACBrPosPrinter.Device.Baud := StrToInt(vVelocidade);
 
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeDescAcrescItem := True;
