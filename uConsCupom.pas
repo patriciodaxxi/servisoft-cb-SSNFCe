@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RxLookup, NxCollection, StdCtrls, Mask, ToolEdit, Grids,
-  DBGrids, SMDBGrid, uDmCupomFiscal, uUtilPadrao, uNFCE_ACBr;
+  DBGrids, SMDBGrid, uDmCupomFiscal, uUtilPadrao, uNFCE_ACBr, uConsCupomItens;
 
 type
   TfrmConsCupom = class(TForm)
@@ -29,6 +29,7 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnReimprimirClick(Sender: TObject);
+    procedure GridCupomDblClick(Sender: TObject);
   private
     { Private declarations }
     fNFCE_ACBr : TfNFCE_ACBR;
@@ -36,6 +37,7 @@ type
   public
     { Public declarations }
     fDmCupomFiscal: TDmCupomFiscal;
+    ffrmConsCupomItens : TfrmConsCupomItens;
     vCancelar : Boolean;
   end;
 
@@ -100,28 +102,43 @@ begin
   end
   else
   begin
-    fDmCupomFiscal.cdsCupom_Cons.First;
-    while not fDmCupomFiscal.cdsCupom_Cons.Eof do
-    begin
-      if GridCupom.SelectedRows.CurrentRowSelected then
+    try
+      if trim(fDMCupomFiscal.cdsCupomFiscalNFEPROTOCOLO.AsString) <> EmptyStr then
       begin
-        fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-        fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
-        fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
-        fNFCE_ACBr.chkGravarXml.Checked := True;
-        fDmCupomFiscal.cdsCupomFiscal.Close;
-        try
-          fNFCE_ACBr.btEnviarNovoClick(Sender);
-        except
-          on E : Exception do
-          begin
-            ShowMessage('Erro: ' + e.Message);
-          end;
-        end;
+        MessageDlg('*** Cupom já enviado!', mtInformation, [mbOk], 0);
+        exit;
       end;
-      fDmCupomFiscal.cdsCupom_Cons.Next;
+      NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
+      if MessageDlg('Tem certeza que deseja reenviar o Cupom Selecionado? ' ,mtConfirmation,[mbYes,mbNo],0) = mrNo then
+        Exit;
+      fDmCupomFiscal.cdsCupom_Cons.DisableControls;
+      fDmCupomFiscal.cdsCupom_Cons.First;
+      while not fDmCupomFiscal.cdsCupom_Cons.Eof do
+      begin
+        if GridCupom.SelectedRows.CurrentRowSelected then
+        begin
+          fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+          fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+          fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+          fNFCE_ACBr.chkGravarXml.Checked := True;
+          fNFCE_ACBr.Reenviar := True;
+          fDmCupomFiscal.cdsCupomFiscal.Close;
+          try
+            fNFCE_ACBr.btEnviarNovoClick(Sender);
+          except
+            on E : Exception do
+            begin
+              ShowMessage('Erro: ' + e.Message);
+            end;
+          end;
+          fNFCE_ACBr.Reenviar := False;
+        end;
+        fDmCupomFiscal.cdsCupom_Cons.Next;
+      end;
+      btnConsultarClick(Sender);
+    finally
+      fDmCupomFiscal.cdsCupom_Cons.EnableControls;
     end;
-    btnConsultarClick(Sender);
   end;
 end;
 
@@ -164,6 +181,17 @@ begin
       ShowMessage('Erro: ' + e.Message);
     end;
   end;
+end;
+
+procedure TfrmConsCupom.GridCupomDblClick(Sender: TObject);
+begin
+  if fDmCupomFiscal.cdsCupom_Cons.IsEmpty then
+    Exit;
+  fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+  ffrmConsCupomItens := TfrmConsCupomItens.Create(nil);
+  ffrmConsCupomItens.fDMCupomFiscal := fDmCupomFiscal;
+  ffrmConsCupomItens.ShowModal;
+  FreeAndNil(ffrmConsCupomItens);
 end;
 
 end.

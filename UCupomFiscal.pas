@@ -508,13 +508,8 @@ begin
       if MessageDlg('Deseja cancelar o cupom?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
         exit;
       fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
-//      fDmCupomFiscal.Excluir_Duplicata;
-//      fDmCupomFiscal.Excluir_ExtComissao;
-//      fDmCupomFiscal.prc_Excluir_Financeiro;
-//      fDmCupomFiscal.prc_Excluir_Movimento;
-//      fDmCupomFiscal.prcExcluir;
-      pnlCaixaLivre.Visible := True;
       fDmCupomFiscal.cdsCupomFiscal.Close;
+      pnlCaixaLivre.Visible := True;
     end;
   end;
 

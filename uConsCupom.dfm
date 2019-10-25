@@ -20,14 +20,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 71
     Width = 987
-    Height = 370
+    Height = 371
     Align = alClient
     TabOrder = 0
     object GridCupom: TSMDBGrid
       Left = 1
       Top = 1
       Width = 985
-      Height = 368
+      Height = 369
       Align = alClient
       DataSource = dmCupomFiscal.dsCupom_Cons
       Options = [dgTitles, dgIndicator, dgColumnResize, dgColLines, dgRowLines, dgTabs, dgMultiSelect]
@@ -37,6 +37,7 @@ object frmConsCupom: TfrmConsCupom
       TitleFont.Height = -11
       TitleFont.Name = 'MS Sans Serif'
       TitleFont.Style = []
+      OnDblClick = GridCupomDblClick
       Flat = False
       BandsFont.Charset = DEFAULT_CHARSET
       BandsFont.Color = clWindowText
@@ -94,6 +95,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -106,6 +108,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -118,6 +121,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -155,6 +159,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -167,6 +172,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -179,6 +185,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -191,6 +198,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -203,6 +211,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -215,6 +224,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -227,6 +237,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -239,6 +250,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -251,6 +263,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -263,6 +276,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -275,6 +289,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -300,6 +315,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -312,6 +328,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -324,6 +341,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -336,6 +354,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -348,6 +367,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -360,6 +380,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -372,6 +393,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -384,6 +406,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -396,6 +419,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -408,6 +432,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -420,6 +445,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -432,6 +458,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -444,6 +471,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -456,6 +484,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -468,6 +497,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -480,6 +510,7 @@ object frmConsCupom: TfrmConsCupom
           Title.Font.Height = -13
           Title.Font.Name = 'MS Sans Serif'
           Title.Font.Style = [fsBold]
+          Width = 64
           Visible = True
         end
         item
@@ -678,7 +709,7 @@ object frmConsCupom: TfrmConsCupom
     object btnEnviar: TNxButton
       Left = 440
       Top = 27
-      Width = 142
+      Width = 149
       Height = 30
       Caption = 'Enviar'
       Font.Charset = DEFAULT_CHARSET
@@ -752,7 +783,7 @@ object frmConsCupom: TfrmConsCupom
     object btnReimprimir: TNxButton
       Left = 592
       Top = 27
-      Width = 142
+      Width = 149
       Height = 30
       Caption = 'Reimprimir'
       Font.Charset = DEFAULT_CHARSET

@@ -44,6 +44,7 @@ type
       Shift: TShiftState);
     procedure btCancelarClick(Sender: TObject);
     procedure btImprimirClick(Sender: TObject);
+    function fnc_ReenviarCupom(Chave : string) : Boolean;
   private
     { Private declarations }
     vNomeArquivo, vNomeArqPdf: string;
@@ -55,6 +56,7 @@ type
     fDMNFCe: TDMNFCe;
     fdmCupomFiscal: TdmCupomFiscal;
     vID_Cupom_Novo: Integer;
+    Reenviar : Boolean;
     function fnc_Gerar_NFCe(ID: Integer): string;
     function fnc_Buscar_Finalidade: Integer;
     procedure prc_Reimprimir(ID : integer);
@@ -707,6 +709,32 @@ var
   Tentativa, RetornoStatus: Integer;
   Flag: Boolean;
 begin
+  if Reenviar then
+  begin
+    try
+      Form := TForm.Create(Application);
+      try
+        prc_Form_Aguarde(Form, '..Gerando Cupom..');
+        sXML := fnc_Gerar_NFCe(vID_Cupom_Novo);
+      finally
+        FreeAndNil(Form);
+      end;
+      chave := copy(fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID,
+                (length(fDMNFCe.ACBrNFe.NotasFiscais.Items[0].NFe.infNFe.ID) - 44) + 1, 44);
+      if fnc_ReenviarCupom(chave) then
+      begin
+        fDMNFCe.ACBrNFe.NotasFiscais.Clear;
+        Exit;
+      end;
+    except
+      on e: Exception do
+      begin
+        vMSGNFCe := 'Não foi possível enviar o NFCe!' + #13 + E.Message + #13 +
+          '  Clique para continuar!';
+      end;
+    end;
+  end;
+
   Form := TForm.Create(Application);
   try
     prc_Form_Aguarde(Form, '..Gerando Cupom..');
@@ -753,30 +781,7 @@ begin
 
   vMSGNFCe := '';
   try
-    {try
-      sds.SQLConnection := dmDatabase.scoDados;
-      sds.NoMetadata    := True;
-      sds.GetMetadata   := False;
-      sds.CommandText   := ' UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('CUPOMFISCAL');
-      Flag := False;
-      while not Flag do
-      begin
-        try
-          sds.Close;
-          sds.ExecSQL;
-          Flag := True;
-        except
-          on E: Exception do
-          begin
-            Flag := False;
-          end;
-        end;
-      end;
-    except
-      raise
-    end;}
     lbChaveAcesso.Caption := chave;
-
     Form := TForm.Create(Application);
     try
       prc_Form_Aguarde(Form, '..Enviando Cupom..');
@@ -803,7 +808,8 @@ begin
         fDMCupomFiscal.cdsCupomFiscalMOTIVO_DENEGADO.AsString
         + #13 + #13 + ' Verificar esta ocorrência, venda não realizada!'
     end
-    else if (RetornoStatus = 100) then
+    else
+    if (RetornoStatus = 100) then
     begin
       fdmCupomFiscal.Gravar_Envio_Nota(fDMNFCe.ACBrNFe.WebServices.Retorno.Recibo,
         fDMNFCe.ACBrNFe.WebServices.Retorno.Protocolo,
@@ -897,6 +903,7 @@ end;
 procedure TfNFCE_ACBR.FormCreate(Sender: TObject);
 begin
   fDMNFCe := TDMNFCe.Create(Self);
+  Reenviar := False;
 end;
 
 procedure TfNFCE_ACBR.FormClose(Sender: TObject; var Action: TCloseAction);
@@ -1075,6 +1082,48 @@ end;
 procedure TfNFCE_ACBR.btImprimirClick(Sender: TObject);
 begin
   prc_Reimprimir(vID_Cupom_Novo);
+end;
+
+function TfNFCE_ACBR.fnc_ReenviarCupom(Chave: string): Boolean;
+var
+  RetornoStatus : Integer;
+begin
+  Form := TForm.Create(Application);
+  try
+    Result := False;
+    prc_Form_Aguarde(Form, '..Reenviando Cupom..');
+    fDMNFCe.ACBrNFe.Consultar(chave);
+    RetornoStatus := fDMNFCe.ACBrNFe.WebServices.Consulta.cStat;
+    if (RetornoStatus = 613) or (RetornoStatus = 539) then
+    begin
+      if fDMNFCe.ACBrNFe.WebServices.Consulta.XMotivo <> '' then
+      begin
+        if pos('NF-e [', fDMNFCe.ACBrNFe.WebServices.Consulta.XMotivo) > 0 then
+        begin
+          Chave := Copy(fDMNFCe.ACBrNFe.WebServices.Consulta.XMotivo, pos('NF-e [', fDMNFCe.ACBrNFe.WebServices.Consulta.XMotivo), 200);
+          Chave := StringReplace(Chave, 'NF-e [', '', [rfReplaceAll, rfIgnoreCase]);
+          Chave := StringReplace(Chave, ']', '', [rfReplaceAll]);
+          if Chave <> '' then
+          begin
+            fDMNFCe.ACBrNFe.Consultar(chave);
+            RetornoStatus := fDMNFCe.ACBrNFe.WebServices.Consulta.cStat;
+            fdmCupomFiscal.Gravar_Envio_Nota('',
+            fDMNFCe.ACBrNFe.WebServices.consulta.Protocolo,
+            chave,
+            1,
+            fnc_Buscar_Finalidade,
+            RetornoStatus,
+            fDMNFCe.ACBrNFe.WebServices.Consulta.xMotivo);
+            Result := True;
+          end;
+        end;
+      end;
+    end;
+    Exit;
+  finally
+    FreeAndNil(Form);
+  end;
+
 end;
 
 end.
