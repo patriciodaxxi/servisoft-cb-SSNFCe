@@ -78,7 +78,7 @@ var
 begin
   if vCancelar then
   begin
-    if trim(fDMCupomFiscal.cdsCupomFiscalNFEPROTOCOLO_CANCELADA.AsString) <> EmptyStr then
+    if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO_CANCELADA.AsString) <> EmptyStr then
     begin
       MessageDlg('*** Cupom já cancelado!', mtInformation, [mbOk], 0);
       exit;
@@ -103,7 +103,7 @@ begin
   else
   begin
     try
-      if trim(fDMCupomFiscal.cdsCupomFiscalNFEPROTOCOLO.AsString) <> EmptyStr then
+      if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString) <> EmptyStr then
       begin
         MessageDlg('*** Cupom já enviado!', mtInformation, [mbOk], 0);
         exit;

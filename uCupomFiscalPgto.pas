@@ -722,6 +722,8 @@ begin
     begin
       ShowMessage('CPF/CNPJ inválido!');
       vCpfOk := False;
+      DBEdit5.SelectAll;
+      DBEdit5.SetFocus;
     end;
   if (vAux <> '') and (vAux <> '000.000.000-00') and (vAux <> '00.000.000/0000-00') then
   begin

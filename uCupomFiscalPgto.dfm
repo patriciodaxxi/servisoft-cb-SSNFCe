@@ -1,6 +1,6 @@
 object fCupomFiscalPgto: TfCupomFiscalPgto
-  Left = 380
-  Top = 51
+  Left = 269
+  Top = 33
   Width = 822
   Height = 697
   BorderIcons = [biSystemMenu]
@@ -22,7 +22,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
   TextHeight = 13
   object Panel1: TPanel
     Left = 0
-    Top = 617
+    Top = 618
     Width = 806
     Height = 41
     Align = alBottom
@@ -88,7 +88,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Left = 0
     Top = 0
     Width = 806
-    Height = 617
+    Height = 618
     ActivePage = TabSheet1
     ActivePageDefault = TabSheet1
     Align = alClient
@@ -101,12 +101,12 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Left = 0
         Top = 0
         Width = 802
-        Height = 594
+        Height = 595
         Align = alClient
         TabOrder = 0
         object Panel3: TPanel
           Left = 1
-          Top = 405
+          Top = 406
           Width = 800
           Height = 116
           Align = alBottom
@@ -582,9 +582,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             ParentFont = False
           end
           object Label1: TLabel
-            Left = 129
+            Left = 128
             Top = 16
-            Width = 209
+            Width = 210
             Height = 32
             Alignment = taRightJustify
             Caption = 'Valor Produtos:'
@@ -675,14 +675,14 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           Left = 1
           Top = 221
           Width = 800
-          Height = 184
+          Height = 185
           Align = alClient
           TabOrder = 2
           OnEnter = Panel7Enter
           object Label15: TLabel
-            Left = 223
+            Left = 219
             Top = 16
-            Width = 115
+            Width = 119
             Height = 48
             Alignment = taRightJustify
             Caption = 'Total:'
@@ -696,9 +696,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             ParentFont = False
           end
           object Label4: TLabel
-            Left = 22
+            Left = 19
             Top = 78
-            Width = 316
+            Width = 319
             Height = 48
             Alignment = taRightJustify
             Caption = 'Valor Recebido:'
@@ -710,9 +710,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             ParentFont = False
           end
           object Label5: TLabel
-            Left = 213
+            Left = 209
             Top = 140
-            Width = 125
+            Width = 129
             Height = 48
             Alignment = taRightJustify
             Caption = 'Troco:'
@@ -785,7 +785,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         end
         object pnlCanalVenda: TPanel
           Left = 1
-          Top = 558
+          Top = 559
           Width = 800
           Height = 35
           Align = alBottom
@@ -794,9 +794,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           ParentCtl3D = False
           TabOrder = 5
           object Label19: TLabel
-            Left = 37
+            Left = 36
             Top = 11
-            Width = 157
+            Width = 158
             Height = 23
             Alignment = taRightJustify
             Caption = 'Canal de Venda:'
@@ -829,7 +829,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         end
         object pnlVendedor: TPanel
           Left = 1
-          Top = 521
+          Top = 522
           Width = 800
           Height = 37
           Align = alBottom
@@ -838,9 +838,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           ParentCtl3D = False
           TabOrder = 4
           object Label11: TLabel
-            Left = 95
+            Left = 94
             Top = 12
-            Width = 99
+            Width = 100
             Height = 23
             Alignment = taRightJustify
             Caption = 'Vendedor:'
@@ -995,7 +995,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
         Left = 0
         Top = 39
         Width = 802
-        Height = 483
+        Height = 484
         Align = alClient
         Color = 12633514
         DataSource = dmCupomFiscal.dsCupom_Parc
@@ -1072,16 +1072,16 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       end
       object Panel8: TPanel
         Left = 0
-        Top = 522
+        Top = 523
         Width = 802
         Height = 72
         Align = alBottom
         TabOrder = 2
         OnEnter = Panel7Enter
         object Label18: TLabel
-          Left = 153
+          Left = 149
           Top = 16
-          Width = 115
+          Width = 119
           Height = 48
           Alignment = taRightJustify
           Caption = 'Total:'
