@@ -29,11 +29,8 @@ type
     DBEdit8: TDBEdit;
     ceCodCliente: TCurrencyEdit;
     Panel4: TPanel;
-    Label2: TLabel;
     Label10: TLabel;
-    RxDBLookupCombo3: TRxDBLookupCombo;
     Edit1: TEdit;
-    ceFormaPgto: TCurrencyEdit;
     cbNFCe: TComboBox;
     Panel6: TPanel;
     Label7: TLabel;
@@ -71,6 +68,10 @@ type
     pnlVendedor: TPanel;
     Label11: TLabel;
     ComboVendedor: TRxDBLookupCombo;
+    pnlFormaPagto: TPanel;
+    Label2: TLabel;
+    ceFormaPgto: TCurrencyEdit;
+    RxDBLookupCombo3: TRxDBLookupCombo;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBEdit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBEdit1Exit(Sender: TObject);
@@ -94,7 +95,6 @@ type
     procedure btnParcelasClick(Sender: TObject);
     procedure SMDBGrid1DblClick(Sender: TObject);
     procedure DBEdit4Exit(Sender: TObject);
-    procedure ceFormaPgtoExit(Sender: TObject);
     procedure ceFormaPgtoKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure RxDBLookupCombo3Change(Sender: TObject);
@@ -133,6 +133,7 @@ type
     procedure CurrencyEdit1Click(Sender: TObject);
     procedure ceJurosExit(Sender: TObject);
     procedure FormShortCut(var Msg: TWMKey; var Handled: Boolean);
+    procedure pnlFormaPagtoExit(Sender: TObject);
   private
     { Private declarations }
     vPercJuros, vVlrDesconto_Ant: Real;
@@ -867,31 +868,13 @@ begin
     CurrencyEdit1.Value := 0;
 end;
 
-procedure TfCupomFiscalPgto.ceFormaPgtoExit(Sender: TObject);
-begin
-  if ceFormaPgto.AsInteger > 0 then
-  begin
-    fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
-    if fDmCupomFiscal.cdsTipoCobranca.FindKey([ceFormaPgto.AsInteger]) then
-    begin
-      RxDBLookupCombo3.KeyValue := ceFormaPgto.AsInteger;
-      RxDBLookupCombo3Change(Sender);
-    end
-    else
-    begin
-      ShowMessage('Forma de pagamento não localizada!');
-      ceFormaPgto.SelectAll;
-    end;
-  end;
-end;
-
 procedure TfCupomFiscalPgto.ceFormaPgtoKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   if (Key = Vk_Return) then
   begin
-    ceFormaPgtoExit(Sender);
-    DBEdit1.SetFocus;
+//    ceFormaPgtoExit(Sender);
+//    DBEdit1.SetFocus;
   end;
 end;
 
@@ -1494,6 +1477,33 @@ begin
       Handled := True;
       btConfirmar.Click;
    end;
+end;
+
+procedure TfCupomFiscalPgto.pnlFormaPagtoExit(Sender: TObject);
+begin
+  if ceFormaPgto.AsInteger > 0 then
+  begin
+    fDmCupomFiscal.cdsTipoCobranca.IndexFieldNames := 'ID';
+    if fDmCupomFiscal.cdsTipoCobranca.FindKey([ceFormaPgto.AsInteger]) then
+    begin
+      RxDBLookupCombo3.KeyValue := ceFormaPgto.AsInteger;
+      RxDBLookupCombo3Change(Sender);
+    end
+    else
+    begin
+      ShowMessage('Forma de pagamento não localizada!');
+      ceFormaPgto.SelectAll;
+      ceFormaPgto.SetFocus;
+    end;
+  end
+  else
+  begin
+    ShowMessage('Forma de pagamento não informada!');
+    ceFormaPgto.SelectAll;
+    ceFormaPgto.SetFocus;
+  end;
+
+
 end;
 
 end.

@@ -314,20 +314,6 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
           Color = 11599792
           TabOrder = 0
           OnExit = Panel4Exit
-          object Label2: TLabel
-            Left = 61
-            Top = 17
-            Width = 181
-            Height = 23
-            Alignment = taRightJustify
-            Caption = 'Forma Pagamento:'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = clBlack
-            Font.Height = -19
-            Font.Name = 'Verdana'
-            Font.Style = []
-            ParentFont = False
-          end
           object Label10: TLabel
             Left = 184
             Top = 93
@@ -447,54 +433,14 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
               FFFFFFF2F2F2FFFFFFFFFFFFF2F2F2000000}
             OnClick = btnParcelasClick
           end
-          object RxDBLookupCombo3: TRxDBLookupCombo
-            Left = 326
-            Top = 8
-            Width = 401
-            Height = 32
-            DropDownCount = 15
-            DataField = 'ID_TIPOCOBRANCA'
-            DataSource = dmCupomFiscal.dsCupomFiscal
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 3683329
-            Font.Height = -19
-            Font.Name = 'MS Sans Serif'
-            Font.Style = []
-            LookupField = 'ID'
-            LookupDisplay = 'NOME'
-            LookupSource = dmCupomFiscal.dsTipoCobranca
-            ParentFont = False
-            TabOrder = 1
-            OnChange = RxDBLookupCombo3Change
-            OnEnter = RxDBLookupCombo3Enter
-            OnKeyDown = RxDBLookupCombo3KeyDown
-          end
           object Edit1: TEdit
             Left = 730
             Top = 94
             Width = 57
             Height = 21
             TabStop = False
-            TabOrder = 5
+            TabOrder = 3
             Visible = False
-          end
-          object ceFormaPgto: TCurrencyEdit
-            Left = 250
-            Top = 8
-            Width = 73
-            Height = 32
-            AutoSize = False
-            DecimalPlaces = 0
-            DisplayFormat = '0'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 3683329
-            Font.Height = -19
-            Font.Name = 'Verdana'
-            Font.Style = []
-            ParentFont = False
-            TabOrder = 0
-            OnExit = ceFormaPgtoExit
-            OnKeyDown = ceFormaPgtoKeyDown
           end
           object cbNFCe: TComboBox
             Left = 250
@@ -511,7 +457,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             ItemHeight = 24
             ItemIndex = 0
             ParentFont = False
-            TabOrder = 3
+            TabOrder = 1
             Text = 'SIM'
             Visible = False
             OnKeyDown = cbNFCeKeyDown
@@ -533,7 +479,7 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             Font.Style = []
             ParentFont = False
             ReadOnly = True
-            TabOrder = 4
+            TabOrder = 2
             Visible = False
             OnExit = ceJurosExit
           end
@@ -554,10 +500,74 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
             LookupDisplay = 'NOME'
             LookupSource = dmCupomFiscal.dsCondPgto
             ParentFont = False
-            TabOrder = 2
+            TabOrder = 0
             OnChange = RxDBLookupCombo2Change
             OnEnter = RxDBLookupCombo2Enter
             OnKeyDown = RxDBLookupCombo2KeyDown
+          end
+          object pnlFormaPagto: TPanel
+            Left = 1
+            Top = 1
+            Width = 798
+            Height = 43
+            Align = alTop
+            BevelOuter = bvNone
+            Color = 11599792
+            TabOrder = 4
+            OnExit = pnlFormaPagtoExit
+            object Label2: TLabel
+              Left = 61
+              Top = 17
+              Width = 181
+              Height = 23
+              Alignment = taRightJustify
+              Caption = 'Forma Pagamento:'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = clBlack
+              Font.Height = -19
+              Font.Name = 'Verdana'
+              Font.Style = []
+              ParentFont = False
+            end
+            object ceFormaPgto: TCurrencyEdit
+              Left = 250
+              Top = 8
+              Width = 73
+              Height = 32
+              AutoSize = False
+              DecimalPlaces = 0
+              DisplayFormat = '0'
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = 3683329
+              Font.Height = -19
+              Font.Name = 'Verdana'
+              Font.Style = []
+              ParentFont = False
+              TabOrder = 0
+              OnKeyDown = ceFormaPgtoKeyDown
+            end
+            object RxDBLookupCombo3: TRxDBLookupCombo
+              Left = 326
+              Top = 8
+              Width = 401
+              Height = 32
+              DropDownCount = 15
+              DataField = 'ID_TIPOCOBRANCA'
+              DataSource = dmCupomFiscal.dsCupomFiscal
+              Font.Charset = DEFAULT_CHARSET
+              Font.Color = 3683329
+              Font.Height = -19
+              Font.Name = 'MS Sans Serif'
+              Font.Style = []
+              LookupField = 'ID'
+              LookupDisplay = 'NOME'
+              LookupSource = dmCupomFiscal.dsTipoCobranca
+              ParentFont = False
+              TabOrder = 1
+              OnChange = RxDBLookupCombo3Change
+              OnEnter = RxDBLookupCombo3Enter
+              OnKeyDown = RxDBLookupCombo3KeyDown
+            end
           end
         end
         object Panel6: TPanel
