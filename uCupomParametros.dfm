@@ -1,8 +1,8 @@
 object fCupomParametros: TfCupomParametros
-  Left = 263
-  Top = 113
-  Width = 881
-  Height = 632
+  Left = -8
+  Top = -8
+  Width = 1382
+  Height = 744
   BorderIcons = [biSystemMenu, biMaximize]
   Caption = 'fCupomParametros'
   Color = clBtnFace
@@ -23,7 +23,7 @@ object fCupomParametros: TfCupomParametros
   object Panel3: TPanel
     Left = 0
     Top = 0
-    Width = 865
+    Width = 1366
     Height = 35
     Align = alTop
     Color = 8404992
@@ -79,8 +79,8 @@ object fCupomParametros: TfCupomParametros
   object PageControl1: TPageControl
     Left = 0
     Top = 35
-    Width = 865
-    Height = 558
+    Width = 1366
+    Height = 671
     ActivePage = TabSheet1
     Align = alClient
     TabOrder = 1
@@ -89,8 +89,8 @@ object fCupomParametros: TfCupomParametros
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 857
-        Height = 530
+        Width = 1358
+        Height = 643
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -786,8 +786,8 @@ object fCupomParametros: TfCupomParametros
         object GroupBox9: TGroupBox
           Left = 4
           Top = 420
-          Width = 841
-          Height = 85
+          Width = 421
+          Height = 88
           Caption = ' Configura'#231#227'o NFCe '
           TabOrder = 4
           object Label71: TLabel
@@ -834,6 +834,100 @@ object fCupomParametros: TfCupomParametros
             DataSource = dmCupomFiscal.dsCupomParametros
             PasswordChar = '*'
             TabOrder = 1
+          end
+        end
+        object GroupBox10: TGroupBox
+          Left = 426
+          Top = 420
+          Width = 419
+          Height = 88
+          Caption = ' Configura'#231#227'o NFCe  Novo'
+          TabOrder = 5
+          object Label78: TLabel
+            Left = 34
+            Top = 24
+            Width = 82
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Porta Impressora:'
+          end
+          object Label79: TLabel
+            Left = 82
+            Top = 45
+            Width = 34
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Bound:'
+          end
+          object Label80: TLabel
+            Left = 62
+            Top = 67
+            Width = 54
+            Height = 13
+            Alignment = taRightJustify
+            Caption = 'Impressora:'
+          end
+          object edtBound: TEdit
+            Left = 120
+            Top = 37
+            Width = 88
+            Height = 21
+            TabOrder = 0
+          end
+          object comboPorta: TRzComboBox
+            Left = 120
+            Top = 16
+            Width = 145
+            Height = 21
+            ItemHeight = 13
+            TabOrder = 1
+            Items.Strings = (
+              'COM1'
+              'COM2'
+              'COM3'
+              'COM4'
+              'COM5'
+              'COM6'
+              'COM7'
+              'COM8'
+              'COM9'
+              'USB')
+            Values.Strings = (
+              'COM1'
+              'COM2'
+              'COM3'
+              'COM4'
+              'COM5'
+              'COM6'
+              'COM7'
+              'COM8'
+              'COM9'
+              'USB')
+          end
+          object comboImpressora: TRzComboBox
+            Left = 120
+            Top = 59
+            Width = 145
+            Height = 21
+            ItemHeight = 13
+            TabOrder = 2
+            Items.Strings = (
+              'BEMATECH'
+              'DR700'
+              'DR800'
+              'ELGIN'
+              'EPSON')
+            Values.Strings = (
+              'COM1'
+              'COM2'
+              'COM3'
+              'COM4'
+              'COM5'
+              'COM6'
+              'COM7'
+              'COM8'
+              'COM9'
+              'USB')
           end
         end
       end
@@ -1901,8 +1995,8 @@ object fCupomParametros: TfCupomParametros
       object Panel2: TPanel
         Left = 0
         Top = 0
-        Width = 857
-        Height = 530
+        Width = 1358
+        Height = 643
         Align = alClient
         TabOrder = 0
         object Label15: TLabel

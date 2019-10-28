@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls, RxDBComb, Mask, DBCtrls,
   db, Buttons, ExtCtrls, uDmCupomFiscal, rsDBUtils, RxLookup, ComCtrls, IniFiles, uUtilPadrao, ToolEdit,uDmParametros,
-  Grids, DBGrids, StrUtils;
+  Grids, DBGrids, StrUtils, RzCmboBx;
 
 type
   TfCupomParametros = class(TForm)
@@ -185,6 +185,13 @@ type
     RxDBComboBox45: TRxDBComboBox;
     Label77: TLabel;
     edtSerieCupom: TEdit;
+    GroupBox10: TGroupBox;
+    Label78: TLabel;
+    Label79: TLabel;
+    Label80: TLabel;
+    edtBound: TEdit;
+    comboPorta: TRzComboBox;
+    comboImpressora: TRzComboBox;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);
@@ -271,6 +278,11 @@ begin
   DirectoryEdit3.Text := fDmCupomFiscal.cdsParametrosENDPDFNFCE.Value;
   PageControl1.ActivePageIndex := 0;
   TS_Numeracao.TabVisible := not TS_Numeracao.TabVisible;
+
+  comboPorta.Text             := lerIni('ACBR2','Porta');
+  comboImpressora.Text        := lerIni('ACBR2','Modelo');
+  edtBound.Text               := lerIni('ACBR2','Boud');
+
 end;
 
 procedure TfCupomParametros.FormClose(Sender: TObject;
@@ -403,6 +415,10 @@ begin
     fDmParametros.cdsSequencial.Post;
     fDmParametros.cdsSequencial.ApplyUpdates(0);
   end;
+  gravarIni('ACBR2','Porta',comboPorta.Text);
+  gravarIni('ACBR2','Boud',edtBound.Text);
+  gravarIni('ACBR2','Modelo',comboImpressora.Text);
+
   prcHabilita;
 end;
 

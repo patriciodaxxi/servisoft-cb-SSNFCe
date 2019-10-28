@@ -1,6 +1,6 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 72
-  Top = 49
+  Left = 26
+  Top = 9
   Width = 1292
   Height = 727
   ActiveControl = Edit1
