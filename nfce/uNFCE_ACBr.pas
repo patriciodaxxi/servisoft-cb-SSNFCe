@@ -1078,6 +1078,7 @@ begin
   vAnoMes := FormatFloat('0000', YearOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime)) +
              FormatFloat('00', MonthOf(fDMCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime));
   vNomeArquivo := fDMNFCe.ACBrNFe.Configuracoes.Arquivos.PathNFe + '\' + vAnoMes + '\' +fdmCupomFiscal.cdsCupomFiscalNFECHAVEACESSO.AsString + '-nfe.xml';
+  fDMNFCe.ACBrNFE.NotasFiscais.Clear;
   fDMNFCe.ACBrNFe.NotasFiscais.LoadFromFile(vNomeArquivo);
   fDMNFCe.ACBrNFE.NotasFiscais.Imprimir;
 end;
