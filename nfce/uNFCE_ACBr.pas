@@ -875,7 +875,10 @@ begin
   if vModeloImpressora = 'BEMATECH' then
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscBematech;
   if vModeloImpressora = 'EPSON' then
+  begin
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscPosEpson;
+    fDMNFCe.ACBrPosPrinter.ColunasFonteNormal := 42;
+  end;
   if vModeloImpressora = 'ELGIN' then
     fDMNFCe.ACBrPosPrinter.Modelo := ppEscPosEpson;
 
@@ -896,8 +899,8 @@ begin
   fDMNFCe.ACBrNFeDANFeESCPOS.ImprimeDescAcrescItem := True;
   fDMNFCe.ACBrNFe.Configuracoes.Arquivos.PathNFe :=
     fDMNFCe.qParametrosENDXMLNFCE.AsString;
-  fDMNFCe.ACBrPosPrinter.Desativar;
-  fDMNFCe.ACBrPosPrinter.Ativar;
+//  fDMNFCe.ACBrPosPrinter.Desativar;
+//  fDMNFCe.ACBrPosPrinter.Ativar;
 end;
 
 procedure TfNFCE_ACBR.FormCreate(Sender: TObject);
