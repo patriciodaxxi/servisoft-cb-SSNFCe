@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 165
-  Top = 18
+  Left = 223
+  Top = 15
   Height = 709
   Width = 1140
   object sdsCupomFiscal: TSQLDataSet
@@ -7299,6 +7299,25 @@ object dmCupomFiscal: TdmCupomFiscal
       end>
     SQLConnection = dmDatabase.scoDados
     Left = 425
+    Top = 600
+  end
+  object sds_prc_Grava_Estoque: TSQLDataSet
+    CommandText = 'PRC_GRAVAR_ESTOQUE'
+    CommandType = ctStoredProc
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftInteger
+        Name = 'ID_DOCUMENTO'
+        ParamType = ptInput
+      end
+      item
+        DataType = ftString
+        Name = 'TIPO'
+        ParamType = ptInput
+      end>
+    SQLConnection = dmDatabase.scoDados
+    Left = 473
     Top = 600
   end
 end

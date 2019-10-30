@@ -181,6 +181,7 @@ begin
       ShowMessage('Erro: ' + e.Message);
     end;
   end;
+  fDmCupomFiscal.cdsCupomFiscal.Close;
 end;
 
 procedure TfrmConsCupom.GridCupomDblClick(Sender: TObject);

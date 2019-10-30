@@ -37,6 +37,9 @@ type
     lbErro: TLabel;
     chkGravarXml: TCheckBox;
     btImprimir: TButton;
+    GroupBox3: TGroupBox;
+    btImpresaoPreVenda: TButton;
+    mmPreVenda: TMemo;
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -45,6 +48,7 @@ type
     procedure btCancelarClick(Sender: TObject);
     procedure btImprimirClick(Sender: TObject);
     function fnc_ReenviarCupom(Chave : string) : Boolean;
+    procedure btImpresaoPreVendaClick(Sender: TObject);
   private
     { Private declarations }
     vNomeArquivo, vNomeArqPdf: string;
@@ -60,6 +64,7 @@ type
     function fnc_Gerar_NFCe(ID: Integer): string;
     function fnc_Buscar_Finalidade: Integer;
     procedure prc_Reimprimir(ID : integer);
+    procedure prc_Impressao_PreVenda(ID : Integer);
 
     { Public declarations }
   end;
@@ -1128,6 +1133,140 @@ begin
     FreeAndNil(Form);
   end;
 
+end;
+
+procedure TfNFCE_ACBR.prc_Impressao_PreVenda(ID: Integer);
+var
+  vEndereco, vTexto, vTexto2 : String;
+  vCod, vProd, vQtd, vVlrUnit, vVlrTot, vVlrDesc: String;
+  i : Integer;
+begin
+  fdmCupomFiscal.prcLocalizar(ID);
+  fDMNFCe.prc_Abrir_Filial(fdmCupomFiscal.cdsCupomFiscalFILIAL.AsInteger);
+  if vModeloImpressora = 'DR700' then fDMNFCe.ACBrPosPrinter.Modelo := ppEscDaruma;
+  if vModeloImpressora = 'DR800' then fDMNFCe.ACBrPosPrinter.Modelo := ppEscDaruma;
+  if vModeloImpressora = 'ELGIN' then fDMNFCe.ACBrPosPrinter.Modelo := ppEscPosEpson;
+  if vModeloImpressora = 'BEMATECH' then fDMNFCe.ACBrPosPrinter.Modelo := ppEscBematech;
+  if vModeloImpressora = 'EPSON' then
+  begin
+    fDMNFCe.ACBrPosPrinter.Modelo := ppEscPosEpson;
+    fDMNFCe.ACBrPosPrinter.ColunasFonteNormal := 42;
+  end;
+  if vPorta <> 'USB' then
+  begin
+    fDMNFCe.ACBrPosPrinter.Device.Porta := vPorta;
+    fDMNFCe.ACBrPosPrinter.ControlePorta := True;
+  end
+  else
+  begin
+    fDMNFCe.ACBrPosPrinter.Device.Porta := ExtractFilePath(application.ExeName) + '\nfceOffline.txt';
+    fDMNFCe.ACBrPosPrinter.ControlePorta := False;
+    fDMNFCe.ACBrPosPrinter.Device.DeviceType := dtFile;
+  end;
+  fDMNFCe.ACBrPosPrinter.Device.Baud := StrToInt(vVelocidade);
+
+  fDMNFCe.ACBrPosPrinter.Desativar;
+
+  vEndereco := fdmCupomFiscal.cdsFilialENDERECO.AsString + ', ' + fdmCupomFiscal.cdsFilialNUM_END.AsString + ' - ' + fdmCupomFiscal.cdsFilialCOMPLEMENTO_END.AsString;
+
+  mmPreVenda.Lines.Add('</ce><e>'   + fdmCupomFiscal.cdsFilialNOME_INTERNO.AsString + '</e>');
+  mmPreVenda.Lines.Add('</fn></ce>' + vEndereco);
+
+  vTexto := 'FONE: ' + fdmCupomFiscal.cdsFilialFONE.AsString;
+  for i := 1 to 20 - Length(vTexto) do
+    vTexto := vTexto + ' ';
+  vTexto := vTexto + fdmCupomFiscal.cdsFilialCIDADE.AsString + ' ' + fdmCupomFiscal.cdsFilialUF.AsString;
+  mmPreVenda.Lines.Add('</fn></ce>' + vTexto);
+
+  mmPreVenda.Lines.Add('</fn></ce>' + fdmCupomFiscal.cdsFilialCNPJ_CPF.AsString);
+  mmPreVenda.Lines.Add('</fn>================================================');
+  vTexto := FormatDateTime('dd/mm/yyyy',fdmCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime) + ' ' +
+            FormatDateTime('hh:mm',fdmCupomFiscal.cdsCupomFiscalHREMISSAO.AsDateTime);
+  vTexto2 := 'NC: ' + vCod;
+  for i := 1 to 40 - Length(vTexto2 + vTexto) do
+    vTexto2 := ' ' + vTexto2;
+  mmPreVenda.Lines.Add('</ae>Data: ' + vTexto + vTexto2);
+
+  if fdmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC' then
+   vTexto := 'ORÇAMENTO'
+  else
+  if fdmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'PED' then
+   vTexto := 'PEDIDO'
+  else
+   vTexto := 'CUPOM DE VENDA';
+  mmPreVenda.Lines.Add('</ce><e>' + vTexto +  '</e>');
+
+  mmPreVenda.Lines.Add('</e></fn>');
+  mmPreVenda.Lines.Add('------------------------------------------------');
+  mmPreVenda.Lines.Add('CÓD  DESCRIÇÃO               QTD  VL.ITEM');
+  mmPreVenda.Lines.Add('------------------------------------------------');
+
+  fdmCupomFiscal.cdsCupom_Itens.First;
+  while not fdmCupomFiscal.cdsCupom_Itens.Eof do
+  begin
+
+    vCod := fdmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsString;
+    vProd := fdmCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString;
+    vQtd := fdmCupomFiscal.cdsCupom_ItensQTD.AsString;
+    vVlrUnit := fdmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsString;
+
+    vCod := Copy(vCod,Length(vCod)-4,4);
+    for i := 1 to 4 - Length(vCod) do
+      vCod := vCod + ' ';
+
+    vProd := Copy(vProd,1,21);
+    for i := 1 to 22 - Length(vProd) do
+      vProd := vProd + ' ';
+
+    for i := 1 to 5 - Length(vQtd) do
+      vQtd := ' ' + vQtd;
+
+    for i := 1 to 7 - Length(vVlrTot) do
+      vVlrTot := ' ' + vVlrTot;
+
+    vTexto := vCod + ' ' + vProd + ' ' + vQtd + ' ' + vVlrTot;
+    mmPreVenda.Lines.Add('</ad>'+ vTexto);
+    fdmCupomFiscal.cdsCupom_Itens.Next;
+  end;
+  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+  mmPreVenda.Lines.Add('</ae> Total: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat));
+  mmPreVenda.Lines.Add('</ae> Vlr Pago: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat));
+  mmPreVenda.Lines.Add('</ae> Troco: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat));
+
+  mmPreVenda.Lines.Add('</ad>'+ fdmCupomFiscal.cdsCupomFiscalFORMAPGTO.AsString);
+  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+
+  fdmCupomFiscal.cdsCupom_Parc.First;
+  while not fdmCupomFiscal.cdsCupom_Parc.Eof do
+  begin
+    vTexto := 'Parc. ' + fdmCupomFiscal.cdsCupom_ParcPARCELA.AsString + '  ' +
+              FormatDateTime('DD/MM/YYYY',fdmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime) + '  R$ ' +
+              FormatFloat('0.00',fdmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
+    if fdmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger = 0 then
+      vTexto := vTexto + ' (ENTR.)';
+    mmPreVenda.Lines.Add('</ad>'+ vTexto);
+    fdmCupomFiscal.cdsCupom_Parc.Next;
+  end;
+
+  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+  mmPreVenda.Lines.Add('</fn>Terminal:' + fdmCupomFiscal.cdsCupomFiscalTERMINAL_ID.AsString);
+  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+  mmPreVenda.Lines.Add('</fn>Obrigado, volte sempre!');
+  mmPreVenda.Lines.Add(' ');
+  mmPreVenda.Lines.Add(' ');
+  mmPreVenda.Lines.Add(' ');
+  mmPreVenda.Lines.Add('</corte_parcial>');
+
+  fDMNFCe.ACBrPosPrinter.Ativar;
+  fDMNFCe.ACBrPosPrinter.LinhasEntreCupons := 3;
+  fDMNFCe.ACBrPosPrinter.Imprimir(mmPreVenda.Lines.Text);
+  if vModeloImpressora = 'DR800' then sleep(100);
+  fDMNFCe.ACBrPosPrinter.Desativar;
+end;
+
+procedure TfNFCE_ACBR.btImpresaoPreVendaClick(Sender: TObject);
+begin
+  prc_Impressao_PreVenda(vID_Cupom_Novo);
 end;
 
 end.

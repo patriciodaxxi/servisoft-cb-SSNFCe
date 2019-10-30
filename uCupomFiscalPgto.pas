@@ -874,7 +874,7 @@ begin
   if (Key = Vk_Return) then
   begin
 //    ceFormaPgtoExit(Sender);
-//    DBEdit1.SetFocus;
+    DBEdit1.SetFocus;
   end;
 end;
 
@@ -1494,6 +1494,7 @@ begin
       ShowMessage('Forma de pagamento não localizada!');
       ceFormaPgto.SelectAll;
       ceFormaPgto.SetFocus;
+      Exit;
     end;
   end
   else
@@ -1501,8 +1502,9 @@ begin
     ShowMessage('Forma de pagamento não informada!');
     ceFormaPgto.SelectAll;
     ceFormaPgto.SetFocus;
+    Exit;
   end;
-
+  DBEdit1.SetFocus;
 
 end;
 

@@ -82,14 +82,14 @@ object fNFCE_ACBR: TfNFCE_ACBR
     Left = 0
     Top = 80
     Width = 963
-    Height = 403
+    Height = 404
     Align = alClient
     TabOrder = 1
     object RzPageControl1: TRzPageControl
       Left = 1
       Top = 1
       Width = 961
-      Height = 401
+      Height = 402
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
@@ -277,12 +277,49 @@ object fNFCE_ACBR: TfNFCE_ACBR
             OnClick = btCancelarClick
           end
         end
+        object GroupBox3: TGroupBox
+          Left = 0
+          Top = 120
+          Width = 957
+          Height = 72
+          Align = alTop
+          Caption = 'Prevenda'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 2
+          object btImpresaoPreVenda: TButton
+            Left = 42
+            Top = 14
+            Width = 89
+            Height = 50
+            Caption = 'Imprimir'
+            Font.Charset = DEFAULT_CHARSET
+            Font.Color = clBlue
+            Font.Height = -11
+            Font.Name = 'MS Sans Serif'
+            Font.Style = [fsBold]
+            ParentFont = False
+            TabOrder = 0
+            OnClick = btImpresaoPreVendaClick
+          end
+          object mmPreVenda: TMemo
+            Left = 136
+            Top = 16
+            Width = 97
+            Height = 49
+            TabOrder = 1
+          end
+        end
       end
     end
   end
   object pnlBotton: TPanel
     Left = 0
-    Top = 483
+    Top = 484
     Width = 963
     Height = 41
     Align = alBottom

@@ -1554,6 +1554,7 @@ type
     cdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
     sds_prc_Exluir_Cupom: TSQLDataSet;
     cdsFilialNFCEPRODUCAO: TStringField;
+    sds_prc_Grava_Estoque: TSQLDataSet;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1616,6 +1617,7 @@ type
     procedure prcInserir(vId, vClienteId: Integer);
     procedure prcExcluir;
     procedure prc_Excluir_Cupom_Fiscal(ID_Cupom : Integer);
+    procedure prc_Gravar_Estoque_Movimento(ID_Cupom : Integer; Tipo : string);
     procedure prcNumNaoFiscal;
     procedure prcLocalizar(vId: Integer);
     function Gravar_Duplicata(Tipo, TransfICMS: String; Parcela: Integer; Valor: Real; Data: TDateTime; Prazo: String = ''): Integer;
@@ -3444,6 +3446,15 @@ begin
   ServerIni := TIniFile.Create('c:\$Servisoft\Impressora.ini');
   result    := ServerIni.ReadString(Tabela,Campo,'');
   ServerIni.Free;
+end;
+
+procedure TdmCupomFiscal.prc_Gravar_Estoque_Movimento(ID_Cupom: Integer;
+  Tipo: string);
+begin
+  sds_prc_Grava_Estoque.Close;
+  sds_prc_Grava_Estoque.ParamByName('ID_DOCUMENTO').AsInteger := ID_Cupom;
+  sds_prc_Grava_Estoque.ParamByName('TIPO').AsString := Tipo;
+  sds_prc_Grava_Estoque.ExecSQL;
 end;
 
 end.

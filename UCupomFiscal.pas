@@ -245,6 +245,8 @@ begin
   fDmCupomFiscal.prc_Abrir_CondPgto;
   fDmCupomFiscal.cdsVendedor.Open;
 
+  vSerieCupom := fDmCupomFiscal.lerIni('IMPRESSORA', 'Serie');
+
   fDmEstoque := TDmEstoque.Create(Self);
   fDmMovimento := TdmMovimento.Create(Self);
 
@@ -484,7 +486,6 @@ begin
       Edit1.Clear;
       Exit;
     end;
-
     prc_EnterCodigo;
   end;
 end;
@@ -1126,8 +1127,13 @@ begin
                   fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
             end
             else
-              for i := 1 to vVias do
-                fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas')
+            begin
+//              for i := 1 to vVias do
+//              fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas')
+                fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+                fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+                fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
+            end;
           end;
         end
         else
@@ -1149,9 +1155,9 @@ begin
     fNFCE_ACBr.btEnviarNovoClick(Sender);
   finally
     //23/10/2019  Estoque e Movimento
-    {if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
-      prc_Controle_Gravar_Diversos(True, True)
-    else if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
+    if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
+      fDmCupomFiscal.prc_Gravar_Estoque_Movimento(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'CFI');
+   { else if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
       prc_Controle_Gravar_Diversos(False, False)
     else
       prc_Controle_Gravar_Diversos(False, True);}
@@ -1926,8 +1932,6 @@ begin
 
   fDmCupomFiscal.prcInserir(0, fDmCupomFiscal.vClienteID);
 
-  vSerieCupom := fDmCupomFiscal.lerIni('IMPRESSORA', 'Serie');
-
   if fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S' then
   begin
     fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'NFC';
@@ -2273,7 +2277,7 @@ begin
      Handled := True;
      btFinalizar.Click;
    end;
-end;   
+end;
 
 end.
 
