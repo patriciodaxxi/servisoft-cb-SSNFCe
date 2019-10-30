@@ -641,7 +641,7 @@ begin
       begin
         vAux := dmDatabase.ProximaSequencia('NUM_CNF',vFilial,IntToStr(fDmCupomFiscal.cdsCupomFiscalSERIE.AsInteger));
         fDmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsInteger := vAux;
-        fDmCupomFiscal.cdsCupomFiscalSERIE.Clear;
+        fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := fDmCupomFiscal.cdsCupomFiscalSERIE.AsString;
         fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
       end;
     end;

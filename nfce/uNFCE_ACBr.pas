@@ -1179,14 +1179,15 @@ begin
   mmPreVenda.Lines.Add('</fn></ce>' + vTexto);
 
   mmPreVenda.Lines.Add('</fn></ce>' + fdmCupomFiscal.cdsFilialCNPJ_CPF.AsString);
-  mmPreVenda.Lines.Add('</fn>================================================');
+  mmPreVenda.Lines.Add('</fn>==========================================');
   vTexto := FormatDateTime('dd/mm/yyyy',fdmCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime) + ' ' +
             FormatDateTime('hh:mm',fdmCupomFiscal.cdsCupomFiscalHREMISSAO.AsDateTime);
-  vTexto2 := 'NC: ' + vCod;
-  for i := 1 to 40 - Length(vTexto2 + vTexto) do
+  vTexto2 := 'NC: ' + fdmCupomFiscal.cdsCupomFiscalNUMCUPOM.AsString;
+  for i := 1 to 30 - Length(vTexto2 + vTexto) do
     vTexto2 := ' ' + vTexto2;
   mmPreVenda.Lines.Add('</ae>Data: ' + vTexto + vTexto2);
-
+  mmPreVenda.Lines.Add(' ');
+  mmPreVenda.Lines.Add(' ');
   if fdmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC' then
    vTexto := 'ORÇAMENTO'
   else
@@ -1194,22 +1195,20 @@ begin
    vTexto := 'PEDIDO'
   else
    vTexto := 'CUPOM DE VENDA';
-  mmPreVenda.Lines.Add('</ce><e>' + vTexto +  '</e>');
+  mmPreVenda.Lines.Add('</ce><e><s>' + vTexto +  '</e></s>');
 
-  mmPreVenda.Lines.Add('</e></fn>');
-  mmPreVenda.Lines.Add('------------------------------------------------');
+  mmPreVenda.Lines.Add(' ');
   mmPreVenda.Lines.Add('CÓD  DESCRIÇÃO               QTD  VL.ITEM');
-  mmPreVenda.Lines.Add('------------------------------------------------');
+  mmPreVenda.Lines.Add('------------------------------------------');
 
   fdmCupomFiscal.cdsCupom_Itens.First;
   while not fdmCupomFiscal.cdsCupom_Itens.Eof do
   begin
-
     vCod := fdmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsString;
     vProd := fdmCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString;
     vQtd := fdmCupomFiscal.cdsCupom_ItensQTD.AsString;
     vVlrUnit := fdmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsString;
-
+    vVlrTot := fdmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsString;
     vCod := Copy(vCod,Length(vCod)-4,4);
     for i := 1 to 4 - Length(vCod) do
       vCod := vCod + ' ';
@@ -1228,13 +1227,14 @@ begin
     mmPreVenda.Lines.Add('</ad>'+ vTexto);
     fdmCupomFiscal.cdsCupom_Itens.Next;
   end;
-  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
-  mmPreVenda.Lines.Add('</ae> Total: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsFloat));
-  mmPreVenda.Lines.Add('</ae> Vlr Pago: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat));
-  mmPreVenda.Lines.Add('</ae> Troco: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat));
+  mmPreVenda.Lines.Add('</fn>------------------------------------------');
+  mmPreVenda.Lines.Add('</ad> Total: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat));
+  mmPreVenda.Lines.Add('</ad> Vlr Pago: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_RECEBIDO.AsFloat));
+  mmPreVenda.Lines.Add('</ad> Troco: R$ ' + FormatFloat('##0.00',fdmCupomFiscal.cdsCupomFiscalVLR_TROCO.AsFloat));
 
-  mmPreVenda.Lines.Add('</ad>'+ fdmCupomFiscal.cdsCupomFiscalFORMAPGTO.AsString);
-  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+  mmPreVenda.Lines.Add('</fn>------------------------------------------');
+  mmPreVenda.Lines.Add('</ae>'+ fdmCupomFiscal.cdsCupomFiscalFORMAPGTO.AsString);
+  mmPreVenda.Lines.Add('</fn>------------------------------------------');
 
   fdmCupomFiscal.cdsCupom_Parc.First;
   while not fdmCupomFiscal.cdsCupom_Parc.Eof do
@@ -1244,13 +1244,13 @@ begin
               FormatFloat('0.00',fdmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
     if fdmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger = 0 then
       vTexto := vTexto + ' (ENTR.)';
-    mmPreVenda.Lines.Add('</ad>'+ vTexto);
+    mmPreVenda.Lines.Add('</ae>'+ vTexto);
     fdmCupomFiscal.cdsCupom_Parc.Next;
   end;
 
-  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+  mmPreVenda.Lines.Add('</fn>------------------------------------------');
   mmPreVenda.Lines.Add('</fn>Terminal:' + fdmCupomFiscal.cdsCupomFiscalTERMINAL_ID.AsString);
-  mmPreVenda.Lines.Add('</fn>------------------------------------------------');
+  mmPreVenda.Lines.Add('</fn>------------------------------------------');
   mmPreVenda.Lines.Add('</fn>Obrigado, volte sempre!');
   mmPreVenda.Lines.Add(' ');
   mmPreVenda.Lines.Add(' ');

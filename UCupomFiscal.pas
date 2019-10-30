@@ -1124,15 +1124,20 @@ begin
             begin
               if (MessageDLg('Deseja imprimir o cupom?', mtConfirmation, [mbyes, mbNo], 0) = mrYes) then
                 for i := 1 to vVias do
-                  fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas');
+                begin
+                  fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+                  fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+                  fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
+                end;
             end
             else
             begin
-//              for i := 1 to vVias do
-//              fDmCupomFiscal.ChamaNaoFiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger, 'modCanvas')
+              for i := 1 to vVias do
+              begin
                 fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
                 fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
                 fNFCE_ACBr.btImpresaoPreVendaClick(Sender);
+              end;
             end;
           end;
         end
@@ -1148,11 +1153,15 @@ begin
     fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
   end;
   try
-    fDmCupomFiscal.mPedidoAux.EmptyDataSet;
-    fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-    fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
-    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
-    fNFCE_ACBr.btEnviarNovoClick(Sender);
+    if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') then
+    begin
+      fDmCupomFiscal.mPedidoAux.EmptyDataSet;
+      fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+      fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
+      fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString, 1) - 1;
+      fNFCE_ACBr.btEnviarNovoClick(Sender);
+    end;
+
   finally
     //23/10/2019  Estoque e Movimento
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
@@ -1170,10 +1179,6 @@ begin
     Edit1.Clear;
     Edit1.SetFocus;
   end;
-
-
-
-  ///////////////////////////////////////////////
 end;
 
 procedure TfCupomFiscal.CurrencyEdit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1954,6 +1959,7 @@ begin
         begin
           fDmCupomFiscal.prcNumNaoFiscal;
           fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
+          fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := vSerieCupom;
           if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
             fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
         end;
@@ -1961,6 +1967,7 @@ begin
         begin
           fDmCupomFiscal.prcNumNaoFiscal;
           fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
+          fDmCupomFiscal.cdsCupomFiscalSERIE.AsString := vSerieCupom;
           if fDmCupomFiscal.cdsCupomParametrosCAIXA_NUMERA_COMANDA.AsString = 'S' then
             fDmCupomFiscal.cdsCupomFiscalNUM_CARTAO.AsInteger := fDmCupomFiscal.fnc_IncrementaCartao(vTerminal);
         end;
