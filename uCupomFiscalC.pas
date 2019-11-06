@@ -905,18 +905,13 @@ begin
   begin
     vEdicao := False;
     fCupomFiscal.Panel2.Enabled := False;
-    fCupomFiscal.Panel3.Enabled := False;
     fCupomFiscal.Panel4.Enabled := False;
     fCupomFiscal.PnlParcial.Enabled := False;
     fCupomFiscal.Panel5.Visible  := True;
-    fCupomFiscal.Label10.Visible := True;
     fCupomFiscal.DBEdit5.Visible := True;
     if fDmCupomFiscal.cdsCupomFiscalNFECHAVEACESSO.AsString <> '' then
       fCupomFiscal.DBEdit4.ReadOnly := True;
-    fCupomFiscal.Panel6.Enabled := False;
     fCupomFiscal.Panel7.Enabled := False;
-    fCupomFiscal.Panel8.Enabled := False;
-    fCupomFiscal.Panel9.Enabled := False;
     fCupomFiscal.SMDBGrid2.Visible  := True;
     fCupomFiscal.SMDBGrid2.ReadOnly := True;
   end

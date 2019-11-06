@@ -97,7 +97,9 @@ uses
   uConsCupom in 'uConsCupom.pas' {frmConsCupom},
   UCadFilial_Certificado in '..\ssfacil\UCadFilial_Certificado.pas' {frmCadFilial_Certificado},
   UDMCadFilial_Certificado in '..\ssfacil\UDMCadFilial_Certificado.pas' {DMFilial_Certificado: TDataModule},
-  uConsCupomItens in 'uConsCupomItens.pas' {frmConsCupomItens};
+  uConsCupomItens in 'uConsCupomItens.pas' {frmConsCupomItens},
+  TelaPrecoAlterado in 'TelaPrecoAlterado.pas' {FormTelaPrecoAlterado},
+  uConsultaRapidaProduto in 'uConsultaRapidaProduto.pas' {frmConsultaRapidaProduto};
 
 {$R *.res}
 

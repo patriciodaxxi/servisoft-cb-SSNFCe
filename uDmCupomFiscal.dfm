@@ -1,8 +1,8 @@
 object dmCupomFiscal: TdmCupomFiscal
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 223
-  Top = 15
+  Left = 135
+  Top = 12
   Height = 709
   Width = 1140
   object sdsCupomFiscal: TSQLDataSet
@@ -1526,174 +1526,22 @@ object dmCupomFiscal: TdmCupomFiscal
     GetMetadata = False
     CommandText = 
       'SELECT P.ID, ID_CLIENTE_CONSUMIDOR, IMPRESSORA_FISCAL, QUITAR_AV' +
-      'ISTA_AUT, ARREDONDAR_5, ID_CONTA_FECHAMENTO, TIPO_LEI_TRANSPAREN' +
-      'CIA, USA_NFCE, APLICARDESCONTONOICMS, APLICARDESCONTONOIPI, ENDX' +
-      'MLNFCE, ENDPDFNFCE, IMP_PERC_TRIB_DADOS_ADIC, IMP_NFE_REF_PROD, ' +
-      'LEI_TRANSPARENCIA_TEXTO_ITEM, IMP_TIPO_TRIBUTOS_ITENS, IMP_TIPO_' +
-      'TRIBUTOS, LEI_TRANSPARENCIA_IMP_ITEM, IMP_PERC_TRIB_ITENS, CONTR' +
-      'OLAR_ESTOQUE_SAIDA, SENHA_LIBERA_ESTOQUE, ALERTA_VLR_ATRASO, USA' +
-      '_LIMITE_CREDITO, SENHA_CREDITO, USA_VENDEDOR, GRAVAR_CONSUMO_NOT' +
-      'A,'#13#10'EMPRESA_SUCATA, EMPRESA_AMBIENTES, EMPRESA_NAVALHA, CONTROLA' +
-      'R_PEDIDO_LIBERACAO, USA_PEDIDO_FUT, UNIDADE_PECA, PERMITE_QTDMAI' +
-      'OR_PEDIDO'#13#10'FROM PARAMETROS P'#13#10#13#10
+      'ISTA_AUT,'#13#10'ARREDONDAR_5, ID_CONTA_FECHAMENTO, TIPO_LEI_TRANSPARE' +
+      'NCIA, USA_NFCE,'#13#10'APLICARDESCONTONOICMS, APLICARDESCONTONOIPI, EN' +
+      'DXMLNFCE, ENDPDFNFCE,'#13#10'IMP_PERC_TRIB_DADOS_ADIC, IMP_NFE_REF_PRO' +
+      'D, LEI_TRANSPARENCIA_TEXTO_ITEM,'#13#10'IMP_TIPO_TRIBUTOS_ITENS, IMP_T' +
+      'IPO_TRIBUTOS, LEI_TRANSPARENCIA_IMP_ITEM,'#13#10'IMP_PERC_TRIB_ITENS, ' +
+      'CONTROLAR_ESTOQUE_SAIDA, SENHA_LIBERA_ESTOQUE,'#13#10'ALERTA_VLR_ATRAS' +
+      'O, USA_LIMITE_CREDITO, SENHA_CREDITO, USA_VENDEDOR,'#13#10'GRAVAR_CONS' +
+      'UMO_NOTA, EMPRESA_SUCATA, EMPRESA_AMBIENTES, EMPRESA_NAVALHA,'#13#10'C' +
+      'ONTROLAR_PEDIDO_LIBERACAO, USA_PEDIDO_FUT, UNIDADE_PECA, PERMITE' +
+      '_QTDMAIOR_PEDIDO,'#13#10'p.informar_cor_material, p.informar_cor_prod,' +
+      ' p.usa_grade'#13#10'FROM PARAMETROS P'#13#10#13#10
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
     Left = 232
     Top = 56
-    object sdsParametrosID: TIntegerField
-      FieldName = 'ID'
-      Required = True
-    end
-    object sdsParametrosID_CLIENTE_CONSUMIDOR: TIntegerField
-      FieldName = 'ID_CLIENTE_CONSUMIDOR'
-    end
-    object sdsParametrosIMPRESSORA_FISCAL: TStringField
-      FieldName = 'IMPRESSORA_FISCAL'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosQUITAR_AVISTA_AUT: TStringField
-      FieldName = 'QUITAR_AVISTA_AUT'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosARREDONDAR_5: TStringField
-      FieldName = 'ARREDONDAR_5'
-      Size = 1
-    end
-    object sdsParametrosID_CONTA_FECHAMENTO: TIntegerField
-      FieldName = 'ID_CONTA_FECHAMENTO'
-    end
-    object sdsParametrosTIPO_LEI_TRANSPARENCIA: TStringField
-      FieldName = 'TIPO_LEI_TRANSPARENCIA'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosUSA_NFCE: TStringField
-      FieldName = 'USA_NFCE'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosAPLICARDESCONTONOICMS: TStringField
-      FieldName = 'APLICARDESCONTONOICMS'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosAPLICARDESCONTONOIPI: TStringField
-      FieldName = 'APLICARDESCONTONOIPI'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosENDXMLNFCE: TStringField
-      FieldName = 'ENDXMLNFCE'
-      Size = 250
-    end
-    object sdsParametrosENDPDFNFCE: TStringField
-      FieldName = 'ENDPDFNFCE'
-      Size = 250
-    end
-    object sdsParametrosIMP_PERC_TRIB_DADOS_ADIC: TStringField
-      FieldName = 'IMP_PERC_TRIB_DADOS_ADIC'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosIMP_NFE_REF_PROD: TStringField
-      FieldName = 'IMP_NFE_REF_PROD'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosLEI_TRANSPARENCIA_TEXTO_ITEM: TStringField
-      FieldName = 'LEI_TRANSPARENCIA_TEXTO_ITEM'
-      Size = 150
-    end
-    object sdsParametrosIMP_TIPO_TRIBUTOS_ITENS: TStringField
-      FieldName = 'IMP_TIPO_TRIBUTOS_ITENS'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosIMP_TIPO_TRIBUTOS: TStringField
-      FieldName = 'IMP_TIPO_TRIBUTOS'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosLEI_TRANSPARENCIA_IMP_ITEM: TStringField
-      FieldName = 'LEI_TRANSPARENCIA_IMP_ITEM'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosIMP_PERC_TRIB_ITENS: TStringField
-      FieldName = 'IMP_PERC_TRIB_ITENS'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosCONTROLAR_ESTOQUE_SAIDA: TStringField
-      FieldName = 'CONTROLAR_ESTOQUE_SAIDA'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosSENHA_LIBERA_ESTOQUE: TStringField
-      FieldName = 'SENHA_LIBERA_ESTOQUE'
-      Size = 10
-    end
-    object sdsParametrosALERTA_VLR_ATRASO: TStringField
-      FieldName = 'ALERTA_VLR_ATRASO'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosUSA_LIMITE_CREDITO: TStringField
-      FieldName = 'USA_LIMITE_CREDITO'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosSENHA_CREDITO: TStringField
-      FieldName = 'SENHA_CREDITO'
-      Size = 15
-    end
-    object sdsParametrosUSA_VENDEDOR: TStringField
-      FieldName = 'USA_VENDEDOR'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosGRAVAR_CONSUMO_NOTA: TStringField
-      FieldName = 'GRAVAR_CONSUMO_NOTA'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosEMPRESA_SUCATA: TStringField
-      FieldName = 'EMPRESA_SUCATA'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosEMPRESA_AMBIENTES: TStringField
-      FieldName = 'EMPRESA_AMBIENTES'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosEMPRESA_NAVALHA: TStringField
-      FieldName = 'EMPRESA_NAVALHA'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosCONTROLAR_PEDIDO_LIBERACAO: TStringField
-      FieldName = 'CONTROLAR_PEDIDO_LIBERACAO'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosUSA_PEDIDO_FUT: TStringField
-      FieldName = 'USA_PEDIDO_FUT'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsParametrosUNIDADE_PECA: TStringField
-      FieldName = 'UNIDADE_PECA'
-      Size = 6
-    end
-    object sdsParametrosPERMITE_QTDMAIOR_PEDIDO: TStringField
-      FieldName = 'PERMITE_QTDMAIOR_PEDIDO'
-      FixedChar = True
-      Size = 1
-    end
   end
   object dspParametros: TDataSetProvider
     DataSet = sdsParametros
@@ -1857,6 +1705,21 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsParametrosPERMITE_QTDMAIOR_PEDIDO: TStringField
       FieldName = 'PERMITE_QTDMAIOR_PEDIDO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsParametrosINFORMAR_COR_MATERIAL: TStringField
+      FieldName = 'INFORMAR_COR_MATERIAL'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsParametrosINFORMAR_COR_PROD: TStringField
+      FieldName = 'INFORMAR_COR_PROD'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsParametrosUSA_GRADE: TStringField
+      FieldName = 'USA_GRADE'
       FixedChar = True
       Size = 1
     end
@@ -2187,101 +2050,6 @@ object dmCupomFiscal: TdmCupomFiscal
     SQLConnection = dmDatabase.scoDados
     Left = 232
     Top = 392
-    object sdsEstoqueMovID: TIntegerField
-      FieldName = 'ID'
-      Required = True
-    end
-    object sdsEstoqueMovFILIAL: TIntegerField
-      FieldName = 'FILIAL'
-    end
-    object sdsEstoqueMovID_PRODUTO: TIntegerField
-      FieldName = 'ID_PRODUTO'
-    end
-    object sdsEstoqueMovID_COR: TIntegerField
-      FieldName = 'ID_COR'
-    end
-    object sdsEstoqueMovDTMOVIMENTO: TDateField
-      FieldName = 'DTMOVIMENTO'
-    end
-    object sdsEstoqueMovTIPO_ES: TStringField
-      FieldName = 'TIPO_ES'
-      FixedChar = True
-      Size = 1
-    end
-    object sdsEstoqueMovTIPO_MOV: TStringField
-      FieldName = 'TIPO_MOV'
-      Size = 5
-    end
-    object sdsEstoqueMovNUMNOTA: TIntegerField
-      FieldName = 'NUMNOTA'
-    end
-    object sdsEstoqueMovID_PESSOA: TIntegerField
-      FieldName = 'ID_PESSOA'
-    end
-    object sdsEstoqueMovVLR_UNITARIO: TFloatField
-      FieldName = 'VLR_UNITARIO'
-    end
-    object sdsEstoqueMovQTD: TFloatField
-      FieldName = 'QTD'
-    end
-    object sdsEstoqueMovPERC_ICMS: TFloatField
-      FieldName = 'PERC_ICMS'
-    end
-    object sdsEstoqueMovPERC_IPI: TFloatField
-      FieldName = 'PERC_IPI'
-    end
-    object sdsEstoqueMovVLR_DESCONTO: TFloatField
-      FieldName = 'VLR_DESCONTO'
-    end
-    object sdsEstoqueMovUNIDADE: TStringField
-      FieldName = 'UNIDADE'
-      Size = 3
-    end
-    object sdsEstoqueMovQTD2: TFloatField
-      FieldName = 'QTD2'
-    end
-    object sdsEstoqueMovTAMANHO: TStringField
-      FieldName = 'TAMANHO'
-      Size = 10
-    end
-    object sdsEstoqueMovPERC_TRIBUTACAO: TFloatField
-      FieldName = 'PERC_TRIBUTACAO'
-    end
-    object sdsEstoqueMovVLR_FRETE: TFloatField
-      FieldName = 'VLR_FRETE'
-    end
-    object sdsEstoqueMovID_CFOP: TIntegerField
-      FieldName = 'ID_CFOP'
-    end
-    object sdsEstoqueMovID_NOTA: TIntegerField
-      FieldName = 'ID_NOTA'
-    end
-    object sdsEstoqueMovSERIE: TStringField
-      FieldName = 'SERIE'
-      Size = 3
-    end
-    object sdsEstoqueMovUNIDADE_ORIG: TStringField
-      FieldName = 'UNIDADE_ORIG'
-      Size = 6
-    end
-    object sdsEstoqueMovVLR_UNITARIOORIG: TFloatField
-      FieldName = 'VLR_UNITARIOORIG'
-    end
-    object sdsEstoqueMovQTD_ORIG: TFloatField
-      FieldName = 'QTD_ORIG'
-    end
-    object sdsEstoqueMovVLR_DESCONTOORIG: TFloatField
-      FieldName = 'VLR_DESCONTOORIG'
-    end
-    object sdsEstoqueMovMERCADO: TStringField
-      FieldName = 'MERCADO'
-      Size = 1
-    end
-    object sdsEstoqueMovGERAR_CUSTO: TStringField
-      FieldName = 'GERAR_CUSTO'
-      FixedChar = True
-      Size = 1
-    end
   end
   object dspEstoqueMov: TDataSetProvider
     DataSet = sdsEstoqueMov
@@ -2989,6 +2757,16 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosUSA_CBARRA_INT: TStringField
+      FieldName = 'USA_CBARRA_INT'
+      FixedChar = True
+      Size = 1
+    end
+    object sdsCupomParametrosUSA_PRECO_REVENDA: TStringField
+      FieldName = 'USA_PRECO_REVENDA'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -3268,6 +3046,16 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField
       FieldName = 'UTILIZA_IMP_ACBR2'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosUSA_CBARRA_INT: TStringField
+      FieldName = 'USA_CBARRA_INT'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosUSA_PRECO_REVENDA: TStringField
+      FieldName = 'USA_PRECO_REVENDA'
       FixedChar = True
       Size = 1
     end
@@ -7319,5 +7107,49 @@ object dmCupomFiscal: TdmCupomFiscal
     SQLConnection = dmDatabase.scoDados
     Left = 473
     Top = 600
+  end
+  object qCBarra_Int: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'COD_BARRA'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'select c.*, comb.nome nome_combinacao'
+      'from cbarra_int c'
+      'left join combinacao comb'
+      'on c.id_cor = comb.id'
+      'where C.COD_BARRA = :COD_BARRA'
+      '')
+    SQLConnection = dmDatabase.scoDados
+    Left = 915
+    Top = 540
+    object qCBarra_IntID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object qCBarra_IntCOD_BARRA: TStringField
+      FieldName = 'COD_BARRA'
+      Size = 13
+    end
+    object qCBarra_IntID_PRODUTO: TIntegerField
+      FieldName = 'ID_PRODUTO'
+    end
+    object qCBarra_IntID_COR: TIntegerField
+      FieldName = 'ID_COR'
+    end
+    object qCBarra_IntTAMANHO: TStringField
+      FieldName = 'TAMANHO'
+      Size = 10
+    end
+    object qCBarra_IntSEQUENCIA: TIntegerField
+      FieldName = 'SEQUENCIA'
+    end
+    object qCBarra_IntNOME_COMBINACAO: TStringField
+      FieldName = 'NOME_COMBINACAO'
+      Size = 60
+    end
   end
 end

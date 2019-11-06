@@ -244,7 +244,7 @@ begin
   ffCupomFiscal2.Edit1Enter(ffCupomFiscal2);
   ffCupomFiscal2.Edit1.Text          := fDMCupomFiscal.cdsPedidoID_PRODUTO.AsString;
   ffCupomFiscal2.Edit1Exit(ffCupomFiscal2);
-  ffCupomFiscal2.CurrencyEdit2.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoVLR_UNITARIO.AsFloat));
+  ffCupomFiscal2.vVlrItem := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoVLR_UNITARIO.AsFloat));
   ffCupomFiscal2.CurrencyEdit1Exit(ffCupomFiscal2);
   ffCupomFiscal2.CurrencyEdit6.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoPERC_DESCONTO.AsFloat));
   ffCupomFiscal2.CurrencyEdit4.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoVLR_DESCONTO.AsFloat + fDMCupomFiscal.cdsPedidoVLR_DESCONTORATEIO.AsFloat));
@@ -330,7 +330,7 @@ begin
   ffCupomFiscal2.vNum_Pedido   := fDMCupomFiscal.cdsPedidoNUM_PEDIDO.AsInteger;
 
   ffCupomFiscal2.vPedidoSelecionado := True;
-  ffCupomFiscal2.btConfirmarItClick(ffCupomFiscal2);
+  ffCupomFiscal2.prc_ConfirmaItem;
   if fDMCupomFiscal.cdsCupom_Itens.State in [dsEdit,dsInsert] then
     fDMCupomFiscal.cdsCupom_Itens.Post;
   ffCupomFiscal2.vPedidoSelecionado := False;

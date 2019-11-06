@@ -166,7 +166,6 @@ begin
     MessageDlg('*** Sacola não está com os produtos cadastrados!', mtError, [mbOk], 0);
     exit;
   end;
-  ffCupomFiscal2.Label5.Caption := 'teste';
   ffCupomFiscal2.vSacolaSelecionada := True;
   vVlrSacola    := CurrencyEdit2.Value;
   vVlrCalculado := fnc_Calcular_Preco;
@@ -408,10 +407,10 @@ begin
   ffCupomFiscal2.Edit1Enter(ffCupomFiscal2);
   ffCupomFiscal2.Edit1.Text := mConsumoID_Material.AsString;
   ffCupomFiscal2.Edit1Exit(ffCupomFiscal2);
-  ffCupomFiscal2.CurrencyEdit2.Value := StrToFloat(FormatFloat('0.0000',mConsumoVlr_Unitario_Nota.AsFloat));
+  ffCupomFiscal2.vVlrItem := StrToFloat(FormatFloat('0.0000',mConsumoVlr_Unitario_Nota.AsFloat));
   ffCupomFiscal2.CurrencyEdit1Exit(ffCupomFiscal2);
 
-  ffCupomFiscal2.btConfirmarItClick(ffCupomFiscal2);
+  ffCupomFiscal2.prc_ConfirmaItem;
 
   if fDMCupomFiscal.cdsCupom_Itens.State in [dsEdit,dsInsert] then
     fDMCupomFiscal.cdsCupom_Itens.Post;

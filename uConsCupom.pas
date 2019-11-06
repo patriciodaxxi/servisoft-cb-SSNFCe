@@ -5,31 +5,60 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RxLookup, NxCollection, StdCtrls, Mask, ToolEdit, Grids,
-  DBGrids, SMDBGrid, uDmCupomFiscal, uUtilPadrao, uNFCE_ACBr, uConsCupomItens;
+  DBGrids, SMDBGrid, uDmCupomFiscal, uUtilPadrao, uNFCE_ACBr, uConsCupomItens,
+  cxStyles, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
+  dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxCustomData,
+  cxGraphics, cxFilter, cxData, cxDataStorage, cxEdit, DB, cxDBData,
+  cxLookAndFeels, cxGrid, cxGridCustomTableView, cxGridTableView,
+  cxGridDBTableView, cxGridLevel, cxClasses, cxControls, cxGridCustomView,
+  AdvPanel;
 
 type
   TfrmConsCupom = class(TForm)
     pnlPrincipal: TPanel;
-    pnlTop: TPanel;
-    GridCupom: TSMDBGrid;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1Level1: TcxGridLevel;
+    cxGrid1: TcxGrid;
+    cxGrid1DBTableView1NUMCUPOM: TcxGridDBColumn;
+    cxGrid1DBTableView1DTEMISSAO: TcxGridDBColumn;
+    cxGrid1DBTableView1VLR_TOTAL: TcxGridDBColumn;
+    cxGrid1DBTableView1CANCELADO: TcxGridDBColumn;
+    cxGrid1DBTableView1CPF: TcxGridDBColumn;
+    cxGrid1DBTableView1NFECHAVEACESSO: TcxGridDBColumn;
+    cxGrid1DBTableView1NFEPROTOCOLO: TcxGridDBColumn;
+    cxGrid1DBTableView1NFERECIBO: TcxGridDBColumn;
+    cxGrid1DBTableView1SERIE: TcxGridDBColumn;
+    cxGrid1DBTableView1CLIENTE_NOME: TcxGridDBColumn;
+    cxGrid1DBTableView1HREMISSAO: TcxGridDBColumn;
+    cxGridViewRepository1: TcxGridViewRepository;
+    cxLookAndFeelController1: TcxLookAndFeelController;
+    cxStyleRepository1: TcxStyleRepository;
+    cxStyle1: TcxStyle;
+    AdvPanel1: TAdvPanel;
     Label1: TLabel;
-    dtInicial: TDateEdit;
     Label2: TLabel;
+    Label20: TLabel;
+    Label3: TLabel;
+    dtInicial: TDateEdit;
     dtFinal: TDateEdit;
     btnConsultar: TNxButton;
-    Label20: TLabel;
     ComboTerminal: TRxDBLookupCombo;
     cbNEnviados: TCheckBox;
     btnEnviar: TNxButton;
     btnReimprimir: TNxButton;
     edtSerie: TEdit;
-    Label3: TLabel;
+    AdvPanelStyler1: TAdvPanelStyler;
+    cxGrid1DBTableView1ID: TcxGridDBColumn;
     procedure FormShow(Sender: TObject);
     procedure btnConsultarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure btnEnviarClick(Sender: TObject);
     procedure btnReimprimirClick(Sender: TObject);
     procedure GridCupomDblClick(Sender: TObject);
+    procedure cxGrid1DBTableView1CellDblClick(
+      Sender: TcxCustomGridTableView;
+      ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+      AShift: TShiftState; var AHandled: Boolean);
   private
     { Private declarations }
     fNFCE_ACBr : TfNFCE_ACBR;
@@ -75,6 +104,7 @@ end;
 procedure TfrmConsCupom.btnEnviarClick(Sender: TObject);
 var
   NumCupom : String;
+  i, Selecionado : integer;
 begin
   if vCancelar then
   begin
@@ -113,12 +143,12 @@ begin
         Exit;
       fDmCupomFiscal.cdsCupom_Cons.DisableControls;
       fDmCupomFiscal.cdsCupom_Cons.First;
-      while not fDmCupomFiscal.cdsCupom_Cons.Eof do
+      //não trocar o indice 0 na grid
+
+      for i:=0 to cxGrid1DBTableView1.Controller.SelectedRowCount - 1 do
       begin
-        if GridCupom.SelectedRows.CurrentRowSelected then
-        begin
           fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
-          fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+          fNFCE_ACBr.vID_Cupom_Novo := cxGrid1DBTableView1.Controller.SelectedRows[i].Values[0];
           fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
           fNFCE_ACBr.chkGravarXml.Checked := True;
           fNFCE_ACBr.Reenviar := True;
@@ -132,9 +162,30 @@ begin
             end;
           end;
           fNFCE_ACBr.Reenviar := False;
-        end;
-        fDmCupomFiscal.cdsCupom_Cons.Next;
       end;
+
+//      while not fDmCupomFiscal.cdsCupom_Cons.Eof do
+//      begin
+//        if cxGrid1DBTableView1.Columns[0].Selected then
+//        begin
+//          fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+//          fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+//          fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+//          fNFCE_ACBr.chkGravarXml.Checked := True;
+//          fNFCE_ACBr.Reenviar := True;
+//          fDmCupomFiscal.cdsCupomFiscal.Close;
+//          try
+//            fNFCE_ACBr.btEnviarNovoClick(Sender);
+//          except
+//            on E : Exception do
+//            begin
+//              ShowMessage('Erro: ' + e.Message);
+//            end;
+//          end;
+//          fNFCE_ACBr.Reenviar := False;
+//        end;
+//        fDmCupomFiscal.cdsCupom_Cons.Next;
+//      end;
       btnConsultarClick(Sender);
     finally
       fDmCupomFiscal.cdsCupom_Cons.EnableControls;
@@ -193,6 +244,21 @@ begin
   ffrmConsCupomItens.fDMCupomFiscal := fDmCupomFiscal;
   ffrmConsCupomItens.ShowModal;
   FreeAndNil(ffrmConsCupomItens);
+end;
+
+procedure TfrmConsCupom.cxGrid1DBTableView1CellDblClick(
+  Sender: TcxCustomGridTableView;
+  ACellViewInfo: TcxGridTableDataCellViewInfo; AButton: TMouseButton;
+  AShift: TShiftState; var AHandled: Boolean);
+begin
+  if fDmCupomFiscal.cdsCupom_Cons.IsEmpty then
+    Exit;
+  fDmCupomFiscal.prcLocalizar(fDmCupomFiscal.cdsCupom_ConsID.AsInteger);
+  ffrmConsCupomItens := TfrmConsCupomItens.Create(nil);
+  ffrmConsCupomItens.fDMCupomFiscal := fDmCupomFiscal;
+  ffrmConsCupomItens.ShowModal;
+  FreeAndNil(ffrmConsCupomItens);
+
 end;
 
 end.

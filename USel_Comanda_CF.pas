@@ -153,9 +153,8 @@ begin
     fCupomFiscal.Edit1Exit(Sender);
     fCupomFiscal.CurrencyEdit1.Value := fDmCupomFiscal.mCupomItensQTD.AsFloat;
     fCupomFiscal.CurrencyEdit1Exit(Sender);
-    fCupomFiscal.CurrencyEdit2.Value := fDmCupomFiscal.mCupomItensVLR_UNIT.AsCurrency;
-    fCupomFiscal.CurrencyEdit2Exit(Sender);
-    fCupomFiscal.btConfirmarItClick(Sender);
+    fCupomFiscal.vVlrItem := fDmCupomFiscal.mCupomItensVLR_UNIT.AsCurrency;
+    fCupomFiscal.prc_ConfirmaItem;
     fDmCupomFiscal.mCupomItens.Delete;
   end;
 
