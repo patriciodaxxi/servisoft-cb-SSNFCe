@@ -667,7 +667,7 @@ begin
         if Trim(fDmCupomFiscal.cdsCupomParametrosUSA_CBARRA_INT.AsString) = 'S' then
         begin
           fDmCupomFiscal.qCBarra_Int.Close;
-          fDmCupomFiscal.qCBarra_Int.ParamByName('COD_BARRA').AsString := Edit1.Text;
+          fDmCupomFiscal.qCBarra_Int.ParamByName('COD_BARRA').AsString := copy(Edit1.Text,1,12);
           fDmCupomFiscal.qCBarra_Int.Open;
           if fDmCupomFiscal.qCBarra_Int.IsEmpty then
           begin
