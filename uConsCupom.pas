@@ -6,12 +6,18 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RxLookup, NxCollection, StdCtrls, Mask, ToolEdit, Grids,
   DBGrids, SMDBGrid, uDmCupomFiscal, uUtilPadrao, uNFCE_ACBr, uConsCupomItens,
-  cxStyles, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
+  cxStyles, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins, rsDBUtils,
   dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxCustomData,
   cxGraphics, cxFilter, cxData, cxDataStorage, cxEdit, DB, cxDBData,
   cxLookAndFeels, cxGrid, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGridLevel, cxClasses, cxControls, cxGridCustomView,
-  AdvPanel;
+  AdvPanel, dxSkinBlack, dxSkinCaramel, dxSkinCoffee, dxSkinDarkRoom,
+  dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans, dxSkiniMaginary,
+  dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky, dxSkinMcSkin,
+  dxSkinOffice2007Black, dxSkinOffice2007Green, dxSkinOffice2007Pink,
+  dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp, dxSkinSilver,
+  dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
 
 type
   TfrmConsCupom = class(TForm)
@@ -81,6 +87,8 @@ implementation
 procedure TfrmConsCupom.FormShow(Sender: TObject);
 begin
   fNFCE_ACBr := TfNFCE_ACBR.Create(nil);
+  oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+
   fDmCupomFiscal.cdsTerminal.Open;
   dtInicial.Date := Date;
   dtFinal.Date := Date;

@@ -10,7 +10,9 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
+  KeyPreview = True
   OldCreateOrder = False
+  OnKeyDown = FormKeyDown
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -18,7 +20,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 150
     Top = 0
     Width = 1066
-    Height = 594
+    Height = 593
     Align = alClient
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -408,7 +410,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 0
     Top = 0
     Width = 150
-    Height = 594
+    Height = 593
     Align = alLeft
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -421,7 +423,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 1216
     Top = 0
     Width = 150
-    Height = 594
+    Height = 593
     Align = alRight
     BevelInner = bvNone
     BevelOuter = bvNone

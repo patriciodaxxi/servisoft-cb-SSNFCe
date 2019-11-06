@@ -15,7 +15,13 @@ uses
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, dxSkinsCore, dxSkinMoneyTwins,
   dxSkinscxPCPainter, cxLookAndFeels, dxSkinBlue, dxSkinOffice2007Blue,
-  dxSkinSeven, dxGDIPlusClasses;
+  dxSkinSeven, dxGDIPlusClasses, dxSkinBlack, dxSkinCaramel, dxSkinCoffee,
+  dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
+  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
+  dxSkinMcSkin, dxSkinOffice2007Black, dxSkinOffice2007Green,
+  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp,
+  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
+  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
 
 type
   TfCupomFiscal = class(TForm)
@@ -1335,7 +1341,7 @@ begin
     begin
       ffrmConsultaRapidaCupom := TfrmConsultaRapidaProduto.Create(nil);
       try
-        ffrmConsultaRapidaCupom.edtDescricao.Text := Edit1.Text;
+        ffrmConsultaRapidaCupom.edtDescricao.Text := UpperCase(Edit1.Text);
         ffrmConsultaRapidaCupom.fdmCupomFiscal := fDmCupomFiscal;
         ffrmConsultaRapidaCupom.ShowModal;
         if ffrmConsultaRapidaCupom.ModalResult = mrOK then
@@ -2181,7 +2187,7 @@ begin
       fDmCupomFiscal.cdsCupom_ItensNUM_PEDIDO.AsInteger := vNum_Pedido;
     end;
 
-    pnlDescricaoProduto.Text := fDmCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString;
+    pnlDescricaoProduto.Text := fDmCupomFiscal.cdsCupom_ItensNOME_PRODUTO.AsString;
     pnlDescricaoProduto.Update;
 
     fDmCupomFiscal.cdsCupom_Itens.Post;

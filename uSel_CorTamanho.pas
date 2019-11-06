@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, uDmCupomFiscal,
-  NxCollection, ExtCtrls, RxLookup, StdCtrls, FMTBcd, DB, DBClient, Provider, SqlExpr;
+  NxCollection, ExtCtrls, RxLookup, StdCtrls, FMTBcd, DB, DBClient, Provider, SqlExpr, rsDBUtils;
 
 type
   TfSel_CorTamanho = class(TForm)
@@ -55,6 +55,8 @@ end;
 
 procedure TfSel_CorTamanho.FormShow(Sender: TObject);
 begin
+  oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+
   fdmCupomFiscal.cdsCombinacao.Close;
   fdmCupomFiscal.sdsCombinacao.ParamByName('P1').AsInteger := vProd;
   fdmCupomFiscal.cdsCombinacao.Open;

@@ -3,7 +3,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
   Top = 148
   Width = 979
   Height = 563
-  Caption = 'n'
+  Caption = 'Envia NFCe'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -15,6 +15,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
   OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel

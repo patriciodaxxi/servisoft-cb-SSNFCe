@@ -6,7 +6,7 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, ExtCtrls, RzTabs, Buttons, StdCtrls, UDMNFCe, uDmParametros, SHDocVw,
   uDmCupomFiscal, ACBrDFeUtil, pcnConversao, pcnConversaoNFe, ACBrPosPrinter,
-  SqlExpr, dbXPress, ACBrUtil, OleCtrls, DateUtils, ACBrDevice;
+  SqlExpr, dbXPress, ACBrUtil, OleCtrls, DateUtils, ACBrDevice, rsDBUtils;
 
 type
   tEnumAmbiente = (tpProducao = 1, tpHomologacao = 2);
@@ -49,6 +49,7 @@ type
     procedure btImprimirClick(Sender: TObject);
     function fnc_ReenviarCupom(Chave : string) : Boolean;
     procedure btImpresaoPreVendaClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
     vNomeArquivo, vNomeArqPdf: string;
@@ -1167,6 +1168,7 @@ begin
 
   fDMNFCe.ACBrPosPrinter.Desativar;
 
+  mmPreVenda.Clear;
   vEndereco := fdmCupomFiscal.cdsFilialENDERECO.AsString + ', ' + fdmCupomFiscal.cdsFilialNUM_END.AsString + ' - ' + fdmCupomFiscal.cdsFilialCOMPLEMENTO_END.AsString;
 
   mmPreVenda.Lines.Add('</ce><e>'   + fdmCupomFiscal.cdsFilialNOME_INTERNO.AsString + '</e>');
@@ -1205,10 +1207,10 @@ begin
   while not fdmCupomFiscal.cdsCupom_Itens.Eof do
   begin
     vCod := fdmCupomFiscal.cdsCupom_ItensID_PRODUTO.AsString;
-    vProd := fdmCupomFiscal.cdsCupom_ItensNOMEPRODUTO.AsString;
+    vProd := fdmCupomFiscal.cdsCupom_ItensNOME_PRODUTO.AsString;
     vQtd := fdmCupomFiscal.cdsCupom_ItensQTD.AsString;
     vVlrUnit := fdmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsString;
-    vVlrTot := fdmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsString;
+    vVlrTot := FormatFloat('##0.00',fdmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat);
     vCod := Copy(vCod,Length(vCod)-4,4);
     for i := 1 to 4 - Length(vCod) do
       vCod := vCod + ' ';
@@ -1267,6 +1269,11 @@ end;
 procedure TfNFCE_ACBR.btImpresaoPreVendaClick(Sender: TObject);
 begin
   prc_Impressao_PreVenda(vID_Cupom_Novo);
+end;
+
+procedure TfNFCE_ACBR.FormShow(Sender: TObject);
+begin
+  oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 end;
 
 end.

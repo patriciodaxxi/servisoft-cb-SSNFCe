@@ -192,6 +192,10 @@ type
     edtBound: TEdit;
     comboPorta: TRzComboBox;
     comboImpressora: TRzComboBox;
+    Label81: TLabel;
+    comboRevenda: TRxDBComboBox;
+    Label82: TLabel;
+    RxDBComboBox46: TRxDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);

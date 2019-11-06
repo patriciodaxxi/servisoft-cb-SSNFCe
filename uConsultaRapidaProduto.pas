@@ -5,7 +5,7 @@ interface
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, RXCtrls, ExtCtrls, AdvPanel, Grids, DBGrids, SMDBGrid, RxLookup,
-  StdCtrls, DB, uDmCupomFiscal;
+  StdCtrls, DB, uDmCupomFiscal, rsDBUtils;
 
 type
   TfrmConsultaRapidaProduto = class(TForm)
@@ -29,6 +29,8 @@ type
     procedure edtDescricaoKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure gridProdutoDblClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     procedure MakeRounded(Control: TWinControl);
@@ -67,6 +69,8 @@ end;
 
 procedure TfrmConsultaRapidaProduto.FormShow(Sender: TObject);
 begin
+  oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
+
   pnlCabecalho.BorderStyle := bsNone;
   MakeRounded(pnlCabecalho);
   pnlPrincipal.BorderStyle := bsNone;
@@ -85,7 +89,7 @@ begin
   filtro := fDmCupomFiscal.ctProduto;
   fDmCupomFiscal.cdsProduto.Close;
   if edtDescricao.Text <> EmptyStr then
-    filtro := filtro + ' AND NOME LIKE ' + '''%' + edtDescricao.Text + '%''';
+    filtro := filtro + ' AND NOME LIKE ' + '''' + edtDescricao.Text + '%''';
   if edtReferencia.Text <> EmptyStr then
     filtro := filtro + ' AND REFERENCIA LIKE' + '''%' + edtReferencia.Text + '%''';
   if edtCodigoBarra.Text <> EmptyStr then
@@ -119,6 +123,13 @@ begin
     ModalResult := mrOk;
   end;
 
+end;
+
+procedure TfrmConsultaRapidaProduto.FormKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN then
+    gridProdutoDblClick(sender);
 end;
 
 end.

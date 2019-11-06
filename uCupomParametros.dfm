@@ -1,6 +1,6 @@
 object fCupomParametros: TfCupomParametros
-  Left = -8
-  Top = -8
+  Left = 32
+  Top = 4
   Width = 1382
   Height = 744
   BorderIcons = [biSystemMenu, biMaximize]
@@ -80,8 +80,8 @@ object fCupomParametros: TfCupomParametros
     Left = 0
     Top = 35
     Width = 1366
-    Height = 671
-    ActivePage = TabSheet1
+    Height = 670
+    ActivePage = TabSheet4
     Align = alClient
     TabOrder = 1
     object TabSheet1: TTabSheet
@@ -90,7 +90,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 1358
-        Height = 643
+        Height = 642
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -1073,11 +1073,27 @@ object fCupomParametros: TfCupomParametros
         end
         object Label69: TLabel
           Left = 572
-          Top = 108
+          Top = 130
           Width = 96
           Height = 13
           Alignment = taRightJustify
           Caption = 'Juros Parcelamento:'
+        end
+        object Label81: TLabel
+          Left = 573
+          Top = 86
+          Width = 95
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Usa Pre'#231'o revenda:'
+        end
+        object Label82: TLabel
+          Left = 557
+          Top = 108
+          Width = 111
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Usa Cod. Barra Interno:'
         end
         object RxDBLookupCombo3: TRxDBLookupCombo
           Left = 246
@@ -1342,12 +1358,48 @@ object fCupomParametros: TfCupomParametros
         end
         object DBEdit12: TDBEdit
           Left = 670
-          Top = 100
+          Top = 122
           Width = 67
           Height = 21
           DataField = 'JUROS_MES'
           DataSource = dmCupomFiscal.dsCupomParametros
           TabOrder = 8
+        end
+        object comboRevenda: TRxDBComboBox
+          Left = 670
+          Top = 78
+          Width = 67
+          Height = 21
+          Style = csDropDownList
+          DataField = 'USA_PRECO_REVENDA'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          EnableValues = True
+          ItemHeight = 13
+          Items.Strings = (
+            'N'#195'O'
+            'SIM')
+          TabOrder = 17
+          Values.Strings = (
+            'N'
+            'S')
+        end
+        object RxDBComboBox46: TRxDBComboBox
+          Left = 670
+          Top = 100
+          Width = 67
+          Height = 21
+          Style = csDropDownList
+          DataField = 'USA_CBARRA_INT'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          EnableValues = True
+          ItemHeight = 13
+          Items.Strings = (
+            'N'#195'O'
+            'SIM')
+          TabOrder = 18
+          Values.Strings = (
+            'N'
+            'S')
         end
       end
       object GroupBox2: TGroupBox
@@ -1996,7 +2048,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 1358
-        Height = 643
+        Height = 642
         Align = alClient
         TabOrder = 0
         object Label15: TLabel
@@ -2152,7 +2204,6 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
-              Width = 64
               Visible = True
             end>
         end

@@ -69,6 +69,10 @@ type
     cdsCupomParametrosANIVERSARIO_PERIODO: TStringField;
     sdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
     cdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField;
+    sdsCupomParametrosUSA_CBARRA_INT: TStringField;
+    sdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
+    cdsCupomParametrosUSA_CBARRA_INT: TStringField;
+    cdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

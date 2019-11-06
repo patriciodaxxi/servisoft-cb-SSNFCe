@@ -134,6 +134,16 @@ object dmParametros: TdmParametros
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosUSA_CBARRA_INT: TStringField
+      FieldName = 'USA_CBARRA_INT'
+      FixedChar = True
+      Size = 1
+    end
+    object sdsCupomParametrosUSA_PRECO_REVENDA: TStringField
+      FieldName = 'USA_PRECO_REVENDA'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -207,6 +217,16 @@ object dmParametros: TdmParametros
     end
     object cdsCupomParametrosUTILIZA_IMP_ACBR2: TStringField
       FieldName = 'UTILIZA_IMP_ACBR2'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosUSA_CBARRA_INT: TStringField
+      FieldName = 'USA_CBARRA_INT'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosUSA_PRECO_REVENDA: TStringField
+      FieldName = 'USA_PRECO_REVENDA'
       FixedChar = True
       Size = 1
     end
