@@ -144,6 +144,11 @@ object dmParametros: TdmParametros
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosGERAR_CRECEBER: TStringField
+      FieldName = 'GERAR_CRECEBER'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -227,6 +232,11 @@ object dmParametros: TdmParametros
     end
     object cdsCupomParametrosUSA_PRECO_REVENDA: TStringField
       FieldName = 'USA_PRECO_REVENDA'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosGERAR_CRECEBER: TStringField
+      FieldName = 'GERAR_CRECEBER'
       FixedChar = True
       Size = 1
     end

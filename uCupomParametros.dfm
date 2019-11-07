@@ -1095,6 +1095,14 @@ object fCupomParametros: TfCupomParametros
           Alignment = taRightJustify
           Caption = 'Usa Cod. Barra Interno:'
         end
+        object Label83: TLabel
+          Left = 582
+          Top = 152
+          Width = 86
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Gerar C. Receber:'
+        end
         object RxDBLookupCombo3: TRxDBLookupCombo
           Left = 246
           Top = 34
@@ -1400,6 +1408,28 @@ object fCupomParametros: TfCupomParametros
           Values.Strings = (
             'N'
             'S')
+        end
+        object RxDBComboBox47: TRxDBComboBox
+          Left = 670
+          Top = 144
+          Width = 91
+          Height = 21
+          Style = csDropDownList
+          DataField = 'GERAR_CRECEBER'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          EnableValues = True
+          ItemHeight = 13
+          Items.Strings = (
+            'Todos'
+            'NFCe'
+            'N'#227'o'
+            '')
+          TabOrder = 19
+          Values.Strings = (
+            'T'
+            'C'
+            'N'
+            '')
         end
       end
       object GroupBox2: TGroupBox

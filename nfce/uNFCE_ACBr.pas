@@ -93,7 +93,7 @@ var
   ok: Boolean;
 begin
   fdmCupomFiscal.prcLocalizar(ID);
-  fdmCupomFiscal.prc_Localizar_Pessoa(fdmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger);
+  fdmCupomFiscal.prc_Localizar_Pessoa(fdmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
   Inicia_NFe;
 
   fDMNFCe.Posiciona_CidadeUF(fDMNFCe.qFilialID_CIDADE.AsInteger, -1);
@@ -840,7 +840,6 @@ begin
   fDMNFCe.ACBrNFe.NotasFiscais.Imprimir;
 
   fDMNFCe.ACBrNFe.NotasFiscais.Clear;
-
 end;
 
 procedure TfNFCE_ACBR.Inicia_NFe;

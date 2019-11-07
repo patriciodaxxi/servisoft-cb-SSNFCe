@@ -196,6 +196,8 @@ type
     comboRevenda: TRxDBComboBox;
     Label82: TLabel;
     RxDBComboBox46: TRxDBComboBox;
+    Label83: TLabel;
+    RxDBComboBox47: TRxDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);

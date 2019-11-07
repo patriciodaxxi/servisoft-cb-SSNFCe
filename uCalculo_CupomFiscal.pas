@@ -60,7 +60,7 @@ begin
   if fDMCupomFiscal.cdsFilialID.AsInteger <> fDMCupomFiscal.cdsCupomFiscalFILIAL.AsInteger then
     fDMCupomFiscal.cdsFilial.Locate('ID',fDMCupomFiscal.cdsCupomFiscalFILIAL.AsInteger,([Locaseinsensitive]));
   if fDMCupomFiscal.cdsPessoaCODIGO.AsInteger <> fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger then
-    fDMCupomFiscal.cdsPessoa.Locate('CODIGO',fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,([Locaseinsensitive]));
+    fDMCupomFiscal.prc_Localizar_Pessoa(fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
   if fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger > 0 then
   begin
     fDMCupomFiscal.qUF.Close;

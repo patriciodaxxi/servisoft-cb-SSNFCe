@@ -1509,6 +1509,9 @@ type
     cdsParametrosUSA_GRADE: TStringField;
     sdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
     cdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
+    SQLQuery2: TSQLQuery;
+    sdsCupomParametrosGERAR_CRECEBER: TStringField;
+    cdsCupomParametrosGERAR_CRECEBER: TStringField;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1613,7 +1616,7 @@ type
     procedure prcGravaTransacao;
 
     procedure prc_Busca_IBPT;
-    procedure prc_Localizar_Pessoa(vId: Integer);
+    procedure prc_Localizar_Pessoa(vId: Integer ; vCNPJ_CPF : String);
   end;
 
   //Funções Balança Urano
@@ -1690,18 +1693,6 @@ begin
   cdsCupomFiscalTERMINAL_ID.AsInteger := vTerminal;
   cdsCupomFiscalID_LOCALESTOQUE.AsInteger := vLocalEstoque;
   cdsCupomFiscalNUMCUPOM.AsInteger    := 0;
-
-  cdsPessoa.IndexFieldNames := 'CODIGO';
-  cdsPessoa.FindKey([vClienteID]);
-  cdsCupomFiscalCLIENTE_NOME.AsString := cdsPessoaNOME.AsString;
-  if not(cdsPessoaENDERECO.IsNull) and (trim(cdsPessoaENDERECO.AsString) <> '') then
-  begin
-    cdsCupomFiscalCLIENTE_ENDERECO.AsString := cdsPessoaENDERECO.AsString + ', ' + cdsPessoaNUM_END.AsString + ' - ' +
-                                               cdsPessoaCOMPLEMENTO_END.AsString + ' - ' + cdsPessoaBAIRRO.AsString + ' - ' +
-                                               cdsPessoaID_CIDADE.AsString;
-  end;
-  if not cdsPessoaTELEFONE1.IsNull then
-   cdsCupomFiscalCLIENTE_FONE.AsString := cdsPessoaDDDFONE1.AsString + ' ' + cdsPessoaTELEFONE1.AsString;
 
   if cdsCupomParametrosREPETE_VENDEDOR.AsString = 'S' then
     cdsCupomFiscalID_VENDEDOR.AsInteger := vId_Vendedor;
@@ -2069,8 +2060,6 @@ var
 begin
   fDMGravarFinanceiro := TDMGravarFinanceiro.Create(Self);
 
-  cdsPessoa.Locate('CODIGO',cdsDuplicataID_PESSOA.AsInteger,([Locaseinsensitive]));
-
   fDMGravarFinanceiro.vTipo_ES := 'E';
   if Tipo = 'ENT' then
   begin
@@ -2112,11 +2101,8 @@ begin
 
   vNome := '';
   vID_Conta_Orcamento := 0;
-  if cdsPessoa.Locate('CODIGO',cdsCupomFiscalID_CLIENTE.AsInteger,([Locaseinsensitive])) then
-  begin
-    vNome := cdsPessoaNOME.AsString;
-    vID_Conta_Orcamento := cdsPessoaCLIENTE_CONTA_ID.AsInteger;
-  end;
+  vNome := cdsPessoaNOME.AsString;
+  vID_Conta_Orcamento := cdsPessoaCLIENTE_CONTA_ID.AsInteger;
   fDMGravarFinanceiro.vTipo_ES := 'E';
   fDMGravarFinanceiro.vHistorico_Compl := 'Recto. CF nº ' + cdsCupomFiscalNUMCUPOM.AsString;
   if cdsCupom_ParcPARCELA.AsInteger > 0 then
@@ -3376,13 +3362,15 @@ begin
   end;
 end;
 
-procedure TdmCupomFiscal.prc_Localizar_Pessoa(vId: Integer);
+procedure TdmCupomFiscal.prc_Localizar_Pessoa(vId: Integer ; vCNPJ_CPF : String);
 begin
   cdsPessoa.Close;
   sdsPessoa.CommandText := ctPessoa;
   if vId <> 0 then
-    sdsPessoa.CommandText := sdsPessoa.CommandText
-                         + ' WHERE CODIGO = ' + IntToStr(vId);
+    sdsPessoa.CommandText := sdsPessoa.CommandText + ' WHERE CODIGO = ' + IntToStr(vId)
+  else
+  if trim(vCNPJ_CPF) <> '' then
+    sdsPessoa.CommandText := sdsPessoa.CommandText + ' WHERE CNPJ_CPF = ' + QuotedStr(vCNPJ_CPF);
   cdsPessoa.Open;
 end;
 

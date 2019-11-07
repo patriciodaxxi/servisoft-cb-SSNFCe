@@ -95,7 +95,6 @@ type
     procedure btnConsultarClick(Sender: TObject);
     procedure btnPesquisarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure RxDBLookupCombo1Enter(Sender: TObject);
     procedure btnInserirClick(Sender: TObject);
     procedure SMDBGrid1GetCellParams(Sender: TObject; Field: TField;
       AFont: TFont; var Background: TColor; Highlight: Boolean);
@@ -204,7 +203,6 @@ begin
   oDBUtils.SetDataSourceProperties(Self,fDmCupomFiscal);
 
   fDmCupomFiscal.vCancelar := False;
-  fDmCupomFiscal.cdsPessoa.Open;
   fDmCupomFiscal.cdsParametros.Open;
   fDmCupomFiscal.cdsFilial.Open;
 
@@ -449,11 +447,6 @@ begin
     FreeAndNil(fDmCupomFiscal);
   vTipo_Dig_Cupom := '';
   Action := caFree;
-end;
-
-procedure TfCupomFiscalC.RxDBLookupCombo1Enter(Sender: TObject);
-begin
-  fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'NOME';
 end;
 
 procedure TfCupomFiscalC.btnInserirClick(Sender: TObject);
@@ -1110,7 +1103,7 @@ begin
   if fDmCupomFiscal.cdsFilial.Locate('ID',vFilial,[loCaseInsensitive]) then
     vFilial_Nome := fDmCupomFiscal.cdsFilialNOME_INTERNO.AsString;
 
-  fDmCupomFiscal.cdsPessoa.Locate('CODIGO',fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,[loCaseInsensitive]);
+  fDmCupomFiscal.prc_Localizar_Pessoa(fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
 
   fDmCupomFiscal.prc_Abrir_CSTICMS(fDmCupomFiscal.cdsFilialSIMPLES.AsString);
 end;

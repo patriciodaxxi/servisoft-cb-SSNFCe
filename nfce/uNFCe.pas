@@ -1278,7 +1278,7 @@ begin
   vFilial := fDMCupomFiscal.cdsCupomFiscalFILIAL.AsInteger;
 
   if fDMCupomFiscal.cdsPessoaCODIGO.AsInteger <> fDMNFCe.cdsCupomFiscalID_CLIENTE.AsInteger then
-    fDMCupomFiscal.cdsPessoa.Locate('CODIGO',fDMNFCe.cdsCupomFiscalID_CLIENTE.AsInteger,[loCaseInsensitive]);
+    fDMCupomFiscal.prc_Localizar_Pessoa(fDMNFCe.cdsCupomFiscalID_CLIENTE.AsInteger,'');
   vEmail_Fortes := fDMCupomFiscal.cdsPessoaEMAIL_NFE.AsString;
 
   fRelDANFE_NFCe := TfRelDANFE_NFCe.Create(Self);
@@ -1720,7 +1720,7 @@ begin
   vFilial := fDMCupomFiscal.cdsCupomFiscalFILIAL.AsInteger;
 
   if fDMCupomFiscal.cdsPessoaCODIGO.AsInteger <> fDMNFCe.cdsCupomFiscalID_CLIENTE.AsInteger then
-    fDMCupomFiscal.cdsPessoa.Locate('CODIGO',fDMNFCe.cdsCupomFiscalID_CLIENTE.AsInteger,[loCaseInsensitive]);
+    fDMCupomFiscal.prc_Localizar_Pessoa(fDMNFCe.cdsCupomFiscalID_CLIENTE.AsInteger,'');
   vEmail_Fortes := fDMCupomFiscal.cdsPessoaEMAIL_NFE.AsString;
 
   oNFe         := TStringList.Create;
@@ -1823,7 +1823,7 @@ begin
   vMarca_Homologacao    := '';
   vCliente_Canhoto      := '';
   if fDMCupomFiscal.cdsPessoaCODIGO.AsInteger <> fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger then
-    fDMCupomFiscal.cdsPessoa.Locate('CODIGO',fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,([Locaseinsensitive]));
+    fDMCupomFiscal.prc_Localizar_Pessoa(fDMCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
   vCliente_Canhoto := fDMCupomFiscal.cdsPessoaNOME.AsString;
   if fDMCupomFiscal.cdsPessoaPESSOA.AsString = 'J' then
     vCliente_Canhoto := vCliente_Canhoto + ', CNPJ: ' + fDMCupomFiscal.cdsPessoaCNPJ_CPF.AsString

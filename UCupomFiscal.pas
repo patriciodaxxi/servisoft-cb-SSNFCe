@@ -242,10 +242,7 @@ var
 begin
   fDmCupomFiscal := TDmCupomFiscal.Create(Self);
   oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
-//  oDBUtils.OpenTables(True,Self);
   fNFCE_ACBr := TfNFCE_ACBR.Create(nil);
-
-  fDmCupomFiscal.cdsPessoa.Open;
 
   fDmParametros := TdmParametros.Create(Self);
   vFilial_Loc := vFilial;
@@ -1657,9 +1654,9 @@ begin
     if Result then
       fDmCupomFiscal.vID_Fechamento := fDmParametros.qCaixaAbertoID.AsInteger;
   end;
-  fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'CODIGO';
   fDmCupomFiscal.vClienteID := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
-  if not fDmCupomFiscal.cdsPessoa.FindKey([fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger]) then
+  fDmCupomFiscal.prc_Localizar_Pessoa(fDmCupomFiscal.vClienteID,'');
+  if fDmCupomFiscal.cdsPessoa.IsEmpty then
     vMSG := vMSG + #13 + 'Não existe Cliente Consumidor código ' + fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsString + '!';
   if (fDmCupomFiscal.cdsParametrosUSA_NFCE.AsString = 'S') and (trim(fDmCupomFiscal.cdsFilialSERIE_NFCE.AsString) = '') then
     vMSG := vMSG + #13 + 'Série da NFCe não informada na Filial!';
@@ -1745,7 +1742,10 @@ begin
     ID.IsolationLevel := xilREADCOMMITTED;
     dmDatabase.scoDados.StartTransaction(ID);
     try
-      if fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P' then
+      //07/11/2019
+      if (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P') or
+       ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
+       or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
       begin
         Le_CupomFiscalParc;
         if (fDmCupomFiscal.cdsCupomFiscalID_VENDEDOR.AsInteger > 0) and (StrToFloat(FormatFloat('0.00', fDmCupomFiscal.cdsCupomFiscalPERC_VENDEDOR.AsFloat)) > 0) then
@@ -1763,6 +1763,8 @@ begin
         fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(0, fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsCurrency);
         fDmCupomFiscal.prc_Gravar_Comissao('AVI');  //aqui, comissão a vista
       end;
+      fDmCupomFiscal.cdsCupom_Parc.ApplyUpdates(0);
+
       dmDatabase.scoDados.Commit(ID);
       vFinanceiroOK := 'S';
     except
@@ -1776,35 +1778,6 @@ begin
     end;
   end;
 
-  {if Estoque then
-  begin
-    fDmEstoque := TDmEstoque.Create(Self);
-    fDmMovimento := TDMMovimento.Create(Self);
-    ID.TransactionID := 71;
-    ID.IsolationLevel := xilREADCOMMITTED;
-    dmDatabase.scoDados.StartTransaction(ID);
-    try
-      Gravar_Estoque(Financeiro);
-      dmDatabase.scoDados.Commit(ID);
-      vEstoqueOK := 'S';
-    except
-      on e: Exception do
-      begin
-        vEstoqueOK := 'N';
-        dmDatabase.scoDados.Rollback(ID);
-      end;
-    end;
-    FreeAndNil(sds);
-    FreeAndNil(fDmEstoque);
-    FreeAndNil(fDmMovimento);
-  end;}
-
-  {fDmCupomFiscal.cdsCupomFiscal.Edit;
-  fDmCupomFiscal.cdsCupomFiscalESTOQUE_OK.AsString    := vEstoqueOK;
-  fDmCupomFiscal.cdsCupomFiscalFINANCEIRO_OK.AsString := vFinanceiroOK;
-  fDmCupomFiscal.cdsCupomFiscal.Post;
-  fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);}
-
   if trim(vMSGAux) <> '' then
     MessageDlg(vMSGAux, mtInformation, [mbOk], 0);
 
@@ -1812,15 +1785,24 @@ end;
 
 procedure TfCupomFiscal.Le_CupomFiscalParc;
 begin
-  fDmCupomFiscal.cdsCupom_Parc.First;
-  while not fDmCupomFiscal.cdsCupom_Parc.Eof do
+  //if (((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
+  //    or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T')) and (fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'V') then
+  //  Gravar_CReceber
+  //else
   begin
-    prc_PosicionaFormaPgto(fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger);
-    if fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S' then
-      Gravar_CReceber
-    else
-      fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
-    fDmCupomFiscal.cdsCupom_Parc.Next;
+    fDmCupomFiscal.cdsCupom_Parc.First;
+    while not fDmCupomFiscal.cdsCupom_Parc.Eof do
+    begin
+      prc_PosicionaFormaPgto(fDmCupomFiscal.cdsCupom_ParcID_TIPOCOBRANCA.AsInteger);
+      //07/11/2019 foi incluido o (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'S')
+      if (fDmCupomFiscal.cdsTipoCobrancaCREDITO_LOJA.AsString = 'S') or
+         ((fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'C') and (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC'))
+         or (fDmCupomFiscal.cdsCupomParametrosGERAR_CRECEBER.AsString = 'T') then
+        Gravar_CReceber
+      else
+        fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
+      fDmCupomFiscal.cdsCupom_Parc.Next;
+    end;
   end;
 end;
 
@@ -1961,11 +1943,22 @@ end;
 
 procedure TfCupomFiscal.Gravar_CReceber;
 begin
-  fDmCupomFiscal.cdsCupom_Parc.Edit;
-  fDmCupomFiscal.cdsCupom_ParcID_DUPLICATA.AsInteger := fDmCupomFiscal.Gravar_Duplicata('R','N',fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger,
-                                                                                        fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat,
-                                                                                        fDmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime,'');
-  fDmCupomFiscal.cdsCupom_Parc.Post;
+  {if fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'V' then
+  begin
+    fDmCupomFiscal.cdsCupomFiscal.Edit;
+    fDmCupomFiscal.cdsCupomFiscalID_DUPLICATA.AsInteger := fDmCupomFiscal.Gravar_Duplicata('R','N',1,
+                                                                                          fDmCupomFiscal.cdsCupomFiscalVLR_TOTAL.AsFloat,
+                                                                                          fDmCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime,'');
+    fDmCupomFiscal.cdsCupomFiscal.Post;
+  end
+  else}
+  begin
+    fDmCupomFiscal.cdsCupom_Parc.Edit;
+    fDmCupomFiscal.cdsCupom_ParcID_DUPLICATA.AsInteger := fDmCupomFiscal.Gravar_Duplicata('R','N',fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger,
+                                                                                          fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsFloat,
+                                                                                          fDmCupomFiscal.cdsCupom_ParcDTVENCIMENTO.AsDateTime,'');
+    fDmCupomFiscal.cdsCupom_Parc.Post;
+  end;
 end;
 
 procedure TfCupomFiscal.prc_PosicionaFormaPgto(vId: Integer);

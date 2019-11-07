@@ -23,7 +23,6 @@ type
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure FormCloseQuery(Sender: TObject; var CanClose: Boolean);
-    procedure RxDBLookupCombo1Enter(Sender: TObject);
     procedure MaskEdit1Exit(Sender: TObject);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -65,7 +64,6 @@ procedure TfCupomFiscalCli.FormShow(Sender: TObject);
 begin
   vCancelar := False;
   oDBUtils.SetDataSourceProperties(Self,fDmCupomFiscal);
-  fDmCupomFiscal.cdsPessoa.Open;
   if not fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.IsNull then
     CurrencyEdit1.Value := fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger;
 end;
@@ -76,11 +74,6 @@ begin
   CanClose := (fDmCupomFiscal.vClienteId > 0) or vCancelar;
   if (not CanClose) then
     ShowMessage('É obrigatório informar o cliente!');
-end;
-
-procedure TfCupomFiscalCli.RxDBLookupCombo1Enter(Sender: TObject);
-begin
-  fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'Nome';
 end;
 
 procedure TfCupomFiscalCli.MaskEdit1Exit(Sender: TObject);
@@ -99,14 +92,17 @@ begin
          Exit;
        end;
   end;
-  fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'CNPJ_CPF';
-  if ((MaskEdit1.Text <> '000.000.000-00') and (MaskEdit1.Text <> '00.000.000/0000-00')) and (fDmCupomFiscal.cdsPessoa.FindKey([MaskEdit1.Text])) then
+  if ((MaskEdit1.Text <> '000.000.000-00') and (MaskEdit1.Text <> '00.000.000/0000-00')) then
   begin
-    CurrencyEdit1.Value := fDmCupomFiscal.cdsPessoaCODIGO.AsInteger;
-    CurrencyEdit1Exit(Sender);
-  end
-  else
-    ShowMessage('CPF/CNPJ não localizado!');
+    fDmCupomFiscal.prc_Localizar_Pessoa(0,MaskEdit1.Text);
+    if not fDmCupomFiscal.cdsPessoa.IsEmpty then
+    begin
+      CurrencyEdit1.Value := fDmCupomFiscal.cdsPessoaCODIGO.AsInteger;
+      CurrencyEdit1Exit(Sender);
+    end
+    else
+      ShowMessage('CPF/CNPJ não localizado!');
+  end;
 end;
 
 procedure TfCupomFiscalCli.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -127,16 +123,23 @@ procedure TfCupomFiscalCli.CurrencyEdit1Exit(Sender: TObject);
 begin
   if CurrencyEdit1.AsInteger > 0 then
   begin
-    fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'CODIGO';
-    fDmCupomFiscal.cdsPessoa.FindKey([CurrencyEdit1.AsInteger]);
-    Edit1.Text     := fDmCupomFiscal.cdsPessoaNOME.AsString;
-    if fDmCupomFiscal.cdsPessoaPESSOA.AsString = 'F' then
-      ComboBox1.ItemIndex := 0
+    fDmCupomFiscal.prc_Localizar_Pessoa(CurrencyEdit1.AsInteger,'');
+    if fDmCupomFiscal.cdsPessoa.IsEmpty then
+    begin
+      MessageDlg('*** Cliente não encontrado!', mtWarning, [mbOk], 0);
+      CurrencyEdit1.SetFocus;
+    end
     else
-      ComboBox1.ItemIndex := 1;
-    ComboBox1Change(Sender);
-    MaskEdit1.Text := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
-    fDmCupomFiscal.vClienteID := CurrencyEdit1.AsInteger;
+    begin
+      Edit1.Text     := fDmCupomFiscal.cdsPessoaNOME.AsString;
+      if fDmCupomFiscal.cdsPessoaPESSOA.AsString = 'F' then
+        ComboBox1.ItemIndex := 0
+      else
+        ComboBox1.ItemIndex := 1;
+      ComboBox1Change(Sender);
+      MaskEdit1.Text := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+      fDmCupomFiscal.vClienteID := CurrencyEdit1.AsInteger;
+    end;
   end;
 end;
 

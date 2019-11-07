@@ -118,7 +118,8 @@ procedure TfrmCupomDadosCli.RxDBComboBox2Exit(Sender: TObject);
 begin
   if (RxDBComboBox2.ItemIndex = 1) and (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger <>  fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) then
   begin
-    if fDmCupomFiscal.cdsPessoa.Locate('CODIGO',fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,[loCaseInsensitive]) then
+    fDmCupomFiscal.prc_Localizar_Pessoa(fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
+    if not fDmCupomFiscal.cdsPessoa.IsEmpty then
     begin
       if trim(fDmCupomFiscal.cdsPessoaENDERECO_ENT.AsString) <> '' then
       begin

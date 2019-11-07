@@ -89,10 +89,10 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
     Top = 0
     Width = 806
     Height = 617
-    ActivePage = TabSheet2
+    ActivePage = TabSheet1
     ActivePageDefault = TabSheet1
     Align = alClient
-    TabIndex = 1
+    TabIndex = 0
     TabOrder = 0
     FixedDimension = 19
     object TabSheet1: TRzTabSheet

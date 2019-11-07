@@ -2767,6 +2767,11 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosGERAR_CRECEBER: TStringField
+      FieldName = 'GERAR_CRECEBER'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -3056,6 +3061,11 @@ object dmCupomFiscal: TdmCupomFiscal
     end
     object cdsCupomParametrosUSA_PRECO_REVENDA: TStringField
       FieldName = 'USA_PRECO_REVENDA'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosGERAR_CRECEBER: TStringField
+      FieldName = 'GERAR_CRECEBER'
       FixedChar = True
       Size = 1
     end
@@ -7151,5 +7161,24 @@ object dmCupomFiscal: TdmCupomFiscal
       FieldName = 'NOME_COMBINACAO'
       Size = 60
     end
+  end
+  object SQLQuery2: TSQLQuery
+    MaxBlobSize = -1
+    Params = <
+      item
+        DataType = ftString
+        Name = 'COD_BARRA'
+        ParamType = ptInput
+      end>
+    SQL.Strings = (
+      'select c.*, comb.nome nome_combinacao'
+      'from cbarra_int c'
+      'left join combinacao comb'
+      'on c.id_cor = comb.id'
+      'where C.COD_BARRA = :COD_BARRA'
+      '')
+    SQLConnection = dmDatabase.scoDados
+    Left = 987
+    Top = 532
   end
 end

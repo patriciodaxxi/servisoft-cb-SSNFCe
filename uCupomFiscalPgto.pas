@@ -79,14 +79,11 @@ type
     procedure RxDBLookupCombo2Enter(Sender: TObject);
     procedure RxDBLookupCombo3Enter(Sender: TObject);
     procedure RxDBLookupCombo2Change(Sender: TObject);
-    procedure RxDBLookupCombo1Enter(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure RxDBLookupCombo3KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure RxDBLookupCombo2KeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure RxDBLookupCombo1KeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btConfirmarClick(Sender: TObject);
     procedure brCancelarClick(Sender: TObject);
@@ -387,11 +384,12 @@ begin
   begin
     ceCodCliente.Value := fDmCupomFiscal.vClienteID;
     ceCodClienteExit(Sender);
-    fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'CODIGO';
-    fDmCupomFiscal.cdsPessoa.FindKey([fDmCupomFiscal.vClienteID]);
-    if (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger <> fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) and
-       ((fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString <> '000.000.000-00') and (fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString <> '')) then
-      fDmCupomFiscal.cdsCupomFiscalCPF.AsString := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+    if fDmCupomFiscal.cdsPessoaCODIGO.AsInteger = fDmCupomFiscal.vClienteID then
+    begin
+      if (fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger <> fDmCupomFiscal.cdsParametrosID_CLIENTE_CONSUMIDOR.AsInteger) and
+         ((fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString <> '000.000.000-00') and (fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString <> '')) then
+        fDmCupomFiscal.cdsCupomFiscalCPF.AsString := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
+    end;
   end;
 
   Panel6.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'T') or
@@ -446,11 +444,6 @@ begin
   vQtdParcelas := fDmCupomFiscal.cdsCondPgtoQTD_PARCELA.AsInteger;
 end;
 
-procedure TfCupomFiscalPgto.RxDBLookupCombo1Enter(Sender: TObject);
-begin
-  fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'NOME';
-end;
-
 procedure TfCupomFiscalPgto.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
@@ -484,16 +477,6 @@ procedure TfCupomFiscalPgto.RxDBLookupCombo2KeyDown(Sender: TObject;
 begin
   if (Key = Vk_F5) then
     fDmCupomFiscal.prc_Abrir_CondPgto;
-end;
-
-procedure TfCupomFiscalPgto.RxDBLookupCombo1KeyDown(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-begin
-  if (Key = Vk_F5) then
-  begin
-    fDmCupomFiscal.cdsPessoa.Close;
-    fDmCupomFiscal.cdsPessoa.Open;
-  end;
 end;
 
 procedure TfCupomFiscalPgto.btConfirmarClick(Sender: TObject);
@@ -592,7 +575,11 @@ begin
   end;
 
   if fDmCupomFiscal.cdsPessoaCODIGO.AsInteger <> fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger then
-    fDmCupomFiscal.cdsPessoa.Locate('CODIGO',fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,[loCaseInsensitive]);
+  begin
+    fdmCupomFiscal.prc_Localizar_Pessoa(fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsInteger,'');
+    if not fDmCupomFiscal.cdsPessoa.IsEmpty then
+      Raise Exception.Create('Cliente: ' + fDmCupomFiscal.cdsCupomFiscalID_CLIENTE.AsString + ', não encontrado!');
+  end;
 
   vExcluir_Cupom := False;
 
@@ -726,6 +713,7 @@ begin
       vCpfOk := False;
       DBEdit5.SelectAll;
       DBEdit5.SetFocus;
+      exit;
     end;
   if (vAux <> '') and (vAux <> '000.000.000-00') and (vAux <> '00.000.000/0000-00') then
   begin
@@ -1067,10 +1055,8 @@ begin
 
   if ceCodCliente.AsInteger > 0 then
   begin
-    fDmCupomFiscal.cdsPessoa.Close;
-    fDmCupomFiscal.cdsPessoa.IndexFieldNames := 'CODIGO';
-    fDmCupomFiscal.cdsPessoa.Open;
-    if fDmCupomFiscal.cdsPessoa.FindKey([ceCodCliente.AsInteger]) then
+    fdmCupomFiscal.prc_Localizar_Pessoa(ceCodCliente.AsInteger,'');
+    if not fDmCupomFiscal.cdsPessoa.IsEmpty then
     begin
 //////////////////////
       RxDBLookupCombo2.Visible := True;
@@ -1084,6 +1070,7 @@ begin
       else
       begin
         fDmCupomFiscal.cdsCupomFiscalCLIENTE_NOME.AsString := Trim(fDmCupomFiscal.cdsPessoaNOME.AsString);
+        fDmCupomFiscal.cdsCupomFiscalCPF.AsString          := fDmCupomFiscal.cdsPessoaCNPJ_CPF.AsString;
         //20/01/2017
         fDmCupomFiscal.cdsCupomFiscalCLIENTE_FONE.AsString := '';
         if trim(fDmCupomFiscal.cdsPessoaTELEFONE1.AsString) <> '' then
@@ -1110,14 +1097,13 @@ begin
         fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString    := fdmCupomFiscal.cdsCondPgtoTIPO.AsString;
         if not fDmCupomFiscal.vPgtoEditado then
           btnParcelasClick(Sender);
-      end
-      else
         RxDBLookupCombo2.SetFocus;
+      end;
       fDmCupomFiscal.vClienteID := ceCodCliente.AsInteger;
     end
     else
     begin
-      ShowMessage('Cliente não localizado!');
+      ShowMessage('Cliente: ' + ceCodCliente.Text + ', não localizado!');
       ceCodCliente.Text := '0';
       ceCodCliente.SelectAll;
     end;
@@ -1240,8 +1226,12 @@ procedure TfCupomFiscalPgto.DBEdit5KeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key = VK_RETURN then
+  begin
     DbEdit5Exit(Sender);
+    if vCpfOk then
+      DBEdit8.SetFocus;
 //    SelectNext(Sender as TWinControl, True, True);}
+  end;
 end;
 
 procedure TfCupomFiscalPgto.CurrencyEdit1Enter(Sender: TObject);

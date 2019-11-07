@@ -73,6 +73,8 @@ type
     sdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
     cdsCupomParametrosUSA_CBARRA_INT: TStringField;
     cdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
+    sdsCupomParametrosGERAR_CRECEBER: TStringField;
+    cdsCupomParametrosGERAR_CRECEBER: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
