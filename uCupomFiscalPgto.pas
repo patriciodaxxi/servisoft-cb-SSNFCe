@@ -230,7 +230,8 @@ begin
   begin
     if fDmCupomFiscal.cdsCondPgtoTIPO_CONDICAO.AsString = 'V' then
     begin
-      vVlrRestante := StrToFloat(FormatFloat('0.00',vVlrParcelas * vQtdParc));
+      //07/11/2019
+      //vVlrRestante := StrToFloat(FormatFloat('0.00',vVlrParcelas * vQtdParc));
 
       vDataAux := fDmCupomFiscal.cdsCupomFiscalDTEMISSAO.AsDateTime;
       fDmCupomFiscal.cdsCondPgto_Dia.First;
