@@ -255,7 +255,8 @@ begin
   fDmCupomFiscal.prc_Abrir_CSTICMS(fDmCupomFiscal.cdsFilialSIMPLES.AsString);
   if not fnc_Validacao_OK then
   begin
-    Close;
+    PostMessage(fCupomFiscal.Handle, WM_CLOSE, 0, 0);
+    //Close;
     exit;
   end;
   fDmCupomFiscal.cdsTipoCobranca.Open;
@@ -1022,8 +1023,14 @@ begin
   finally
     //23/10/2019  Estoque e Movimento
     if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'NFC') or (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'CNF') then
+    //06/11/2019 aqui
+    begin
       fDmCupomFiscal.prc_Gravar_Estoque_Movimento(fDmCupomFiscal.cdsCupomFiscalID.AsInteger,'CFI');
-   { else if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
+      prc_Controle_Gravar_Diversos(True,True);
+    end;
+
+    {else
+    if (fDmCupomFiscal.cdsCupomFiscalTIPO.AsString = 'ORC') then
       prc_Controle_Gravar_Diversos(False, False)
     else
       prc_Controle_Gravar_Diversos(False, True);}
@@ -1726,11 +1733,9 @@ end;
 procedure TfCupomFiscal.prc_Controle_Gravar_Diversos(Financeiro, Estoque: Boolean);
 var
   ID: TTransactionDesc;
-  sds: TSQLDataSet;
   Flag: Boolean;
   vMSGAux: string;
 begin
-  sds := TSQLDataSet.Create(nil);
   vMSGAux := '';
   vFinanceiroOK := 'N';
   vEstoqueOK := 'N';
@@ -1740,28 +1745,6 @@ begin
     ID.IsolationLevel := xilREADCOMMITTED;
     dmDatabase.scoDados.StartTransaction(ID);
     try
-      {try
-        sds.SQLConnection := dmDatabase.scoDados;
-        sds.NoMetadata := True;
-        sds.GetMetadata := False;
-        sds.CommandText := 'UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('FINANCEIRO');
-        Flag := False;
-        while not Flag do
-        begin
-          try
-            sds.Close;
-            sds.ExecSQL;
-            Flag := True;
-          except
-            on E: Exception do
-            begin
-              Flag := False;
-            end;
-          end;
-        end;
-      except
-        raise
-      end;}
       if fDmCupomFiscal.cdsCupomFiscalTIPO_PGTO.AsString = 'P' then
       begin
         Le_CupomFiscalParc;
@@ -1787,13 +1770,13 @@ begin
       begin
         vFinanceiroOK := 'N';
         //vMSGAux := 'Erro ao gravar Comissão/Contas Receber: ' + #13 + e.Message;
-        uGrava_Erro.prc_Gravar('Financeiro,Estoque,Comissão', 'fCupomFiscal', vMSGAux, DateToStr(Date), TimeToStr(Now));
+        //uGrava_Erro.prc_Gravar('Financeiro,Estoque,Comissão', 'fCupomFiscal', vMSGAux, DateToStr(Date), TimeToStr(Now));
         dmDatabase.scoDados.Rollback(ID);
       end;
     end;
   end;
 
-  if Estoque then
+  {if Estoque then
   begin
     fDmEstoque := TDmEstoque.Create(Self);
     fDmMovimento := TDMMovimento.Create(Self);
@@ -1801,28 +1784,6 @@ begin
     ID.IsolationLevel := xilREADCOMMITTED;
     dmDatabase.scoDados.StartTransaction(ID);
     try
-      {try
-        sds.SQLConnection := dmDatabase.scoDados;
-        sds.NoMetadata := True;
-        sds.GetMetadata := False;
-        sds.CommandText := 'UPDATE TABELALOC SET FLAG = 1 WHERE TABELA = ' + QuotedStr('ESTOQUE_MOV');
-        Flag := False;
-        while not Flag do
-        begin
-          try
-            sds.Close;
-            sds.ExecSQL;
-            Flag := True;
-          except
-            on E: Exception do
-            begin
-              Flag := False;
-            end;
-          end;
-        end;
-      except
-        raise
-      end;}
       Gravar_Estoque(Financeiro);
       dmDatabase.scoDados.Commit(ID);
       vEstoqueOK := 'S';
@@ -1831,19 +1792,18 @@ begin
       begin
         vEstoqueOK := 'N';
         dmDatabase.scoDados.Rollback(ID);
-        //vMSGAux := vMSGAux + #13 + #13 + 'Erro ao gravar Estoque: ' + #13 + e.Message;
       end;
     end;
     FreeAndNil(sds);
     FreeAndNil(fDmEstoque);
     FreeAndNil(fDmMovimento);
-  end;
+  end;}
 
-  fDmCupomFiscal.cdsCupomFiscal.Edit;
+  {fDmCupomFiscal.cdsCupomFiscal.Edit;
   fDmCupomFiscal.cdsCupomFiscalESTOQUE_OK.AsString    := vEstoqueOK;
   fDmCupomFiscal.cdsCupomFiscalFINANCEIRO_OK.AsString := vFinanceiroOK;
   fDmCupomFiscal.cdsCupomFiscal.Post;
-  fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
+  fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);}
 
   if trim(vMSGAux) <> '' then
     MessageDlg(vMSGAux, mtInformation, [mbOk], 0);
@@ -1862,7 +1822,6 @@ begin
       fDmCupomFiscal.prc_Gravar_Financeiro_Cupom(fDmCupomFiscal.cdsCupom_ParcPARCELA.AsInteger, fDmCupomFiscal.cdsCupom_ParcVLR_VENCIMENTO.AsCurrency);
     fDmCupomFiscal.cdsCupom_Parc.Next;
   end;
-
 end;
 
 procedure TfCupomFiscal.Gravar_Estoque(vFinanceiro: Boolean);

@@ -774,7 +774,7 @@ object fCupomFiscal: TfCupomFiscal
     object Panel7: TPanel
       Left = 0
       Top = 702
-      Width = 400
+      Width = 401
       Height = 54
       Align = alBottom
       Color = 3683329
