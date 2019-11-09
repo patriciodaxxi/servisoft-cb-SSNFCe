@@ -1,5 +1,5 @@
 object fSel_CorTamanho: TfSel_CorTamanho
-  Left = 605
+  Left = 364
   Top = 217
   BorderIcons = [biSystemMenu, biMaximize]
   BorderStyle = bsSingle
@@ -90,7 +90,7 @@ object fSel_CorTamanho: TfSel_CorTamanho
       OnClick = brCancelarClick
     end
   end
-  object RxDBLookupCombo1: TRxDBLookupCombo
+  object comboCor: TRxDBLookupCombo
     Left = 156
     Top = 16
     Width = 361
@@ -107,7 +107,7 @@ object fSel_CorTamanho: TfSel_CorTamanho
     ParentFont = False
     TabOrder = 0
   end
-  object RxDBLookupCombo2: TRxDBLookupCombo
+  object comboTamanho: TRxDBLookupCombo
     Left = 156
     Top = 40
     Width = 145

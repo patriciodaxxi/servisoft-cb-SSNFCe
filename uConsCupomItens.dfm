@@ -1,5 +1,5 @@
 object frmConsCupomItens: TfrmConsCupomItens
-  Left = 261
+  Left = 184
   Top = 90
   Width = 1082
   Height = 480
@@ -13,6 +13,7 @@ object frmConsCupomItens: TfrmConsCupomItens
   OldCreateOrder = False
   Position = poDesktopCenter
   OnClose = FormClose
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlTop: TPanel

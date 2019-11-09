@@ -1,6 +1,6 @@
 object frmConsCupom: TfrmConsCupom
-  Left = 131
-  Top = 67
+  Left = 250
+  Top = 78
   Width = 1087
   Height = 524
   Caption = 'Consulta Cupons'
@@ -13,6 +13,7 @@ object frmConsCupom: TfrmConsCupom
   KeyPreview = True
   OldCreateOrder = False
   Position = poDesktopCenter
+  WindowState = wsMaximized
   OnClose = FormClose
   OnShow = FormShow
   PixelsPerInch = 96
@@ -21,14 +22,14 @@ object frmConsCupom: TfrmConsCupom
     Left = 0
     Top = 0
     Width = 1071
-    Height = 485
+    Height = 486
     Align = alClient
     TabOrder = 0
     object cxGrid1: TcxGrid
       Left = 1
       Top = 90
       Width = 1069
-      Height = 394
+      Height = 395
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -46,53 +47,60 @@ object frmConsCupom: TfrmConsCupom
         DataController.Summary.SummaryGroups = <>
         OptionsData.Deleting = False
         OptionsData.DeletingConfirmation = False
-        OptionsData.Editing = False
         OptionsData.Inserting = False
         OptionsSelection.MultiSelect = True
         object cxGrid1DBTableView1ID: TcxGridDBColumn
           DataBinding.FieldName = 'ID'
           Visible = False
+          Options.Editing = False
         end
         object cxGrid1DBTableView1DTEMISSAO: TcxGridDBColumn
           DataBinding.FieldName = 'DTEMISSAO'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 87
         end
         object cxGrid1DBTableView1HREMISSAO: TcxGridDBColumn
           DataBinding.FieldName = 'HREMISSAO'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 108
         end
         object cxGrid1DBTableView1NUMCUPOM: TcxGridDBColumn
           DataBinding.FieldName = 'NUMCUPOM'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 104
         end
         object cxGrid1DBTableView1SERIE: TcxGridDBColumn
           DataBinding.FieldName = 'SERIE'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 54
         end
         object cxGrid1DBTableView1VLR_TOTAL: TcxGridDBColumn
           DataBinding.FieldName = 'VLR_TOTAL'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 97
         end
         object cxGrid1DBTableView1CANCELADO: TcxGridDBColumn
           DataBinding.FieldName = 'CANCELADO'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 83
         end
         object cxGrid1DBTableView1CPF: TcxGridDBColumn
           DataBinding.FieldName = 'CPF'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
         end
         object cxGrid1DBTableView1NFECHAVEACESSO: TcxGridDBColumn
           DataBinding.FieldName = 'NFECHAVEACESSO'
@@ -104,17 +112,20 @@ object frmConsCupom: TfrmConsCupom
           DataBinding.FieldName = 'NFEPROTOCOLO'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
         end
         object cxGrid1DBTableView1NFERECIBO: TcxGridDBColumn
           DataBinding.FieldName = 'NFERECIBO'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
           Width = 285
         end
         object cxGrid1DBTableView1CLIENTE_NOME: TcxGridDBColumn
           DataBinding.FieldName = 'CLIENTE_NOME'
           HeaderAlignmentHorz = taCenter
           HeaderGlyphAlignmentHorz = taCenter
+          Options.Editing = False
         end
       end
       object cxGrid1Level1: TcxGridLevel

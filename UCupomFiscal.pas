@@ -10,18 +10,14 @@ uses
   uDmParametros, NxCollection, UCupomFiscalImposto, StrUtils, ValEdit, UCBase,
   ACBrBase, ACBrBAL, ACBrDevice, uNFCE_ACBr, uConsCupom, dbXPress, uConsultaRapidaProduto,
   ComCtrls, JvStatusBar, AdvPanel, JvGroupBox, TelaPrecoAlterado, cxStyles,
-  cxCustomData, cxGraphics, cxFilter, cxData,
+  cxCustomData, cxGraphics, cxFilter, cxData, uTipoDescontoItem,
   cxDataStorage, cxEdit, cxDBData, cxGridLevel, cxClasses, cxControls,
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxGrid, dxSkinsCore, dxSkinMoneyTwins,
-  dxSkinscxPCPainter, cxLookAndFeels, dxSkinBlue, dxSkinOffice2007Blue,
-  dxSkinSeven, dxGDIPlusClasses, dxSkinBlack, dxSkinCaramel, dxSkinCoffee,
-  dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy, dxSkinGlassOceans,
-  dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky, dxSkinLondonLiquidSky,
-  dxSkinMcSkin, dxSkinOffice2007Black, dxSkinOffice2007Green,
-  dxSkinOffice2007Pink, dxSkinOffice2007Silver, dxSkinPumpkin, dxSkinSharp,
-  dxSkinSilver, dxSkinSpringTime, dxSkinStardust, dxSkinSummer2008,
-  dxSkinsDefaultPainters, dxSkinValentine, dxSkinXmas2008Blue;
+  cxGridDBTableView, cxGrid, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
+  dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxLookAndFeels,
+  dxGDIPlusClasses;
+type
+  tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
 
 type
   TfCupomFiscal = class(TForm)
@@ -43,13 +39,6 @@ type
     Label3: TLabel;
     CurrencyEdit1: TCurrencyEdit;
     Edit2: TEdit;
-    gbDesconto: TJvGroupBox;
-    Label16: TLabel;
-    Label17: TLabel;
-    Label15: TLabel;
-    CurrencyEdit4: TCurrencyEdit;
-    CurrencyEdit6: TCurrencyEdit;
-    CurrencyEdit7: TCurrencyEdit;
     pnlDescricaoProduto: TAdvPanel;
     JvGroupBox1: TJvGroupBox;
     DBEdit1: TDBEdit;
@@ -95,7 +84,6 @@ type
     procedure SMDBGrid1GetCellParams(Sender: TObject; Field: TField; AFont: TFont; var Background: TColor; Highlight: Boolean);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure CurrencyEdit6Exit(Sender: TObject);
     procedure RxDBLookupCombo2Enter(Sender: TObject);
     procedure btCancelarClick(Sender: TObject);
     procedure btFinalizarClick(Sender: TObject);
@@ -106,17 +94,9 @@ type
     procedure btComandaClick(Sender: TObject);
     procedure btOrcamentoClick(Sender: TObject);
     procedure btPedidoClick(Sender: TObject);
-    procedure CurrencyEdit7Exit(Sender: TObject);
-    procedure CurrencyEdit4Exit(Sender: TObject);
-    procedure CurrencyEdit6Enter(Sender: TObject);
-    procedure CurrencyEdit4Enter(Sender: TObject);
-    procedure CurrencyEdit7Enter(Sender: TObject);
     procedure btnCopiarComandaClick(Sender: TObject);
     procedure SMDBGrid2DblClick(Sender: TObject);
     procedure CurrencyEdit1Enter(Sender: TObject);
-    procedure CurrencyEdit6KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure CurrencyEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-    procedure CurrencyEdit7KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure SMDBGrid1DblClick(Sender: TObject);
     procedure ACBrBAL1LePeso(Peso: Double; Resposta: string);
@@ -134,6 +114,7 @@ type
     ffrmConsCupom: TfrmConsCupom;
     ffrmConsultaRapidaCupom : TfrmConsultaRapidaProduto;
     ffrmTelaPrecoAlterado : TFormTelaPrecoAlterado;
+    ffrmTelaTipoDescontoItem : TfrmTelaTipoDescontoItem;
     vAliqIcms: Real;
     vTipoDesc: string;
     vSitTrib: Integer;
@@ -141,6 +122,7 @@ type
     vID_Produto: Integer;
     vFilial_Loc: Integer;
     vEstoqueOK, vFinanceiroOK: String;
+    vAplicarDescontoItem : Boolean;
     
     procedure Limpa_Campos;
     function posicionaProduto: Boolean;
@@ -151,7 +133,7 @@ type
     procedure prc_EnterCodigo;
     function fnc_VerficaFracionado(vUnidade: string): Boolean;
     procedure FinalizaParcial(vTipo: string);
-    procedure prc_CorTamanho;
+    function fnc_CorTamanho : Boolean;
     procedure prcPesa;
     procedure Le_CupomFiscalParc;
     procedure prc_Controle_Gravar_Diversos(Financeiro, Estoque: Boolean);
@@ -160,6 +142,7 @@ type
     procedure prc_PosicionaFormaPgto(vId: Integer);
     procedure Gravar_CReceber;
     function fnc_Altera_Preco : Boolean;
+    function fnc_Aplicar_Desconto : Boolean;
 
   public
     { Public declarations }
@@ -183,7 +166,10 @@ type
     vGeraIcms: Boolean;
     vCopiandoComanda: Boolean;
     vSubTotal : Double;
+    vValorDesconto : Double;
     vVlrItem : Double;
+    vTipoDescItem : String;
+    TipoDescFech : String;
     procedure Excluir_Estoque(Filial, NumMov: Integer);
     procedure prc_ConfirmaItem;
     procedure prc_InformaCliente;
@@ -199,7 +185,6 @@ var
 
 implementation
 
-//---------------TROCAR IMPRESSORA
 uses
   UCupomFiscalPgto, UCupomFiscalCanc, USel_Produto, uUtilPadrao, uComandaR,
   uCupomCliente, uCalculo_CupomFiscal, Math, USenha, uUtilCupom, UConsPreco,
@@ -265,7 +250,7 @@ begin
   fDmEstoque := TDmEstoque.Create(Self);
   fDmMovimento := TdmMovimento.Create(Self);
 
-  gbDesconto.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'I') or (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'A');
+//  gbDesconto.Visible := (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'I') or (fDmCupomFiscal.cdsCupomParametrosUSA_DESCONTO.AsString = 'A');
   vFormaQtd := '0.000';
 
 //  prc_le_Grid(SMDBGrid1, Name, fDmCupomFiscal.qParametros_GeralENDGRIDS.AsString);
@@ -434,11 +419,9 @@ begin
   CurrencyEdit1.Value := fDmCupomFiscal.cdsCupomParametrosQTD_PADRAO.AsCurrency;
   vVlrItem := 0;
   vSubTotal := 0;
-  CurrencyEdit6.Clear;
-  CurrencyEdit4.Clear;
-  CurrencyEdit7.Clear;
   vPreco_Pos := 0;
   vAliqIcms := 0;
+  vValorDesconto := 0;
 
   if fDmCupomFiscal.cdsCupomParametrosPRODUTO_PADRAO.AsInteger > 0 then
   begin
@@ -448,6 +431,7 @@ begin
 
   vCalcula_IPI := True;
   vPedidoSelecionado := False;
+  vAplicarDescontoItem := False;
   vUnidade := '';
   vPerc_Ipi := 0;
   vNome_Complementar := '';
@@ -491,89 +475,6 @@ begin
   if not (Panel4.Enabled) then
     Exit;
 
-  if (Shift = [ssCtrl]) and (Key = 87) then
-  begin
-  end;
-
-  if key = 27 then // Esc
-  begin
-    if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
-    begin
-      if MessageDlg('Deseja cancelar o cupom?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
-        exit;
-      fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
-      fDmCupomFiscal.cdsCupomFiscal.Close;
-      pnlDescricaoProduto.Text := '';
-      pnlDescricaoProduto.Update;
-      pnlCaixaLivre.Visible := True;
-    end;
-  end;
-
-  if key = vk_F11 then //F11
-  begin
-    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
-    begin
-      ffrmConsCupom := TfrmConsCupom.Create(nil);
-      ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
-      ffrmConsCupom.btnReimprimir.Visible := True;
-      ffrmConsCupom.edtSerie.Text := vSerieCupom;
-      try
-        ffrmConsCupom.ShowModal;
-      finally
-        FreeAndNil(ffrmConsCupom);
-      end;
-    end;
-  end;
-  if ssCtrl in Shift then
-  begin
-    case Upcase(Char(Key)) of
-      'C' :
-      begin
-        if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
-        begin
-          ffrmConsCupom := TfrmConsCupom.Create(nil);
-          ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
-          ffrmConsCupom.vCancelar := True;
-          try
-            ffrmConsCupom.ShowModal;
-          finally
-            FreeAndNil(ffrmConsCupom);
-          end;
-          fDmCupomFiscal.cdsCupomFiscal.Close;
-        end;
-      end;
-    end;
-
-  end;
-  if (Key = Vk_F12) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
-  begin
-    if btComanda.Visible then
-      btComandaClick(Sender);
-  end
-  else
-  if (Key = Vk_F4) then
-    prc_ConsPreco
-  else
-  if (Key = Vk_F6) then
-    prc_InformaCliente
-  else
-  if (Key = Vk_F7) then
-  begin
-    prc_ConfirmaItem;
-  end
-  else
-  if (Key = Vk_F8) then
-  begin
-    if btOrcamento.Visible then
-      btOrcamentoClick(Sender);
-  end
-  else
-  if (Key = Vk_F9) then
-  begin
-    if btPedido.Visible then
-      btPedidoClick(Sender);
-  end;
-
   if (Key = Vk_F2) then
   begin
     Edit1.Clear;
@@ -593,16 +494,108 @@ begin
         Edit1Exit(Sender);
     end;
   end;
-end;
 
-procedure TfCupomFiscal.CurrencyEdit6Exit(Sender: TObject);
-begin
-  if CurrencyEdit6.Value > 0 then
+  //lança desconto no item
+  if (Key = Vk_F3) then
   begin
-    CurrencyEdit4.Value := (CurrencyEdit1.Value * vVlrItem * CurrencyEdit6.Value / 100);
-    CurrencyEdit7.Value := CurrencyEdit1.Value * vVlrItem - CurrencyEdit4.Value;
-    vTipoDesc := 'R$';
+    vAplicarDescontoItem := True;
+    pnlDescricaoProduto.Text := 'Informe o Produto (C/Desconto)';
+    pnlDescricaoProduto.Update;
   end;
+
+  if (Key = Vk_F4) then
+    prc_ConsPreco;
+
+  if (Key = Vk_F6) then
+    prc_InformaCliente;
+
+  if (Key = Vk_F7) then
+    prc_ConfirmaItem;
+
+  if (Key = Vk_F8) then
+  begin
+    if btOrcamento.Visible then
+      btOrcamentoClick(Sender);
+  end;
+
+  if (Key = Vk_F9) then
+  begin
+    if btPedido.Visible then
+      btPedidoClick(Sender);
+  end;
+
+  if key = vk_F11 then //F11
+  begin
+    if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+    begin
+      ffrmConsCupom := TfrmConsCupom.Create(nil);
+      ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+      ffrmConsCupom.btnReimprimir.Visible := True;
+      ffrmConsCupom.edtSerie.Text := vSerieCupom;
+      try
+        ffrmConsCupom.ShowModal;
+      finally
+        FreeAndNil(ffrmConsCupom);
+      end;
+    end;
+  end;
+
+  if (Key = Vk_F12) and not (fDmCupomFiscal.cdsCupom_Itens.IsEmpty) then
+  begin
+    if btComanda.Visible then
+      btComandaClick(Sender);
+  end;
+
+  //Cancela lançamento de itens do cupom
+  if key = 27 then // Esc
+  begin
+    if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert] then
+    begin
+      if MessageDlg('Deseja cancelar o cupom?', mtConfirmation, [mbYes, mbNo], 0) = mrNo then
+        exit;
+      fDmCupomFiscal.prc_Excluir_Cupom_Fiscal(fDmCupomFiscal.cdsCupomFiscalID.AsInteger);
+      fDmCupomFiscal.cdsCupomFiscal.Close;
+      pnlDescricaoProduto.Text := '';
+      pnlDescricaoProduto.Update;
+      pnlCaixaLivre.Visible := True;
+    end;
+  end;
+
+  //Consulta de cupons
+
+  //cancelamento do cupom
+  if ssCtrl in Shift then
+  begin
+    case Upcase(Char(Key)) of
+      'C' :
+      begin
+        if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+        begin
+          ffrmConsCupom := TfrmConsCupom.Create(nil);
+          ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+          ffrmConsCupom.vCancelar := True;
+          try
+            ffrmConsCupom.ShowModal;
+          finally
+            FreeAndNil(ffrmConsCupom);
+          end;
+          fDmCupomFiscal.cdsCupomFiscal.Close;
+        end;
+      end;
+      'S' :
+      begin
+        if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+          Close;
+      end;
+    end;
+
+  end;
+
+  if (Shift = [ssCtrl]) and (Key = 87) then
+  begin
+  end;
+
+
 end;
 
 function TfCupomFiscal.posicionaProduto: Boolean;
@@ -707,23 +700,6 @@ begin
     else
     begin
 
-{  22/12/2017  Juca
-      if copy(Edit1.Text,1,1) = '0' then
-      begin
-        fDmCupomFiscal.prc_Abrir_Produto(vCampoPesquisa,IntToStr(StrToInt(Edit1.Text)));
-        if fDmCupomFiscal.cdsProduto.IsEmpty then
-        begin
-          ShowMessage('Código do produto lido: ' + Copy(Edit1.Text,2,vTamCod));
-          Result := False;
-        end
-        else
-        begin
-          vID_Produto := fDmCupomFiscal.cdsProdutoID.AsInteger;
-          Result := True;
-          Exit;
-        end;
-      end;}
-
     end;
 
     fDmCupomFiscal.prc_Abrir_Produto('CB', Edit1.Text);
@@ -753,9 +729,16 @@ begin
          (fDmCupomFiscal.cdsParametrosINFORMAR_COR_PROD.AsString = 'C') or
          (fDmCupomFiscal.cdsParametrosINFORMAR_COR_PROD.AsString = 'B') or
          (fDmCupomFiscal.cdsParametrosUSA_GRADE.AsString = 'S') then
-        prc_CorTamanho;
-      //********************
-
+      begin
+        if not fnc_CorTamanho then
+        begin
+          MessageDlg('*** Produto possui grade de cor e/ou tamanho, favor informar!' , mtInformation, [mbOk], 0);
+          Edit1.Clear;
+          Edit1.SetFocus;
+          Result := False;
+          Exit;
+        end;
+      end;
     end
     else
     begin
@@ -780,7 +763,6 @@ begin
       else
         vVlrItem := fDmCupomFiscal.cdsProdutoPRECO_VENDA.AsFloat;
     end;
-    //***************
     vSubTotal := StrToFloat(FormatFloat('0.00', vVlrItem * CurrencyEdit1.Value));
     vID_Produto := fDmCupomFiscal.cdsProdutoID.AsInteger;
   end
@@ -1056,39 +1038,23 @@ begin
       Edit1.SetFocus
     else
     begin
-      if fDmCupomFiscal.cdsCupomParametrosEXIGE_CAMPO_DESCONTO.AsString = 'S' then
+      if vVlrItem = 0 then
       begin
-        if vVlrItem = 0 then
+        if not fnc_Altera_Preco then
         begin
-          if not fnc_Altera_Preco then
-          begin
-            Edit1.SetFocus;
-            Exit;
-          end;
-        end
-        else
-        if CurrencyEdit6.Visible then
-          CurrencyEdit6.SetFocus
-        else
-        begin
-          prc_ConfirmaItem;
-        end
-      end
-      else
-      begin
-        if vVlrItem = 0 then
-        begin
-          if not fnc_Altera_Preco then
-          begin
-            Edit1.SetFocus;
-            Exit;
-          end;
-        end
-        else
-        begin
-          prc_ConfirmaItem;
+          Edit1.SetFocus;
+          Exit;
         end;
       end;
+      if vAplicarDescontoItem then
+      begin
+        if not fnc_Aplicar_Desconto then
+        begin
+          Edit1.SetFocus;
+          Exit;
+        end;
+      end;
+      prc_ConfirmaItem;
     end;
 end;
 
@@ -1368,35 +1334,6 @@ begin
       CurrencyEdit1.SetFocus;
   end;
 end;
-
-procedure TfCupomFiscal.CurrencyEdit7Exit(Sender: TObject);
-begin
-  CurrencyEdit6.Value := 100 - (CurrencyEdit7.Value * 100 / (CurrencyEdit1.Value * vVlrItem));
-  CurrencyEdit4.Value := CurrencyEdit1.Value * vVlrItem - CurrencyEdit7.Value;
-  vSubTotal := CurrencyEdit7.Value;
-end;
-
-procedure TfCupomFiscal.CurrencyEdit4Exit(Sender: TObject);
-begin
-  CurrencyEdit7.Value := (CurrencyEdit1.Value * vVlrItem - CurrencyEdit4.Value);
-  CurrencyEdit6.Value := 100 - (CurrencyEdit7.Value * 100 / (CurrencyEdit1.Value * vVlrItem));
-end;
-
-procedure TfCupomFiscal.CurrencyEdit6Enter(Sender: TObject);
-begin
-  CurrencyEdit6.SelectAll;
-end;
-
-procedure TfCupomFiscal.CurrencyEdit4Enter(Sender: TObject);
-begin
-  CurrencyEdit4.SelectAll;
-end;
-
-procedure TfCupomFiscal.CurrencyEdit7Enter(Sender: TObject);
-begin
-  CurrencyEdit7.SelectAll;
-end;
-
 procedure TfCupomFiscal.btnCopiarComandaClick(Sender: TObject);
 begin
   frmSel_Comanda_CF := TfrmSel_Comanda_CF.Create(Self);
@@ -1455,24 +1392,6 @@ begin
   end;
 end;
 
-procedure TfCupomFiscal.CurrencyEdit6KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if Key = VK_RETURN then
-    SelectNext(Sender as TWinControl, True, True);
-end;
-
-procedure TfCupomFiscal.CurrencyEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if Key = VK_RETURN then
-    SelectNext(Sender as TWinControl, True, True);
-end;
-
-procedure TfCupomFiscal.CurrencyEdit7KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
-begin
-  if Key = VK_RETURN then
-    SelectNext(Sender as TWinControl, True, True);
-end;
-
 function TfCupomFiscal.fnc_VerficaFracionado(vUnidade: string): Boolean;
 begin
   Result := True;
@@ -1484,12 +1403,13 @@ begin
   fDmCupomFiscal.qUnidade.Close;
 end;
 
-procedure TfCupomFiscal.prc_CorTamanho;
+function TfCupomFiscal.fnc_CorTamanho : Boolean;
 var
   sds: TSQLDataSet;
   vExiste : Boolean;
 begin
   //06/11/2019
+  Result := False;
   vExiste := False;
   sds := TSQLDataSet.Create(nil);
   try
@@ -1515,8 +1435,12 @@ begin
     fSel_CorTamanho.fDmCupomFiscal := fDmCupomFiscal;
     fSel_CorTamanho.vProd := fDmCupomFiscal.cdsProdutoID.AsInteger;
     fSel_CorTamanho.ShowModal;
+    if fSel_CorTamanho.ModalResult = mrOK then
+      Result := True;
     FreeAndNil(fSel_CorTamanho);
-  end;
+  end
+  else
+    Result := True;
 end;
 
 procedure TfCupomFiscal.DBEdit4KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -2006,6 +1930,15 @@ begin
     end;
   end;
 
+  if vAplicarDescontoItem then
+  begin
+    if not fnc_Aplicar_Desconto then
+    begin
+      Edit1.SetFocus;
+      Exit;
+    end;
+  end;
+
   if trim(vUnidade) <> '' then
   begin
     if not fnc_VerficaFracionado(vUnidade) then
@@ -2045,12 +1978,15 @@ begin
     fDmCupomFiscal.cdsCupom_ItensVLR_UNIT_ORIGINAL.AsFloat  := vVlrItem;
     fDmCupomFiscal.vSomaOriginal := fDmCupomFiscal.vSomaOriginal + vSubTotal;
 
-    if CurrencyEdit6.Value > 0 then
+    if vValorDesconto > 0 then
     begin
-      fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat := CurrencyEdit4.Value;
+      fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat := vValorDesconto;
       vTipoDesc := '$';
       fDmCupomFiscal.cdsCupomFiscalTIPO_DESCONTO.AsString := 'I';
-    end;
+    end
+    else
+      fDmCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat := 0;
+
     fDmCupomFiscal.cdsCupom_ItensVLR_TOTAL.AsFloat := vSubTotal;
 
     //NFCe
@@ -2256,6 +2192,117 @@ begin
   fDmCupomFiscal.vBase_ICMS_Efet := fDmCupomFiscal.cdsCupom_ItensVLR_BASE_EFET.AsFloat;
   fCupomFiscalImposto.ShowModal;
   FreeAndNil(fCupomFiscalImposto);
+end;
+
+function TfCupomFiscal.fnc_Aplicar_Desconto : Boolean;
+var
+  vDescItemValor : Double;
+  vDescItemPerc : Double;
+begin
+  Result := False;
+  ffrmTelaTipoDescontoItem := TfrmTelaTipoDescontoItem.Create(nil);
+  ffrmTelaTipoDescontoItem.vValorOriginal := vVlrItem;
+  ffrmTelaTipoDescontoItem.ShowModal;
+  if ffrmTelaTipoDescontoItem.ModalResult = mrCancel then
+    Exit;
+  with ffrmTelaTipoDescontoItem do
+  begin
+    if EditDesconto.Value > 0 then
+    begin
+      case tEnumTipoDesconto(rdgDescontoUnitario.ItemIndex) of
+        tpPercentual :
+        begin
+          vDescItemPerc := EditDesconto.Value;
+          vDescItemValor := 0;
+        end;
+        tpValor :
+        begin
+          vDescItemPerc := 0;
+          vDescItemValor := EditDesconto.Value;
+        end;
+        tpValorPago :
+        begin
+          vDescItemPerc := 0;
+          vDescItemValor := vVlrItem - EditDesconto.Value;
+        end;
+      end;
+    end;
+  end;
+
+  if vDescItemPerc > 0 then
+    vDescItemValor := vVlrItem * (vDescItemPerc / 100);
+
+  if CurrencyEdit1.Value > 1 then
+  begin
+
+  end;
+
+  if (vDescItemValor > 0) and (vDescItemValor > vVlrItem) and (CurrencyEdit1.Value = 1) then
+  begin
+    MessageDlg('O valor do desconto informado é maior que o valor do item!',mtInformation,[mbOK],0);
+    Result := False;
+    Exit;
+  end;
+  vSubTotal := (CurrencyEdit1.Value * vVlrItem - vDescItemValor);
+  vValorDesconto := vDescItemValor;
+  Result := True;
+
+//
+//      PercentualDesconto := 0;
+//      //Verifica qual desconto aplicar, se o do usuário ou do produto
+//      PercentualDesconto := PercDesqMaxUsario;
+//      if PercDescMaxProduto > 0 then
+//        PercentualDesconto := PercDescMaxProduto;
+//
+//      if (((DescItemVlr / ValorItem) * 100) > PercentualDesconto) and not ImportandoPreVenda then
+//      begin
+//        if QuantItem > 0 then
+//          DescItemPerc := (DescItemVlr / (ValorItem * QuantItem)) * 100
+//        else
+//          DescItemPerc := (DescItemVlr / (ValorItem * 1)) * 100; // Coloquei o nro.1 pq quando o usuario nao tem poder de desconto a QuantItem estava Nulo e dava erro de calculo
+//
+//            // Testa se o usuario tem poder de Desconto, senao faz pergunta
+//        if PercentualDesconto < DescItemPerc then
+//        begin
+//          if Pergunta('SIM', 'Informe a Senha para Desconto?') then
+//          begin
+//            RetornoCampoUsuario := AutenticaUsuario(UsuarioAtualNome, 'USUAN2PERCDESC', RetornoUser);
+//            if RetornoCampoUsuario <> '' then
+//            begin
+//              if StrToInt(RetornoCampoUsuario) >= DescItemPerc then
+//              begin
+//                EntradaDados.Clear;
+//              end
+//              else
+//              begin
+//                Informa('Você não tem permissão de dar este percentual de desconto!');
+//                EntradaDados.Clear;
+//                PreparaEstadoBalcao(InformandoItens);
+//                AplicarDescontoItem := False;
+//                exit;
+//              end;
+//            end
+//            else
+//            begin
+//              EntradaDados.Clear;
+//              PreparaEstadoBalcao(InformandoItens);
+//              exit;
+//            end;
+//          end
+//          else
+//          begin
+//            EntradaDados.Clear;
+//            PreparaEstadoBalcao(InformandoItens);
+//            exit;
+//          end;
+//        end;
+//      end;
+//      if DescItemPerc > 0 then
+//      begin
+//        DescItemVlr := ValorItem * (DescItemPerc / 100);
+//        DescItemVlr := StrToFloat(Copy(FloatToStr(DescItemVlr), 1, Pos(',', FloatToStr(DescItemVlr)) + 2));
+//      end;
+
 end;
 
 end.

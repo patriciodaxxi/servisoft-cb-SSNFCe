@@ -3,7 +3,7 @@ unit uConsCupomItens;
 interface
 
 uses
-  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms, rsDBUtils,
   Dialogs, StdCtrls, DBCtrls, ExtCtrls, Grids, DBGrids, SMDBGrid, uDmCupomFiscal;
 
 type
@@ -28,6 +28,7 @@ type
     Label8: TLabel;
     dbtRecibo: TDBText;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure FormShow(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +46,14 @@ implementation
 procedure TfrmConsCupomItens.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
+  if fDMCupomFiscal.cdsCupomFiscal.Active then
+    fDMCupomFiscal.cdsCupomFiscal.Close;
   Close
+end;
+
+procedure TfrmConsCupomItens.FormShow(Sender: TObject);
+begin
+  oDBUtils.SetDataSourceProperties(Self, fDmCupomFiscal);
 end;
 
 end.

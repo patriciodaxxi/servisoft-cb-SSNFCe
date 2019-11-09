@@ -13,8 +13,8 @@ type
     brCancelar: TNxButton;
     Label1: TLabel;
     Label2: TLabel;
-    RxDBLookupCombo1: TRxDBLookupCombo;
-    RxDBLookupCombo2: TRxDBLookupCombo;
+    comboCor: TRxDBLookupCombo;
+    comboTamanho: TRxDBLookupCombo;
     procedure brCancelarClick(Sender: TObject);
     procedure btConfirmarClick(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
@@ -37,14 +37,28 @@ implementation
 procedure TfSel_CorTamanho.brCancelarClick(Sender: TObject);
 begin
   Close;
+  ModalResult := mrCancel;
 end;
 
 procedure TfSel_CorTamanho.btConfirmarClick(Sender: TObject);
 begin
-  fDmCupomFiscal.vIdCombinacao := RxDBLookupCombo1.KeyValue;
-  fDmCupomFiscal.vTamanho      := RxDBLookupCombo2.KeyValue;
-  fDmCupomFiscal.vCombinacao   := RxDBLookupCombo1.Text;
+  if (comboCor.Text = EmptyStr) and (fdmCupomFiscal.cdsCombinacao.RecordCount > 0) then
+  begin
+    MessageDlg('Informe uma Cor!',mtInformation,[mbOK],0);
+    comboCor.SetFocus;
+    Exit;
+  end;
+  if (comboTamanho.Text = EmptyStr) and (fdmCupomFiscal.cdsTamanho.RecordCount > 0) then
+  begin
+    MessageDlg('Informe um Tamanho!',mtInformation,[mbOK],0);
+    comboTamanho.SetFocus;
+    Exit;
+  end;
+  fDmCupomFiscal.vIdCombinacao := comboCor.KeyValue;
+  fDmCupomFiscal.vTamanho      := comboTamanho.KeyValue;
+  fDmCupomFiscal.vCombinacao   := comboCor.Text;
   Close;
+  ModalResult := mrOk;
 end;
 
 procedure TfSel_CorTamanho.FormClose(Sender: TObject;

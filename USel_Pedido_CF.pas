@@ -246,9 +246,9 @@ begin
   ffCupomFiscal2.Edit1Exit(ffCupomFiscal2);
   ffCupomFiscal2.vVlrItem := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoVLR_UNITARIO.AsFloat));
   ffCupomFiscal2.CurrencyEdit1Exit(ffCupomFiscal2);
-  ffCupomFiscal2.CurrencyEdit6.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoPERC_DESCONTO.AsFloat));
-  ffCupomFiscal2.CurrencyEdit4.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoVLR_DESCONTO.AsFloat + fDMCupomFiscal.cdsPedidoVLR_DESCONTORATEIO.AsFloat));
-  ffCupomFiscal2.CurrencyEdit4Exit(ffCupomFiscal2);
+//  ffCupomFiscal2.CurrencyEdit6.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoPERC_DESCONTO.AsFloat));
+//  ffCupomFiscal2.CurrencyEdit4.Value := StrToFloat(FormatFloat('0.0000',fDMCupomFiscal.cdsPedidoVLR_DESCONTO.AsFloat + fDMCupomFiscal.cdsPedidoVLR_DESCONTORATEIO.AsFloat));
+//  ffCupomFiscal2.CurrencyEdit4Exit(ffCupomFiscal2);
 
   if (fDMCupomFiscal.cdsParametrosEMPRESA_AMBIENTES.AsString <> 'S') and (fDMCupomFiscal.cdsPedidoTIPO_ACESSORIO.AsString <> 'T') and (fDMCupomFiscal.cdsPedidoTIPO_ACESSORIO.AsString <> 'R') then
   begin

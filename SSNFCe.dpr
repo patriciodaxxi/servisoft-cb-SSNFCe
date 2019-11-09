@@ -99,7 +99,8 @@ uses
   UDMCadFilial_Certificado in '..\ssfacil\UDMCadFilial_Certificado.pas' {DMFilial_Certificado: TDataModule},
   uConsCupomItens in 'uConsCupomItens.pas' {frmConsCupomItens},
   TelaPrecoAlterado in 'TelaPrecoAlterado.pas' {FormTelaPrecoAlterado},
-  uConsultaRapidaProduto in 'uConsultaRapidaProduto.pas' {frmConsultaRapidaProduto};
+  uConsultaRapidaProduto in 'uConsultaRapidaProduto.pas' {frmConsultaRapidaProduto},
+  uTipoDescontoItem in 'uTipoDescontoItem.pas' {frmTelaTipoDescontoItem};
 
 {$R *.res}
 
@@ -109,6 +110,7 @@ begin
   Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
+  Application.CreateForm(TfrmTelaTipoDescontoItem, frmTelaTipoDescontoItem);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
 

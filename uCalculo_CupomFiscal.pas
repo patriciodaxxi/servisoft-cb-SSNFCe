@@ -104,6 +104,8 @@ begin
 
   fDMCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsString := FormatFloat('0.00',fDMCupomFiscal.cdsCupomFiscalVLR_PRODUTOS.AsCurrency +
                                                                     vVlrTotalItem - fDMCupomFiscal.cdsCupom_ItensVLR_DESCONTO.AsFloat);
+  fDMCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsString := FormatFloat('0.00',fDMCupomFiscal.cdsCupomFiscalVLR_DESCONTO.AsCurrency + vVlrDescontoItem);
+
   //26/02/2019
   prc_Calcular_ST_Ret(fDMCupomFiscal);
   prc_Calcular_ICMS_Efet(fDMCupomFiscal);

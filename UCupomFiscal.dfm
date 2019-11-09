@@ -1,10 +1,11 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = -2
-  Top = 17
-  Width = 1460
-  Height = 825
+  Left = 22
+  Top = 4
   BorderIcons = [biSystemMenu, biMaximize]
+  BorderStyle = bsNone
   Caption = 'Emiss'#227'o Cupom Fiscal'
+  ClientHeight = 746
+  ClientWidth = 1288
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -24,14 +25,14 @@ object fCupomFiscal: TfCupomFiscal
   object Panel1: TPanel
     Left = 401
     Top = 0
-    Width = 1043
-    Height = 756
+    Width = 887
+    Height = 716
     Align = alClient
     TabOrder = 1
     object SMDBGrid2: TSMDBGrid
       Left = 1
-      Top = 592
-      Width = 1041
+      Top = 552
+      Width = 885
       Height = 110
       Align = alBottom
       Color = 12633514
@@ -104,8 +105,8 @@ object fCupomFiscal: TfCupomFiscal
     end
     object pnlDescricaoProduto: TAdvPanel
       Left = 1
-      Top = 702
-      Width = 1041
+      Top = 662
+      Width = 885
       Height = 53
       Align = alBottom
       BevelInner = bvRaised
@@ -153,8 +154,8 @@ object fCupomFiscal: TfCupomFiscal
     end
     object Panel5: TPanel
       Left = 1
-      Top = 539
-      Width = 1041
+      Top = 499
+      Width = 885
       Height = 53
       Align = alBottom
       Anchors = [akLeft, akBottom]
@@ -166,7 +167,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 59
+        Width = 60
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -260,8 +261,8 @@ object fCupomFiscal: TfCupomFiscal
     object cxGrid1: TcxGrid
       Left = 1
       Top = 1
-      Width = 1041
-      Height = 538
+      Width = 885
+      Height = 498
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -327,13 +328,13 @@ object fCupomFiscal: TfCupomFiscal
           Caption = 'Valor Unit'#225'rio'
           DataBinding.FieldName = 'VLR_UNITARIO'
           HeaderAlignmentHorz = taCenter
-          Width = 79
+          Width = 108
         end
         object cxGrid1DBTableView1VLR_DESCONTO: TcxGridDBColumn
           Caption = 'Valor Desc'
           DataBinding.FieldName = 'VLR_DESCONTO'
           HeaderAlignmentHorz = taCenter
-          Width = 74
+          Width = 80
         end
         object cxGrid1DBTableView1VLR_TOTAL: TcxGridDBColumn
           Caption = 'Valor Total'
@@ -348,8 +349,8 @@ object fCupomFiscal: TfCupomFiscal
     object pnlCaixaLivre: TPanel
       Left = 1
       Top = 1
-      Width = 1041
-      Height = 538
+      Width = 885
+      Height = 498
       Align = alClient
       Caption = 'Caixa Livre'
       Font.Charset = DEFAULT_CHARSET
@@ -365,7 +366,7 @@ object fCupomFiscal: TfCupomFiscal
     Left = 0
     Top = 0
     Width = 401
-    Height = 756
+    Height = 716
     Align = alLeft
     BevelOuter = bvNone
     Constraints.MinWidth = 380
@@ -523,125 +524,6 @@ object fCupomFiscal: TfCupomFiscal
           Text = '0,00'
           Visible = False
         end
-        object gbDesconto: TJvGroupBox
-          Left = 2
-          Top = 152
-          Width = 390
-          Height = 63
-          Align = alBottom
-          Caption = 'Desconto'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clBlue
-          Font.Height = -13
-          Font.Name = 'Verdana'
-          Font.Style = [fsBold, fsItalic]
-          ParentFont = False
-          TabOrder = 3
-          HintColor = clGradientActiveCaption
-          object Label16: TLabel
-            Left = 115
-            Top = 37
-            Width = 16
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'R$'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 3683329
-            Font.Height = -11
-            Font.Name = 'Verdana'
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
-          object Label17: TLabel
-            Left = 222
-            Top = 37
-            Width = 34
-            Height = 13
-            Alignment = taRightJustify
-            Caption = 'Valor'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 3683329
-            Font.Height = -11
-            Font.Name = 'Verdana'
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
-          object Label15: TLabel
-            Left = 9
-            Top = 37
-            Width = 14
-            Height = 13
-            Alignment = taRightJustify
-            Caption = '%'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 3683329
-            Font.Height = -11
-            Font.Name = 'Verdana'
-            Font.Style = [fsBold]
-            ParentFont = False
-          end
-          object CurrencyEdit4: TCurrencyEdit
-            Left = 134
-            Top = 25
-            Width = 73
-            Height = 25
-            AutoSize = False
-            Ctl3D = False
-            DisplayFormat = '0.00'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 5585152
-            Font.Height = -15
-            Font.Name = 'Verdana'
-            Font.Style = []
-            ParentCtl3D = False
-            ParentFont = False
-            TabOrder = 0
-            OnEnter = CurrencyEdit4Enter
-            OnExit = CurrencyEdit4Exit
-            OnKeyDown = CurrencyEdit4KeyDown
-          end
-          object CurrencyEdit6: TCurrencyEdit
-            Left = 29
-            Top = 25
-            Width = 74
-            Height = 25
-            AutoSize = False
-            Ctl3D = False
-            DecimalPlaces = 1
-            DisplayFormat = '0.0'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 5585152
-            Font.Height = -15
-            Font.Name = 'Verdana'
-            Font.Style = []
-            ParentCtl3D = False
-            ParentFont = False
-            TabOrder = 1
-            OnEnter = CurrencyEdit6Enter
-            OnExit = CurrencyEdit6Exit
-            OnKeyDown = CurrencyEdit6KeyDown
-          end
-          object CurrencyEdit7: TCurrencyEdit
-            Left = 259
-            Top = 19
-            Width = 130
-            Height = 31
-            AutoSize = False
-            Ctl3D = False
-            DisplayFormat = '0.00'
-            Font.Charset = DEFAULT_CHARSET
-            Font.Color = 5585152
-            Font.Height = -19
-            Font.Name = 'Verdana'
-            Font.Style = []
-            ParentCtl3D = False
-            ParentFont = False
-            TabOrder = 2
-            OnEnter = CurrencyEdit7Enter
-            OnExit = CurrencyEdit7Exit
-            OnKeyDown = CurrencyEdit7KeyDown
-          end
-        end
         object JvGroupBox1: TJvGroupBox
           Left = 2
           Top = 215
@@ -655,7 +537,7 @@ object fCupomFiscal: TfCupomFiscal
           Font.Name = 'Verdana'
           Font.Style = [fsBold]
           ParentFont = False
-          TabOrder = 4
+          TabOrder = 3
           HintColor = clBtnShadow
           object Label2: TLabel
             Left = 256
@@ -773,7 +655,7 @@ object fCupomFiscal: TfCupomFiscal
     end
     object Panel7: TPanel
       Left = 0
-      Top = 702
+      Top = 662
       Width = 401
       Height = 54
       Align = alBottom
@@ -902,7 +784,7 @@ object fCupomFiscal: TfCupomFiscal
       Left = 0
       Top = 399
       Width = 401
-      Height = 303
+      Height = 263
       Align = alClient
       BevelInner = bvRaised
       BorderStyle = bsSingle
@@ -950,12 +832,13 @@ object fCupomFiscal: TfCupomFiscal
         Left = 2
         Top = 2
         Width = 393
-        Height = 295
+        Height = 255
         Align = alClient
+        Center = True
         Picture.Data = {
           0B546478504E47496D61676589504E470D0A1A0A0000000D4948445200000189
           0000010F0806000000B73438780000000467414D410000B18F0BFC6105000000
-          097048597300000EBF00000EBF01380553240000FFB249444154785EECFD757C
+          097048597300000EBC00000EBC0195BC72490000FFB249444154785EECFD757C
           54E7F6360EBF7FBDEFEF797ECFF3FD7ECFA99E0A15A4A554292D2D5E6891E2EE
           EEEE4E7009C18225411212128293902021425C8821F184B8BB279000D7BBAE7B
           CF848112A0E7F49CD3F6CCFAB0D8337BF6DE33D9B2AEFB5A76FF7F6014A318C5
@@ -4229,13 +4112,14 @@ object fCupomFiscal: TfCupomFiscal
           46C906099B6CB2C9269B1A251B246CB2C9269B6C6A946C90B0C9269B6CB2A951
           B241C2269B6CB2C9A646C906099B6CB2C9269B1A21E0FF03A9E0404F7A58931D
           0000000049454E44AE426082}
+        Proportional = True
       end
     end
   end
   object JvStatusBar1: TJvStatusBar
     Left = 0
-    Top = 756
-    Width = 1444
+    Top = 716
+    Width = 1288
     Height = 30
     Panels = <
       item
