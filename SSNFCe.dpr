@@ -95,12 +95,12 @@ uses
   uXMLNFCe4_00 in 'nfce\uXMLNFCe4_00.pas',
   uNFCE_ACBr in 'nfce\uNFCE_ACBr.pas' {fNFCE_ACBR},
   uConsCupom in 'uConsCupom.pas' {frmConsCupom},
-  UCadFilial_Certificado in '..\ssfacil\UCadFilial_Certificado.pas' {frmCadFilial_Certificado},
-  UDMCadFilial_Certificado in '..\ssfacil\UDMCadFilial_Certificado.pas' {DMFilial_Certificado: TDataModule},
   uConsCupomItens in 'uConsCupomItens.pas' {frmConsCupomItens},
   TelaPrecoAlterado in 'TelaPrecoAlterado.pas' {FormTelaPrecoAlterado},
   uConsultaRapidaProduto in 'uConsultaRapidaProduto.pas' {frmConsultaRapidaProduto},
-  uTipoDescontoItem in 'uTipoDescontoItem.pas' {frmTelaTipoDescontoItem};
+  uTipoDescontoItem in 'uTipoDescontoItem.pas' {frmTelaTipoDescontoItem},
+  UDMCadFilial_Certificado in 'UDMCadFilial_Certificado.pas' {DMFilial_Certificado: TDataModule},
+  UCadFilial_Certificado in 'UCadFilial_Certificado.pas' {frmCadFilial_Certificado};
 
 {$R *.res}
 
@@ -110,7 +110,6 @@ begin
   Application.CreateForm(TdmDatabase, dmDatabase);
   Application.CreateForm(TfMenu, fMenu);
   Application.CreateForm(TfMenu1, fMenu1);
-  Application.CreateForm(TfrmTelaTipoDescontoItem, frmTelaTipoDescontoItem);
   fMenu1.FormStyle := fsMDIChild;
   fMenu1.Show;
 

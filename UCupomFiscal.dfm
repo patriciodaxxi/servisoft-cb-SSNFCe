@@ -167,7 +167,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 60
+        Width = 59
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -560,6 +560,7 @@ object fCupomFiscal: TfCupomFiscal
             Top = 28
             Width = 232
             Height = 46
+            TabStop = False
             Color = 12633514
             Ctl3D = False
             DataField = 'VLR_TOTAL'
@@ -578,6 +579,7 @@ object fCupomFiscal: TfCupomFiscal
             Top = 45
             Width = 125
             Height = 29
+            TabStop = False
             Color = 12633514
             Ctl3D = False
             DataField = 'VLR_DESCONTO'

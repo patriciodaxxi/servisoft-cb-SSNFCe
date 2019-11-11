@@ -3,7 +3,7 @@ object frmCadFilial_Certificado: TfrmCadFilial_Certificado
   Top = 81
   Width = 849
   Height = 613
-  Caption = 'Cadastro de Contas (Bancos)'
+  Caption = 'Cadastro de Certificado'
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -22,7 +22,7 @@ object frmCadFilial_Certificado: TfrmCadFilial_Certificado
     Left = 0
     Top = 0
     Width = 833
-    Height = 557
+    Height = 556
     ActivePage = TS_Cadastro
     ActivePageDefault = TS_Consulta
     Align = alClient
@@ -40,7 +40,7 @@ object frmCadFilial_Certificado: TfrmCadFilial_Certificado
         Left = 0
         Top = 63
         Width = 829
-        Height = 471
+        Height = 470
         Align = alClient
         Ctl3D = False
         DataSource = DMFilial_Certificado.dsFilial_Certificado
@@ -770,7 +770,7 @@ object frmCadFilial_Certificado: TfrmCadFilial_Certificado
         Left = 0
         Top = 30
         Width = 829
-        Height = 504
+        Height = 503
         ActivePage = TS_Dados
         ActivePageDefault = TS_Dados
         Align = alClient
@@ -783,7 +783,7 @@ object frmCadFilial_Certificado: TfrmCadFilial_Certificado
             Left = 0
             Top = 0
             Width = 825
-            Height = 481
+            Height = 480
             Align = alClient
             Enabled = False
             TabOrder = 0
@@ -988,7 +988,7 @@ object frmCadFilial_Certificado: TfrmCadFilial_Certificado
   end
   object stat1: TStatusBar
     Left = 0
-    Top = 557
+    Top = 556
     Width = 833
     Height = 18
     Panels = <

@@ -406,6 +406,8 @@ begin
     prc_Calcular_IPI;
     vSubTotal := StrToFloat(FormatFloat('0.00', vVlrItem * CurrencyEdit1.Value));
   end;
+  if (Edit1.Text = EmptyStr) and (CurrencyEdit1.Value > 0) then
+    Edit1.SetFocus;
 end;
 
 procedure TfCupomFiscal.RxDBLookupCombo2Exit(Sender: TObject);

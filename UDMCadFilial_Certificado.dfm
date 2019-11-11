@@ -1,8 +1,8 @@
 object DMFilial_Certificado: TDMFilial_Certificado
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 325
-  Top = 198
+  Left = 412
+  Top = 312
   Height = 328
   Width = 507
   object sdsFilial_Certificado: TSQLDataSet
