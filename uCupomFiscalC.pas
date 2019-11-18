@@ -732,10 +732,10 @@ begin
 //        Raise Exception.Create('Cupom Fiscal não é o último!');
     end;
 
-    fDmCupomFiscal.Excluir_Duplicata;
-    fDmCupomFiscal.Excluir_ExtComissao;
-    fDmCupomFiscal.prc_Excluir_Financeiro;
-    fDmCupomFiscal.prc_Excluir_Movimento;
+//    fDmCupomFiscal.Excluir_Duplicata;
+//    fDmCupomFiscal.Excluir_ExtComissao;
+//    fDmCupomFiscal.prc_Excluir_Financeiro;
+//    fDmCupomFiscal.prc_Excluir_Movimento;
 
     fDmCupomFiscal.prcExcluir;
 

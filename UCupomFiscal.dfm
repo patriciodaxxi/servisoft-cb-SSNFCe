@@ -1,11 +1,11 @@
 object fCupomFiscal: TfCupomFiscal
-  Left = 22
-  Top = 4
+  Left = -8
+  Top = -8
   BorderIcons = [biSystemMenu, biMaximize]
   BorderStyle = bsNone
   Caption = 'Emiss'#227'o Cupom Fiscal'
-  ClientHeight = 746
-  ClientWidth = 1288
+  ClientHeight = 706
+  ClientWidth = 1366
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -25,14 +25,14 @@ object fCupomFiscal: TfCupomFiscal
   object Panel1: TPanel
     Left = 401
     Top = 0
-    Width = 887
-    Height = 716
+    Width = 965
+    Height = 676
     Align = alClient
     TabOrder = 1
     object SMDBGrid2: TSMDBGrid
       Left = 1
-      Top = 552
-      Width = 885
+      Top = 512
+      Width = 963
       Height = 110
       Align = alBottom
       Color = 12633514
@@ -105,8 +105,8 @@ object fCupomFiscal: TfCupomFiscal
     end
     object pnlDescricaoProduto: TAdvPanel
       Left = 1
-      Top = 662
-      Width = 885
+      Top = 622
+      Width = 963
       Height = 53
       Align = alBottom
       BevelInner = bvRaised
@@ -154,8 +154,8 @@ object fCupomFiscal: TfCupomFiscal
     end
     object Panel5: TPanel
       Left = 1
-      Top = 499
-      Width = 885
+      Top = 459
+      Width = 963
       Height = 53
       Align = alBottom
       Anchors = [akLeft, akBottom]
@@ -167,7 +167,7 @@ object fCupomFiscal: TfCupomFiscal
       object Label18: TLabel
         Left = 28
         Top = 13
-        Width = 59
+        Width = 60
         Height = 13
         Caption = 'Vendedor:'
         Font.Charset = DEFAULT_CHARSET
@@ -261,8 +261,8 @@ object fCupomFiscal: TfCupomFiscal
     object cxGrid1: TcxGrid
       Left = 1
       Top = 1
-      Width = 885
-      Height = 498
+      Width = 963
+      Height = 458
       Align = alClient
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
@@ -349,8 +349,8 @@ object fCupomFiscal: TfCupomFiscal
     object pnlCaixaLivre: TPanel
       Left = 1
       Top = 1
-      Width = 885
-      Height = 498
+      Width = 963
+      Height = 458
       Align = alClient
       Caption = 'Caixa Livre'
       Font.Charset = DEFAULT_CHARSET
@@ -361,12 +361,159 @@ object fCupomFiscal: TfCupomFiscal
       ParentFont = False
       TabOrder = 4
     end
+    object pnlMenu: TPanel
+      Left = 964
+      Top = 1
+      Width = 0
+      Height = 458
+      Align = alRight
+      BevelOuter = bvNone
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clRed
+      Font.Height = -67
+      Font.Name = 'Verdana'
+      Font.Style = [fsBold, fsItalic]
+      ParentFont = False
+      TabOrder = 5
+      object GradientLabel1: TGradientLabel
+        Left = 8
+        Top = 16
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'CTRL + C = Cancela Cupom Eletr'#244'nico'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+      object GradientLabel2: TGradientLabel
+        Left = 8
+        Top = 35
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'CTRL + S = Sair do Cupom'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+      object GradientLabel3: TGradientLabel
+        Left = 8
+        Top = 54
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'F4 - Consulta Produto'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+      object GradientLabel4: TGradientLabel
+        Left = 8
+        Top = 74
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'F10 - Finaliza a Venda'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+      object GradientLabel5: TGradientLabel
+        Left = 8
+        Top = 93
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'F11 - Consulta Cupons Emitidos'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+      object GradientLabel6: TGradientLabel
+        Left = 8
+        Top = 112
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'ESC - Sair'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+    end
   end
   object Panel2: TPanel
     Left = 0
     Top = 0
     Width = 401
-    Height = 716
+    Height = 676
     Align = alLeft
     BevelOuter = bvNone
     Constraints.MinWidth = 380
@@ -657,8 +804,8 @@ object fCupomFiscal: TfCupomFiscal
     end
     object Panel7: TPanel
       Left = 0
-      Top = 662
-      Width = 401
+      Top = 622
+      Width = 400
       Height = 54
       Align = alBottom
       Color = 3683329
@@ -786,7 +933,7 @@ object fCupomFiscal: TfCupomFiscal
       Left = 0
       Top = 399
       Width = 401
-      Height = 263
+      Height = 223
       Align = alClient
       BevelInner = bvRaised
       BorderStyle = bsSingle
@@ -834,7 +981,7 @@ object fCupomFiscal: TfCupomFiscal
         Left = 2
         Top = 2
         Width = 393
-        Height = 255
+        Height = 215
         Align = alClient
         Center = True
         Picture.Data = {
@@ -4120,8 +4267,8 @@ object fCupomFiscal: TfCupomFiscal
   end
   object JvStatusBar1: TJvStatusBar
     Left = 0
-    Top = 716
-    Width = 1288
+    Top = 676
+    Width = 1366
     Height = 30
     Panels = <
       item
@@ -4139,7 +4286,14 @@ object fCupomFiscal: TfCupomFiscal
       item
         Alignment = taCenter
         Text = 'Empresa'
-        Width = 200
+        Width = 550
+      end
+      item
+        Alignment = taRightJustify
+        BiDiMode = bdRightToLeft
+        ParentBiDiMode = False
+        Text = 'F1 - Menu'
+        Width = 50
       end>
   end
   object ACBrBAL1: TACBrBAL

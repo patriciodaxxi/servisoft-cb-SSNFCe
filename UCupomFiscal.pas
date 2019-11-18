@@ -15,7 +15,7 @@ uses
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
   dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxLookAndFeels,
-  dxGDIPlusClasses;
+  dxGDIPlusClasses, GradientLabel;
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
 
@@ -75,6 +75,13 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     pnlCaixaLivre: TPanel;
+    pnlMenu: TPanel;
+    GradientLabel1: TGradientLabel;
+    GradientLabel2: TGradientLabel;
+    GradientLabel3: TGradientLabel;
+    GradientLabel4: TGradientLabel;
+    GradientLabel5: TGradientLabel;
+    GradientLabel6: TGradientLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Edit1Exit(Sender: TObject);
@@ -476,6 +483,14 @@ procedure TfCupomFiscal.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShif
 begin
   if not (Panel4.Enabled) then
     Exit;
+
+  if (Key = Vk_F1) then
+  begin
+    if pnlMenu.width = 0 then
+      pnlMenu.width := 250
+    else
+      pnlMenu.width := 0;
+  end;
 
   if (Key = Vk_F2) then
   begin
