@@ -17,7 +17,6 @@ type
     Panel2: TPanel;
     SMDBGrid1: TSMDBGrid;
     brCancelar: TNxButton;
-    btConfirmar: TNxButton;
     btGaveta: TNxButton;
     Label13: TLabel;
     RxDBLookupCombo4: TRxDBLookupCombo;
@@ -72,6 +71,7 @@ type
     Label2: TLabel;
     ceFormaPgto: TCurrencyEdit;
     RxDBLookupCombo3: TRxDBLookupCombo;
+    btConfirmar: TNxButton;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure DBEdit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure DBEdit1Exit(Sender: TObject);
@@ -162,7 +162,8 @@ implementation
 
 //---------------TROCAR IMPRESSORA
 uses UCupomFiscalCli, UCupomFiscalC, ACBrECF, DmdDatabase, uUtilPadrao, uCupomFiscalParcela, uUtilCliente, USel_Pessoa,
-  uCalculo_CupomFiscal, UConsPessoa_Fin, uCupomCliente, uCupomDadosCli, UCupomFiscal, USenha;
+  uCalculo_CupomFiscal, UConsPessoa_Fin, uCupomCliente, uCupomDadosCli, UCupomFiscal, USenha,
+  uGrava_Erro;
 
 {$R *.dfm}
 
@@ -482,7 +483,7 @@ end;
 procedure TfCupomFiscalPgto.btConfirmarClick(Sender: TObject);
 var
   vGravar_Aux: Boolean;
-  vGeraNFCe: Boolean;
+  vGeraNFCe, vGravar_OK : Boolean;
   vAux: Integer;
   vIdCupom: Integer;
   vMSGAux: String;
@@ -559,7 +560,7 @@ begin
       Exit;
     end;
   end;
-
+  vGravar_OK := False;
   if fDmCupomFiscal.vID_Fechamento > 0 then
     fDmCupomFiscal.cdsCupomFiscalID_FECHAMENTO.AsInteger := fDmCupomFiscal.vID_Fechamento;
 
@@ -633,12 +634,16 @@ begin
         fDmCupomFiscal.cdsCupomFiscalTIPO.AsString := 'CNF';
       end;
     end;
-
-    fDmCupomFiscal.vEncerrado := True;
+    vIdCupom := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;
 
     if fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit,dsInsert] then
       fDmCupomFiscal.cdsCupomFiscal.Post;
-    fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0);
+
+    if fDmCupomFiscal.cdsCupomFiscal.ApplyUpdates(0) <= 0 then
+    begin
+      vGravar_OK := True;
+      fDmCupomFiscal.vEncerrado := True;
+    end;
 
     if fDmCupomFiscal.cdsParametrosGRAVAR_CONSUMO_NOTA.AsString = 'S' then
       fDmCupomFiscal.cdsCupomFiscal_ProdPrincipal.ApplyUpdates(0);
@@ -649,6 +654,12 @@ begin
                              //#13 + #13 'Feche o programa e abra novamente!');
                              #13 + #13 + 'Favor confirmar novamente e verificar se o cupom foi enviado corretamente!');
     end;
+  end;
+  if not vGravar_OK then
+  begin
+    fDmCupomFiscal.cdsCupomFiscal.Edit;
+    RzPageControl1.ActivePageIndex := 0;
+    exit;
   end;
 
   vIdCupom := fDmCupomFiscal.cdsCupomFiscalID.AsInteger;

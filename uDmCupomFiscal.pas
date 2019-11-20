@@ -1671,6 +1671,9 @@ type
     procedure cdsCupomFiscalBeforePost(DataSet: TDataSet);
     procedure cdsCupomFiscalNewRecord(DataSet: TDataSet);
     procedure cdsParametrosBeforePost(DataSet: TDataSet);
+    procedure cdsCupomFiscalReconcileError(DataSet: TCustomClientDataSet;
+      E: EReconcileError; UpdateKind: TUpdateKind;
+      var Action: TReconcileAction);
   private
     { Private declarations }
     ctCupomFiscal: String;
@@ -1804,7 +1807,8 @@ const
 
 implementation
 
-uses DmdDatabase, uImpFiscal_Bematech, uImpFiscal_Daruma, uUtilDaruma, uUtilBematech, LogProvider;
+uses DmdDatabase, uImpFiscal_Bematech, uImpFiscal_Daruma, uUtilDaruma, uUtilBematech, LogProvider,
+  uGrava_Erro;
 
 {$R *.dfm}
 
@@ -3599,6 +3603,16 @@ begin
   else
     vCpfOK := True;
 
+procedure TdmCupomFiscal.cdsCupomFiscalReconcileError(
+  DataSet: TCustomClientDataSet; E: EReconcileError;
+  UpdateKind: TUpdateKind; var Action: TReconcileAction);
+begin
+  MessageDlg('Erro Gravando Cupom: ' + e.Message,mtError,[mbOK],0);
+  prc_Gravar('CUPOMFISCAL',
+             'uCupomFiscalPgto',
+             'cupom nº ' + IntToStr(cdsCupomFiscalID.AsInteger) + ' ' + e.Message,
+             FormatDateTime('dd/mm/yyyy',Date),
+             FormatDateTime('hh:mm',Time));
 end;
 
 end.

@@ -295,6 +295,8 @@ object dmCupomFiscal: TdmCupomFiscal
     BeforePost = cdsCupomFiscalBeforePost
     OnNewRecord = cdsCupomFiscalNewRecord
     Left = 96
+    OnReconcileError = cdsCupomFiscalReconcileError
+    Left = 120
     Top = 8
     object cdsCupomFiscalID: TIntegerField
       FieldName = 'ID'
