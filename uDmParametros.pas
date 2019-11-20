@@ -75,6 +75,8 @@ type
     cdsCupomParametrosUSA_PRECO_REVENDA: TStringField;
     sdsCupomParametrosGERAR_CRECEBER: TStringField;
     cdsCupomParametrosGERAR_CRECEBER: TStringField;
+    sdsCupomParametrosSOLICITA_CPF: TStringField;
+    cdsCupomParametrosSOLICITA_CPF: TStringField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }

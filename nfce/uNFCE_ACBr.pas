@@ -43,7 +43,7 @@ type
     procedure btEnviarNovoClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
-    procedure FormKeyDown(Sender: TObject; var Key: Word;
+    procedure documento(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure btCancelarClick(Sender: TObject);
     procedure btImprimirClick(Sender: TObject);
@@ -165,6 +165,8 @@ begin
 
     if copy(vDocumento, 1, 8) <> '00000000' then
       Dest.CNPJCPF := vDocumento;
+
+    Dest.CNPJCPF := vDocumentoClienteVenda;
 
 //    if vTipo_Ambiente_NFe = 2 then
 //      Dest.xNome := 'NF-E EMITIDA EM AMBIENTE DE HOMOLOGACAO - SEM VALOR FISCAL'
@@ -927,7 +929,7 @@ begin
   Result := Ord(Tipo);
 end;
 
-procedure TfNFCE_ACBR.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TfNFCE_ACBR.documento(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if (Shift = [ssCtrl]) and (Key = 87) then

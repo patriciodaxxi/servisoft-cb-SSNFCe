@@ -68,6 +68,7 @@ type
     fDmCupomFiscal: TDmCupomFiscal;
     ffrmConsCupomItens : TfrmConsCupomItens;
     vCancelar : Boolean;
+    vExcluir : Boolean;
   end;
 
 var
@@ -89,6 +90,11 @@ begin
   ComboTerminal.KeyValue := vTerminal;
   if vCancelar then
     btnEnviar.Caption := 'Cancelar NFCe';
+  if vExcluir then
+  begin
+    btnEnviar.Caption := 'Excluir';
+    btnEnviar.Glyph := nil;
+  end;
   btnConsultarClick(Sender);
 end;
 
@@ -133,6 +139,38 @@ begin
     btnConsultarClick(Sender);
   end
   else
+  if vExcluir then
+  begin
+    if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO_CANCELADA.AsString) <> EmptyStr then
+    begin
+      MessageDlg('*** Cupom já cancelado!', mtInformation, [mbOk], 0);
+      exit;
+    end;
+    if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString) <> EmptyStr then
+    begin
+      MessageDlg('*** Cupom já enviado!', mtInformation, [mbOk], 0);
+      exit;
+    end;
+
+    NumCupom := IntToStr(fDmCupomFiscal.cdsCupom_ConsNUMCUPOM.AsInteger);
+    if MessageDlg('Tem certeza que deseja cancelar o Cupom Nº: ' + NumCupom,mtConfirmation,[mbYes,mbNo],0) = mrNo then
+      Exit;
+    fNFCE_ACBr.fdmCupomFiscal := fDmCupomFiscal;
+    fNFCE_ACBr.vID_Cupom_Novo := fDmCupomFiscal.cdsCupom_ConsID.AsInteger;
+    fNFCE_ACBr.ComboAmbiente.ItemIndex := StrToIntDef(fdmCupomFiscal.cdsFilialNFCEPRODUCAO.AsString,1) - 1;
+    fDmCupomFiscal.cdsCupomFiscal.Close;
+    try
+      fNFCE_ACBr.btCancelarClick(Sender);
+    except
+      on E : Exception do
+      begin
+        ShowMessage('Erro: ' + e.Message);
+      end;
+    end;
+    btnConsultarClick(Sender);
+  end
+  else
+
   begin
     try
       if trim(fDMCupomFiscal.cdsCupom_ConsNFEPROTOCOLO.AsString) <> EmptyStr then

@@ -5,7 +5,8 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr,
   ACBrDFeReport, ACBrDFeDANFeReport, ACBrNFeDANFEClass, ACBrNFeDANFeESCPOS,
-  ACBrPosPrinter, ACBrBase, ACBrDFe, ACBrNFe, ACBrNFeDANFeRLClass;
+  ACBrPosPrinter, ACBrBase, ACBrDFe, ACBrNFe, ACBrNFeDANFeRLClass,
+  ACBrValidador;
 
 type
   TDMNFCe = class(TDataModule)

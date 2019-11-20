@@ -5,7 +5,7 @@ interface
 uses
   SysUtils, Classes, FMTBcd, DB, DBClient, Provider, SqlExpr, UDMCadExtComissao, UDMGravarFinanceiro, StdConvs, StrUtils,
   Printers, logTypes, uUtilPadrao, Graphics, ACBrBarCode, frxClass, frxDBSet, frxBarcode, Windows, Messages, ACBrBase, ACBrBAL,
-  ACBrDevice, Dialogs, ExtCtrls, IniFiles;
+  ACBrDevice, Dialogs, ExtCtrls, IniFiles, ACBrValidador;
 
 type
   TdmCupomFiscal = class(TDataModule)
@@ -1512,6 +1512,159 @@ type
     SQLQuery2: TSQLQuery;
     sdsCupomParametrosGERAR_CRECEBER: TStringField;
     cdsCupomParametrosGERAR_CRECEBER: TStringField;
+    sdsGrupo: TSQLDataSet;
+    dspGrupo: TDataSetProvider;
+    cdsGrupo: TClientDataSet;
+    dsGrupo: TDataSource;
+    sdsGrupoID: TIntegerField;
+    sdsGrupoNOME: TStringField;
+    sdsGrupoCODIGO: TStringField;
+    cdsGrupoID: TIntegerField;
+    cdsGrupoNOME: TStringField;
+    cdsGrupoCODIGO: TStringField;
+    sdsConsProduto: TSQLDataSet;
+    dspConsProduto: TDataSetProvider;
+    cdsConsProduto: TClientDataSet;
+    dsConsProduto: TDataSource;
+    cdsConsProdutoID: TIntegerField;
+    cdsConsProdutoREFERENCIA: TStringField;
+    cdsConsProdutoNOME: TStringField;
+    cdsConsProdutoCOD_BARRA: TStringField;
+    cdsConsProdutoPRECO_VENDA: TFloatField;
+    cdsConsProdutoPESOLIQUIDO: TFloatField;
+    cdsConsProdutoPESOBRUTO: TFloatField;
+    cdsConsProdutoINATIVO: TStringField;
+    cdsConsProdutoID_CSTIPI: TIntegerField;
+    cdsConsProdutoPERC_IPI: TFloatField;
+    cdsConsProdutoPRECO_CUSTO: TFloatField;
+    cdsConsProdutoTIPO_REG: TStringField;
+    cdsConsProdutoPOSSE_MATERIAL: TStringField;
+    cdsConsProdutoESTOQUE: TStringField;
+    cdsConsProdutoMATERIAL_OUTROS: TStringField;
+    cdsConsProdutoUSUARIO: TStringField;
+    cdsConsProdutoDTCAD: TDateField;
+    cdsConsProdutoHRCAD: TTimeField;
+    cdsConsProdutoCA: TStringField;
+    cdsConsProdutoCOMPLEMENTO: TStringField;
+    cdsConsProdutoID_NCM: TIntegerField;
+    cdsConsProdutoORIGEM_PROD: TStringField;
+    cdsConsProdutoOBS: TMemoField;
+    cdsConsProdutoCODSITCF: TStringField;
+    cdsConsProdutoPERC_REDUCAOICMS: TFloatField;
+    cdsConsProdutoTIPO_VENDA: TStringField;
+    cdsConsProdutoPERC_MARGEMLUCRO: TFloatField;
+    cdsConsProdutoUNIDADE: TStringField;
+    cdsConsProdutoDT_ALTPRECO: TDateField;
+    cdsConsProdutoLOCALIZACAO: TStringField;
+    cdsConsProdutoID_GRUPO: TIntegerField;
+    cdsConsProdutoID_SUBGRUPO: TIntegerField;
+    cdsConsProdutoID_MARCA: TIntegerField;
+    cdsConsProdutoID_FORNECEDOR: TIntegerField;
+    cdsConsProdutoPERC_IMPORTACAO: TFloatField;
+    cdsConsProdutoCOD_ANT: TStringField;
+    cdsConsProdutoPERC_REDUCAOICMSSUBST: TFloatField;
+    cdsConsProdutoUSA_GRADE: TStringField;
+    cdsConsProdutoID_GRADE: TIntegerField;
+    cdsConsProdutoUSA_PERC_IMP_INTERESTADUAL: TStringField;
+    cdsConsProdutoIMPRIMIR_ETIQUETA_NAV: TStringField;
+    cdsConsProdutoCARIMBO: TStringField;
+    cdsConsProdutoPERC_QUEBRAMAT: TFloatField;
+    cdsConsProdutoSPED_TIPO_ITEM: TStringField;
+    cdsConsProdutoQTD_ESTOQUE_MIN: TFloatField;
+    cdsConsProdutoPERC_PIS: TFloatField;
+    cdsConsProdutoPERC_COFINS: TFloatField;
+    cdsConsProdutoPERC_ICMS_IMP: TFloatField;
+    cdsConsProdutoPERC_IPI_IMP: TFloatField;
+    cdsConsProdutoREFERENCIA_PADRAO: TStringField;
+    cdsConsProdutoNUM_FCI: TStringField;
+    cdsConsProdutoPERC_USADO_FCI: TFloatField;
+    cdsConsProdutoNCM_EX: TStringField;
+    cdsConsProdutoID_SITTRIB_CF: TIntegerField;
+    cdsConsProdutoID_CLIENTE: TIntegerField;
+    cdsConsProdutoPRECO_REVENDA: TFMTBCDField;
+    cdsConsProdutoPRECO_INDUSTRIALIZACAO: TFMTBCDField;
+    cdsConsProdutoPRECO_CONSUMO: TFMTBCDField;
+    cdsConsProdutoFOTO: TStringField;
+    cdsConsProdutoREFERENCIA_SEQ: TIntegerField;
+    cdsConsProdutoID_COR: TIntegerField;
+    cdsConsProdutoCALCULAR_2_LADOS: TStringField;
+    cdsConsProdutoPERC_VIDRO: TFloatField;
+    cdsConsProdutoID_LINHA: TIntegerField;
+    cdsConsProdutoID_CFOP_NFCE: TIntegerField;
+    cdsConsProdutoUSA_PRECO_COR: TStringField;
+    cdsConsProdutoUSA_COR: TStringField;
+    cdsConsProdutoTRANSFER: TStringField;
+    cdsConsProdutoPRECO_CUSTO_TOTAL: TFloatField;
+    cdsConsProdutoID_CONTA_ORCAMENTO: TIntegerField;
+    cdsConsProdutoID_LOCAL_ESTOQUE_PROD: TIntegerField;
+    cdsConsProdutoPERC_COMISSAO: TFloatField;
+    cdsConsProdutoID_ENQIPI: TIntegerField;
+    cdsConsProdutoLANCA_LOTE_CONTROLE: TStringField;
+    cdsConsProdutoCOD_CEST: TStringField;
+    cdsConsProdutoPICTOGRAMA: TStringField;
+    cdsConsProdutoPICTO_CABEDAL: TStringField;
+    cdsConsProdutoPICTO_INTERIOR: TStringField;
+    cdsConsProdutoPICTO_SOLA: TStringField;
+    cdsConsProdutoCOD_PRODUTO_CLI: TStringField;
+    cdsConsProdutoFILIAL: TIntegerField;
+    cdsConsProdutoBAIXA_ESTOQUE_MAT: TStringField;
+    cdsConsProdutoCOD_JUSTNEW: TIntegerField;
+    cdsConsProdutoNOME_ORIGINAL: TStringField;
+    cdsConsProdutoIMP_ROTULO: TStringField;
+    cdsConsProdutoNUM_MS: TStringField;
+    cdsConsProdutoIMP_CONSUMO_NFE: TStringField;
+    cdsConsProdutoGERAR_FCI: TStringField;
+    cdsConsProdutoMEDIDA: TStringField;
+    cdsConsProdutoQTD_EMBALAGEM: TFloatField;
+    cdsConsProdutoDT_ALT_PRECOCUSTO: TDateField;
+    cdsConsProdutoUSA_CARIMBO_OC: TStringField;
+    cdsConsProdutoUSA_NA_BALANCA: TStringField;
+    cdsConsProdutoMENSAGEM: TStringField;
+    cdsConsProdutoPERC_DESC_MAX: TFloatField;
+    cdsConsProdutoID_CSTICMS_BRED: TIntegerField;
+    cdsConsProdutoTIPO_MAT: TStringField;
+    cdsConsProdutoID_PROCESSO_GRUPO: TIntegerField;
+    cdsConsProdutoTIPO_PRODUCAO: TStringField;
+    cdsConsProdutoCRIADO_OS: TStringField;
+    cdsConsProdutoID_MATERIAL_CRU: TIntegerField;
+    cdsConsProdutoID_FORMA: TIntegerField;
+    cdsConsProdutoTAMANHO: TStringField;
+    cdsConsProdutoTESTE: TStringField;
+    cdsConsProdutoPRECO_LIQ: TFloatField;
+    cdsConsProdutoUSA_CLIQ: TStringField;
+    cdsConsProdutoQTD_PECA_EMB: TIntegerField;
+    cdsConsProdutoLARGURA: TFloatField;
+    cdsConsProdutoALTURA: TFloatField;
+    cdsConsProdutoESPESSURA: TFloatField;
+    cdsConsProdutoMULTIPLICADOR: TFloatField;
+    cdsConsProdutoREF2: TStringField;
+    cdsConsProdutoFATOR_CALCULO: TFloatField;
+    cdsConsProdutoREF_ORD: TStringField;
+    cdsConsProdutoGERAR_WEB: TStringField;
+    cdsConsProdutoTAM_CALC: TFloatField;
+    cdsConsProdutoCOD_BARRA2: TStringField;
+    cdsConsProdutoPOSSUE_LADO: TStringField;
+    cdsConsProdutoUNIDADE2: TStringField;
+    cdsConsProdutoCAIXINHA: TStringField;
+    cdsConsProdutoSEPARA_COR: TStringField;
+    cdsConsProdutoVALIDADE: TSmallintField;
+    cdsConsProdutoID_CSTICMS: TIntegerField;
+    cdsConsProdutoNOME_MODELO: TStringField;
+    cdsConsProdutoDESC_MAXIMO: TFloatField;
+    cdsConsProdutoQTD_POR_ROTULO: TFloatField;
+    cdsConsProdutoPERC_ICMS_NFCE: TFloatField;
+    cdsConsProdutoTIPO_ALGODAO: TStringField;
+    cdsConsProdutoCALCULAR_ST: TStringField;
+    cdsConsProdutoPRECO_CUSTO_ANT: TFloatField;
+    cdsConsProdutoTIPO: TStringField;
+    cdsConsProdutoCODIGO: TStringField;
+    cdsConsProdutoNIVEL: TIntegerField;
+    cdsConsProdutoSUPERIOR: TStringField;
+    cdsConsProdutoCOD_PRINCIPAL: TIntegerField;
+    cdsConsProdutoTIPO_PROD: TStringField;
+    sdsCupomParametrosSOLICITA_CPF: TStringField;
+    cdsCupomParametrosSOLICITA_CPF: TStringField;
+    ACBrValidador: TACBrValidador;
     procedure DataModuleCreate(Sender: TObject);
     procedure mCupomBeforeDelete(DataSet: TDataSet);
     procedure cdsPedidoCalcFields(DataSet: TDataSet);
@@ -1528,7 +1681,7 @@ type
     procedure prc_Gravar_Financeiro(Tipo: String);//ENT=Entrada   AVI= Avista
   public
     { Public declarations }
-    ctCondPgto, ctProduto: String;
+    ctCondPgto, ctProduto, ctConsProduto : String;
     ctCupomFiscal_ProdPrincipal: String;
     ctConsCupom : String;
     ctPedido, ctDuplicata: String;
@@ -1597,6 +1750,7 @@ type
     procedure SetDefaultPrinter(PrinterName: String);
 
     procedure ImpCarne(vTipo: String);
+    procedure prc_Digita_Documento;
 
     function fnc_Buscar_Regra_CFOP(ID_CFOP: Integer): Integer;
     procedure prc_Mover_CST;
@@ -1726,6 +1880,7 @@ begin
   ctPedido      := sdsPedido.CommandText;
   ctqIBPT       := qIBPT.SQL.Text;
   ctProduto     := sdsProduto.CommandText;
+  ctConsProduto := sdsConsProduto.CommandText;
   ctDuplicata   := sdsDuplicata.CommandText;
   ctTotais      := sdsTotais.CommandText;
   ctConsCupom   := sdsCupom_Cons.CommandText;
@@ -3397,6 +3552,53 @@ begin
   sds_prc_Grava_Estoque.ParamByName('ID_DOCUMENTO').AsInteger := ID_Cupom;
   sds_prc_Grava_Estoque.ParamByName('TIPO').AsString := Tipo;
   sds_prc_Grava_Estoque.ExecSQL;
+end;
+
+procedure TdmCupomFiscal.prc_Digita_Documento;
+begin
+  if vDocumentoClienteVenda = '' then
+  begin
+    repeat
+      vCpfOK := False;
+      if (not vCpfOK) then
+        vDocumentoClienteVenda := InputBox('Documento Cliente!', 'Informar CPF/CNPJ no Cupom?', vDocumentoClienteVenda);
+      if vDocumentoClienteVenda <> '' then
+      begin
+        if length(vDocumentoClienteVenda) = 11 then
+        begin
+          ACBrValidador.TipoDocto := TACBrValTipoDocto(docCPF);
+          ACBrValidador.Documento := vDocumentoClienteVenda;
+
+          if ACBrValidador.Validar then
+          begin
+            vCpfOK := True;
+            vDocumentoClienteVenda := ACBrValidador.Formatar;
+          end
+          else
+            ShowMessage('ERRO: O CPF DIGITADO É INVÁLIDO!');
+        end
+        else
+        if length(vDocumentoClienteVenda) = 14 then
+        begin
+          ACBrValidador.TipoDocto := TACBrValTipoDocto(docCNPJ);
+          ACBrValidador.Documento := vDocumentoClienteVenda;
+          if ACBrValidador.Validar then
+          begin
+            vCpfOK := True;
+            vDocumentoClienteVenda := ACBrValidador.Formatar;
+          end
+          else
+            ShowMessage('ERRO: O CNPJ DIGITADO É INVÁLIDO!');
+        end;
+      end;
+      if vDocumentoClienteVenda = '' then
+        vCpfOK := True;
+    until
+      vCpfOK;
+  end
+  else
+    vCpfOK := True;
+
 end;
 
 end.

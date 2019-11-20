@@ -54,9 +54,13 @@ begin
     comboTamanho.SetFocus;
     Exit;
   end;
-  fDmCupomFiscal.vIdCombinacao := comboCor.KeyValue;
-  fDmCupomFiscal.vTamanho      := comboTamanho.KeyValue;
-  fDmCupomFiscal.vCombinacao   := comboCor.Text;
+  if fdmCupomFiscal.cdsCombinacaoID_COR_COMBINACAO.AsInteger > 0 then
+  begin
+    fDmCupomFiscal.vCombinacao   := comboCor.Text;
+    fDmCupomFiscal.vIdCombinacao := comboCor.KeyValue;
+  end;
+  if fdmCupomFiscal.cdsTamanhoTAMANHO.AsString <> EmptyStr then
+    fDmCupomFiscal.vTamanho      := comboTamanho.KeyValue;
   Close;
   ModalResult := mrOk;
 end;

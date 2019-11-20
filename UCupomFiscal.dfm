@@ -443,7 +443,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel4: TGradientLabel
         Left = 8
-        Top = 74
+        Top = 91
         Width = 289
         Height = 17
         AutoSize = False
@@ -465,7 +465,7 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel5: TGradientLabel
         Left = 8
-        Top = 93
+        Top = 110
         Width = 289
         Height = 17
         AutoSize = False
@@ -487,11 +487,33 @@ object fCupomFiscal: TfCupomFiscal
       end
       object GradientLabel6: TGradientLabel
         Left = 8
-        Top = 112
+        Top = 129
         Width = 289
         Height = 17
         AutoSize = False
         Caption = 'ESC - Sair'
+        Font.Charset = DEFAULT_CHARSET
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Verdana'
+        Font.Style = [fsBold]
+        ParentFont = False
+        ColorTo = clWhite
+        EllipsType = etNone
+        GradientType = gtFullHorizontal
+        Indent = 0
+        LineWidth = 2
+        Orientation = goHorizontal
+        TransparentText = False
+        VAlignment = vaTop
+      end
+      object GradientLabel7: TGradientLabel
+        Left = 8
+        Top = 73
+        Width = 289
+        Height = 17
+        AutoSize = False
+        Caption = 'F5 - Informa Documento'
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -626,7 +648,7 @@ object fCupomFiscal: TfCupomFiscal
           Ctl3D = False
           Font.Charset = DEFAULT_CHARSET
           Font.Color = 5585152
-          Font.Height = -19
+          Font.Height = -25
           Font.Name = 'Verdana'
           Font.Style = []
           ParentCtl3D = False
@@ -648,7 +670,7 @@ object fCupomFiscal: TfCupomFiscal
           DisplayFormat = '0.000'
           Font.Charset = DEFAULT_CHARSET
           Font.Color = 5585152
-          Font.Height = -19
+          Font.Height = -25
           Font.Name = 'Verdana'
           Font.Style = []
           Anchors = []
@@ -805,7 +827,7 @@ object fCupomFiscal: TfCupomFiscal
     object Panel7: TPanel
       Left = 0
       Top = 622
-      Width = 400
+      Width = 401
       Height = 54
       Align = alBottom
       Color = 3683329
@@ -4388,5 +4410,10 @@ object fCupomFiscal: TfCupomFiscal
       Font.Name = 'Verdana'
       Font.Style = [fsBold, fsItalic]
     end
+  end
+  object ACBrValidador: TACBrValidador
+    IgnorarChar = './-'
+    Left = 984
+    Top = 144
   end
 end

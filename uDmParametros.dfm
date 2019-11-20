@@ -149,6 +149,11 @@ object dmParametros: TdmParametros
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosSOLICITA_CPF: TStringField
+      FieldName = 'SOLICITA_CPF'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
@@ -237,6 +242,11 @@ object dmParametros: TdmParametros
     end
     object cdsCupomParametrosGERAR_CRECEBER: TStringField
       FieldName = 'GERAR_CRECEBER'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsCupomParametrosSOLICITA_CPF: TStringField
+      FieldName = 'SOLICITA_CPF'
       FixedChar = True
       Size = 1
     end

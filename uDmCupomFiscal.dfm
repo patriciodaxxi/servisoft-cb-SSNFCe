@@ -284,7 +284,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dspCupomFiscal: TDataSetProvider
     DataSet = sdsCupomFiscal
     UpdateMode = upWhereKeyOnly
-    Left = 72
+    Left = 64
     Top = 8
   end
   object cdsCupomFiscal: TClientDataSet
@@ -294,7 +294,7 @@ object dmCupomFiscal: TdmCupomFiscal
     ProviderName = 'dspCupomFiscal'
     BeforePost = cdsCupomFiscalBeforePost
     OnNewRecord = cdsCupomFiscalNewRecord
-    Left = 120
+    Left = 96
     Top = 8
     object cdsCupomFiscalID: TIntegerField
       FieldName = 'ID'
@@ -578,7 +578,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupomFiscal: TDataSource
     DataSet = cdsCupomFiscal
-    Left = 152
+    Left = 128
     Top = 8
   end
   object dsmCupomFiscal: TDataSource
@@ -834,7 +834,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSetField = cdsCupomFiscalsdsCupom_Itens
     IndexFieldNames = 'ID;ITEM'
     Params = <>
-    Left = 112
+    Left = 96
     Top = 104
     object cdsCupom_ItensID: TIntegerField
       FieldName = 'ID'
@@ -1070,7 +1070,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupom_Itens: TDataSource
     DataSet = cdsCupom_Itens
-    Left = 152
+    Left = 128
     Top = 104
   end
   object sdsCupom_Parc: TSQLDataSet
@@ -1130,7 +1130,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSetField = cdsCupomFiscalsdsCupom_Parc
     IndexFieldNames = 'ID;PARCELA'
     Params = <>
-    Left = 112
+    Left = 96
     Top = 152
     object cdsCupom_ParcID: TIntegerField
       FieldName = 'ID'
@@ -1168,7 +1168,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupom_Parc: TDataSource
     DataSet = cdsCupom_Parc
-    Left = 152
+    Left = 128
     Top = 152
   end
   object sdsCupom_Cons: TSQLDataSet
@@ -1188,14 +1188,14 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspCupom_Cons: TDataSetProvider
     DataSet = sdsCupom_Cons
-    Left = 72
+    Left = 64
     Top = 256
   end
   object cdsCupom_Cons: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspCupom_Cons'
-    Left = 112
+    Left = 96
     Top = 256
     object cdsCupom_ConsID: TIntegerField
       FieldName = 'ID'
@@ -1363,7 +1363,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupom_Cons: TDataSource
     DataSet = cdsCupom_Cons
-    Left = 152
+    Left = 128
     Top = 256
   end
   object sdsPessoa: TSQLDataSet
@@ -1380,19 +1380,19 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 8
   end
   object dspPessoa: TDataSetProvider
     DataSet = sdsPessoa
-    Left = 272
+    Left = 248
     Top = 8
   end
   object cdsPessoa: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspPessoa'
-    Left = 312
+    Left = 280
     Top = 8
     object cdsPessoaCODIGO: TIntegerField
       FieldName = 'CODIGO'
@@ -1518,7 +1518,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsPessoa: TDataSource
     DataSet = cdsPessoa
-    Left = 352
+    Left = 312
     Top = 8
   end
   object sdsParametros: TSQLDataSet
@@ -1540,12 +1540,12 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 56
   end
   object dspParametros: TDataSetProvider
     DataSet = sdsParametros
-    Left = 272
+    Left = 248
     Top = 56
   end
   object cdsParametros: TClientDataSet
@@ -1553,7 +1553,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspParametros'
     BeforePost = cdsParametrosBeforePost
-    Left = 312
+    Left = 280
     Top = 56
     object cdsParametrosID: TIntegerField
       FieldName = 'ID'
@@ -1731,19 +1731,19 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 104
   end
   object dspProduto: TDataSetProvider
     DataSet = sdsProduto
-    Left = 272
+    Left = 248
     Top = 104
   end
   object cdsProduto: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspProduto'
-    Left = 311
+    Left = 279
     Top = 103
     object cdsProdutoID: TIntegerField
       FieldName = 'ID'
@@ -1885,7 +1885,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsProduto: TDataSource
     DataSet = cdsProduto
-    Left = 352
+    Left = 312
     Top = 104
   end
   object sdsCondPgto: TSQLDataSet
@@ -1895,12 +1895,12 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 152
   end
   object dspCondPgto: TDataSetProvider
     DataSet = sdsCondPgto
-    Left = 272
+    Left = 248
     Top = 152
   end
   object cdsCondPgto: TClientDataSet
@@ -1908,7 +1908,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'NOME'
     Params = <>
     ProviderName = 'dspCondPgto'
-    Left = 312
+    Left = 280
     Top = 152
     object cdsCondPgtoID: TIntegerField
       FieldName = 'ID'
@@ -1947,7 +1947,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCondPgto: TDataSource
     DataSet = cdsCondPgto
-    Left = 352
+    Left = 312
     Top = 152
   end
   object sdsCondPgto_Dia: TSQLDataSet
@@ -1964,7 +1964,7 @@ object dmCupomFiscal: TdmCupomFiscal
         Size = 4
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 272
+    Left = 248
     Top = 248
     object sdsCondPgto_DiaID: TIntegerField
       FieldName = 'ID'
@@ -1982,7 +1982,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Aggregates = <>
     DataSetField = cdsCondPgtosdsCondPgto_Dia
     Params = <>
-    Left = 312
+    Left = 280
     Top = 248
     object cdsCondPgto_DiaID: TIntegerField
       FieldName = 'ID'
@@ -1998,12 +1998,12 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCondPgto_Dia: TDataSource
     DataSet = cdsCondPgto_Dia
-    Left = 352
+    Left = 312
     Top = 248
   end
   object dsmCondPgto: TDataSource
     DataSet = sdsCondPgto
-    Left = 232
+    Left = 208
     Top = 200
   end
   object sdsContas: TSQLDataSet
@@ -2013,19 +2013,19 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 344
   end
   object dspContas: TDataSetProvider
     DataSet = sdsContas
-    Left = 272
+    Left = 248
     Top = 344
   end
   object cdsContas: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspContas'
-    Left = 312
+    Left = 280
     Top = 344
     object cdsContasID: TIntegerField
       FieldName = 'ID'
@@ -2038,7 +2038,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsContas: TDataSource
     DataSet = cdsContas
-    Left = 352
+    Left = 312
     Top = 344
   end
   object sdsEstoqueMov: TSQLDataSet
@@ -2048,19 +2048,19 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 392
   end
   object dspEstoqueMov: TDataSetProvider
     DataSet = sdsEstoqueMov
-    Left = 272
+    Left = 248
     Top = 392
   end
   object cdsEstoqueMov: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspEstoqueMov'
-    Left = 312
+    Left = 280
     Top = 392
     object cdsEstoqueMovID: TIntegerField
       FieldName = 'ID'
@@ -2160,7 +2160,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsEstoqueMov: TDataSource
     DataSet = cdsEstoqueMov
-    Left = 352
+    Left = 312
     Top = 392
   end
   object sdsFilial: TSQLDataSet
@@ -2170,19 +2170,19 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 440
   end
   object dspFilial: TDataSetProvider
     DataSet = sdsFilial
-    Left = 272
+    Left = 248
     Top = 440
   end
   object cdsFilial: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspFilial'
-    Left = 312
+    Left = 280
     Top = 440
     object cdsFilialID: TIntegerField
       FieldName = 'ID'
@@ -2358,7 +2358,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsFilial: TDataSource
     DataSet = cdsFilial
-    Left = 352
+    Left = 312
     Top = 440
   end
   object qUltimo: TSQLQuery
@@ -2368,8 +2368,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'SELECT MAX(NUMCUPOM) ULT '
       'FROM CUPOMFISCAL')
     SQLConnection = dmDatabase.scoDados
-    Left = 856
-    Top = 376
+    Left = 848
+    Top = 216
     object qUltimoULT: TIntegerField
       FieldName = 'ULT'
     end
@@ -2381,19 +2381,19 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 296
   end
   object dspTipoCobranca: TDataSetProvider
     DataSet = sdsTipoCobranca
-    Left = 272
+    Left = 248
     Top = 296
   end
   object cdsTipoCobranca: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspTipoCobranca'
-    Left = 312
+    Left = 280
     Top = 296
     object cdsTipoCobrancaID: TIntegerField
       FieldName = 'ID'
@@ -2476,7 +2476,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTipoCobranca: TDataSource
     DataSet = cdsTipoCobranca
-    Left = 352
+    Left = 312
     Top = 296
   end
   object sdsCupomParametros: TSQLDataSet
@@ -2772,11 +2772,16 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object sdsCupomParametrosSOLICITA_CPF: TStringField
+      FieldName = 'SOLICITA_CPF'
+      FixedChar = True
+      Size = 1
+    end
   end
   object dspCupomParametros: TDataSetProvider
     DataSet = sdsCupomParametros
     UpdateMode = upWhereKeyOnly
-    Left = 72
+    Left = 64
     Top = 368
   end
   object cdsCupomParametros: TClientDataSet
@@ -2784,7 +2789,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspCupomParametros'
-    Left = 112
+    Left = 96
     Top = 368
     object cdsCupomParametrosID: TIntegerField
       FieldName = 'ID'
@@ -3069,6 +3074,11 @@ object dmCupomFiscal: TdmCupomFiscal
       FixedChar = True
       Size = 1
     end
+    object cdsCupomParametrosSOLICITA_CPF: TStringField
+      FieldName = 'SOLICITA_CPF'
+      FixedChar = True
+      Size = 1
+    end
   end
   object sdsSitTribCF: TSQLDataSet
     NoMetadata = True
@@ -3095,7 +3105,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dspSitTribCF: TDataSetProvider
     DataSet = sdsSitTribCF
     UpdateMode = upWhereKeyOnly
-    Left = 72
+    Left = 64
     Top = 416
   end
   object cdsSitTribCF: TClientDataSet
@@ -3103,7 +3113,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspSitTribCf'
-    Left = 112
+    Left = 96
     Top = 416
     object cdsSitTribCFID: TIntegerField
       FieldName = 'ID'
@@ -3120,7 +3130,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsSitTribCF: TDataSource
     DataSet = cdsSitTribCF
-    Left = 152
+    Left = 128
     Top = 416
   end
   object sdsDuplicata: TSQLDataSet
@@ -3130,8 +3140,8 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
-    Top = 144
+    Left = 385
+    Top = 152
     object sdsDuplicataID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -3281,16 +3291,16 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspDuplicata: TDataSetProvider
     DataSet = sdsDuplicata
-    Left = 457
-    Top = 144
+    Left = 417
+    Top = 152
   end
   object cdsDuplicata: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspDuplicata'
-    Left = 489
-    Top = 144
+    Left = 449
+    Top = 152
     object cdsDuplicataID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -3451,8 +3461,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsDuplicata_Mestre: TDataSource
     DataSet = sdsDuplicata
-    Left = 529
-    Top = 144
+    Left = 481
+    Top = 152
   end
   object sdsDuplicata_Hist: TSQLDataSet
     NoMetadata = True
@@ -3468,8 +3478,8 @@ object dmCupomFiscal: TdmCupomFiscal
         Size = 4
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 465
-    Top = 192
+    Left = 385
+    Top = 200
     object sdsDuplicata_HistID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -3541,8 +3551,8 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSetField = cdsDuplicatasdsDuplicata_Hist
     IndexFieldNames = 'ID;ITEM'
     Params = <>
-    Left = 497
-    Top = 192
+    Left = 417
+    Top = 200
     object cdsDuplicata_HistID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -3617,7 +3627,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupomParametros: TDataSource
     DataSet = cdsCupomParametros
-    Left = 152
+    Left = 128
     Top = 368
   end
   object sdsVendedor: TSQLDataSet
@@ -3631,12 +3641,12 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
+    Left = 385
     Top = 248
   end
   object dspVendedor: TDataSetProvider
     DataSet = sdsVendedor
-    Left = 457
+    Left = 417
     Top = 248
   end
   object cdsVendedor: TClientDataSet
@@ -3644,7 +3654,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'NOME'
     Params = <>
     ProviderName = 'dspVendedor'
-    Left = 489
+    Left = 449
     Top = 248
     object cdsVendedorCODIGO: TIntegerField
       FieldName = 'CODIGO'
@@ -3672,12 +3682,12 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsVendedor: TDataSource
     DataSet = cdsVendedor
-    Left = 529
+    Left = 481
     Top = 248
   end
   object dsParametros: TDataSource
     DataSet = cdsParametros
-    Left = 352
+    Left = 312
     Top = 56
   end
   object qIBPT: TSQLQuery
@@ -3690,8 +3700,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM TAB_IBPT I'
       'LEFT JOIN TAB_NCM N ON (I.CODIGO = N.NCM)')
     SQLConnection = dmDatabase.scoDados
-    Left = 888
-    Top = 376
+    Left = 880
+    Top = 216
     object qIBPTPERC_NACIONAL: TFloatField
       FieldName = 'PERC_NACIONAL'
     end
@@ -3742,7 +3752,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dspCupomTerminal: TDataSetProvider
     DataSet = sdsCupomTerminal
     UpdateMode = upWhereKeyOnly
-    Left = 72
+    Left = 64
     Top = 464
   end
   object cdsCupomTerminal: TClientDataSet
@@ -3750,7 +3760,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspCupomTerminal'
-    Left = 112
+    Left = 96
     Top = 464
     object cdsCupomTerminalID: TSmallintField
       FieldName = 'ID'
@@ -3763,7 +3773,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupomTerminal: TDataSource
     DataSet = cdsCupomTerminal
-    Left = 152
+    Left = 128
     Top = 464
   end
   object sdsComandaRel: TSQLDataSet
@@ -3784,19 +3794,19 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
+    Left = 385
     Top = 304
   end
   object dspComandaRel: TDataSetProvider
     DataSet = sdsComandaRel
-    Left = 457
+    Left = 417
     Top = 304
   end
   object cdsComandaRel: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspComandaRel'
-    Left = 488
+    Left = 448
     Top = 304
     object cdsComandaRelID: TIntegerField
       FieldName = 'ID'
@@ -3835,7 +3845,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsComandaRel: TDataSource
     DataSet = cdsComandaRel
-    Left = 528
+    Left = 480
     Top = 304
   end
   object sdsComandaItem_Rel: TSQLDataSet
@@ -3854,19 +3864,19 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
+    Left = 385
     Top = 352
   end
   object dspComandaItem_Rel: TDataSetProvider
     DataSet = sdsComandaItem_Rel
-    Left = 457
+    Left = 417
     Top = 352
   end
   object cdsComandaItem_Rel: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspComandaItem_Rel'
-    Left = 488
+    Left = 448
     Top = 352
     object cdsComandaItem_RelQTD: TFloatField
       FieldName = 'QTD'
@@ -3888,7 +3898,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsComandaItem_Rel: TDataSource
     DataSet = cdsComandaItem_Rel
-    Left = 528
+    Left = 480
     Top = 352
   end
   object mCupomItens: TClientDataSet
@@ -3923,8 +3933,8 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexDefs = <>
     Params = <>
     StoreDefs = True
-    Left = 440
-    Top = 488
+    Left = 1000
+    Top = 80
     Data = {
       8C0000009619E0BD0100000018000000060000000000030000008C000C4E4F4D
       455F50524F4455544F0100490000000100055749445448020002002800035154
@@ -3959,16 +3969,16 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsmCupomItens: TDataSource
     DataSet = mCupomItens
-    Left = 472
-    Top = 488
+    Left = 1032
+    Top = 80
   end
   object mCupom: TClientDataSet
     Active = True
     Aggregates = <>
     Params = <>
     BeforeDelete = mCupomBeforeDelete
-    Left = 440
-    Top = 440
+    Left = 824
+    Top = 80
     Data = {
       4C0000009619E0BD0100000018000000030000000000030000004C0006434152
       54414F04000100000000000849445F4355504F4D040001000000000009564C52
@@ -3986,8 +3996,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsmCupom: TDataSource
     DataSet = mCupom
-    Left = 472
-    Top = 440
+    Left = 856
+    Top = 80
   end
   object sdsCFOP: TSQLDataSet
     NoMetadata = True
@@ -4006,21 +4016,21 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 601
-    Top = 216
+    Left = 569
+    Top = 16
   end
   object dspCFOP: TDataSetProvider
     DataSet = sdsCFOP
-    Left = 633
-    Top = 216
+    Left = 601
+    Top = 16
   end
   object cdsCFOP: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'CODCFOP;ID'
     Params = <>
     ProviderName = 'dspCFOP'
-    Left = 673
-    Top = 216
+    Left = 633
+    Top = 16
     object cdsCFOPID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4176,8 +4186,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCFOP: TDataSource
     DataSet = cdsCFOP
-    Left = 713
-    Top = 216
+    Left = 665
+    Top = 16
   end
   object qRegra_CFOP: TSQLQuery
     MaxBlobSize = -1
@@ -4218,8 +4228,8 @@ object dmCupomFiscal: TdmCupomFiscal
       ''
       '')
     SQLConnection = dmDatabase.scoDados
-    Left = 601
-    Top = 377
+    Left = 817
+    Top = 265
     object qRegra_CFOPID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4342,8 +4352,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'WHERE T.ID = :ID'
       '  AND T.ITEM = :ITEM')
     SQLConnection = dmDatabase.scoDados
-    Left = 760
-    Top = 376
+    Left = 976
+    Top = 264
     object qVariacaoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4460,8 +4470,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM UF'
       'WHERE UF = :UF')
     SQLConnection = dmDatabase.scoDados
-    Left = 728
-    Top = 376
+    Left = 944
+    Top = 264
     object qUFUF: TStringField
       FieldName = 'UF'
       Required = True
@@ -4493,21 +4503,21 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 593
-    Top = 4
+    Left = 385
+    Top = 444
   end
   object dspTab_CSTICMS: TDataSetProvider
     DataSet = sdsTab_CSTICMS
-    Left = 625
-    Top = 4
+    Left = 417
+    Top = 444
   end
   object cdsTab_CSTICMS: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTab_CSTICMS'
-    Left = 665
-    Top = 4
+    Left = 449
+    Top = 444
     object cdsTab_CSTICMSID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4539,21 +4549,21 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTab_CSTICMS: TDataSource
     DataSet = cdsTab_CSTICMS
-    Left = 705
-    Top = 4
+    Left = 481
+    Top = 444
   end
   object dsTab_CSTIPI: TDataSource
     DataSet = cdsTab_CSTIPI
-    Left = 707
-    Top = 56
+    Left = 483
+    Top = 496
   end
   object cdsTab_CSTIPI: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTab_CSTIPI'
-    Left = 667
-    Top = 56
+    Left = 451
+    Top = 496
     object cdsTab_CSTIPIID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4574,8 +4584,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspTab_CSTIPI: TDataSetProvider
     DataSet = sdsTab_CSTIPI
-    Left = 627
-    Top = 56
+    Left = 419
+    Top = 496
   end
   object sdsTab_CSTIPI: TSQLDataSet
     NoMetadata = True
@@ -4584,8 +4594,8 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 595
-    Top = 56
+    Left = 387
+    Top = 496
   end
   object sdsTab_Pis: TSQLDataSet
     NoMetadata = True
@@ -4594,18 +4604,18 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 595
-    Top = 106
+    Left = 387
+    Top = 546
   end
   object dspTab_Pis: TDataSetProvider
     DataSet = sdsTab_Pis
-    Left = 627
-    Top = 106
+    Left = 419
+    Top = 546
   end
   object dspTab_Cofins: TDataSetProvider
     DataSet = sdsTab_Cofins
-    Left = 627
-    Top = 160
+    Left = 419
+    Top = 600
   end
   object sdsTab_Cofins: TSQLDataSet
     NoMetadata = True
@@ -4614,16 +4624,16 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 595
-    Top = 159
+    Left = 387
+    Top = 599
   end
   object cdsTab_Cofins: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTab_Cofins'
-    Left = 667
-    Top = 160
+    Left = 451
+    Top = 600
     object cdsTab_CofinsID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4644,21 +4654,21 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTab_Cofins: TDataSource
     DataSet = cdsTab_Cofins
-    Left = 707
-    Top = 160
+    Left = 483
+    Top = 600
   end
   object dsTab_Pis: TDataSource
     DataSet = cdsTab_Pis
-    Left = 707
-    Top = 106
+    Left = 483
+    Top = 546
   end
   object cdsTab_Pis: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTab_Pis'
-    Left = 667
-    Top = 106
+    Left = 451
+    Top = 546
     object cdsTab_PisID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4684,12 +4694,12 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
+    Left = 385
     Top = 400
   end
   object dspOrigem_Prod: TDataSetProvider
     DataSet = sdsOrigem_Prod
-    Left = 457
+    Left = 417
     Top = 400
   end
   object cdsOrigem_Prod: TClientDataSet
@@ -4697,7 +4707,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ORIGEM'
     Params = <>
     ProviderName = 'dspOrigem_Prod'
-    Left = 483
+    Left = 451
     Top = 400
     object cdsOrigem_ProdORIGEM: TStringField
       FieldName = 'ORIGEM'
@@ -4711,13 +4721,13 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsOrigem_Prod: TDataSource
     DataSet = cdsOrigem_Prod
-    Left = 523
+    Left = 483
     Top = 400
   end
   object dsCFOP_Mestre: TDataSource
     DataSet = sdsCFOP
-    Left = 745
-    Top = 216
+    Left = 713
+    Top = 16
   end
   object sdsCFOP_Variacao: TSQLDataSet
     NoMetadata = True
@@ -4733,8 +4743,8 @@ object dmCupomFiscal: TdmCupomFiscal
         Size = 4
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 601
-    Top = 272
+    Left = 569
+    Top = 72
     object sdsCFOP_VariacaoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4840,8 +4850,8 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSetField = cdsCFOPsdsCFOP_Variacao
     IndexFieldNames = 'NOME'
     Params = <>
-    Left = 673
-    Top = 272
+    Left = 601
+    Top = 72
     object cdsCFOP_VariacaoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -4944,8 +4954,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCFOP_Variacao: TDataSource
     DataSet = cdsCFOP_Variacao
-    Left = 713
-    Top = 272
+    Left = 633
+    Top = 72
   end
   object qProximoCupom: TSQLQuery
     MaxBlobSize = -1
@@ -4966,8 +4976,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'WHERE FILIAL = :FILIAL'
       '  AND TIPO = :TIPO')
     SQLConnection = dmDatabase.scoDados
-    Left = 632
-    Top = 376
+    Left = 848
+    Top = 264
     object qProximoCupomNUMCUPOM: TIntegerField
       FieldName = 'NUMCUPOM'
     end
@@ -4983,21 +4993,21 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 611
-    Top = 472
+    Left = 563
+    Top = 232
   end
   object dspTab_NCM: TDataSetProvider
     DataSet = sdsTab_NCM
-    Left = 643
-    Top = 472
+    Left = 595
+    Top = 232
   end
   object cdsTab_NCM: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTab_NCM'
-    Left = 683
-    Top = 472
+    Left = 627
+    Top = 232
     object cdsTab_NCMID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -5057,8 +5067,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTab_NCM: TDataSource
     DataSet = cdsTab_NCM
-    Left = 723
-    Top = 472
+    Left = 659
+    Top = 232
   end
   object qUltimo_NFCe: TSQLQuery
     MaxBlobSize = -1
@@ -5073,8 +5083,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'WHERE TIPO = '#39'NFC'#39
       '  AND FILIAL = :FILIAL')
     SQLConnection = dmDatabase.scoDados
-    Left = 920
-    Top = 376
+    Left = 912
+    Top = 216
     object qUltimo_NFCeULT: TIntegerField
       FieldName = 'ULT'
     end
@@ -5091,12 +5101,12 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 488
   end
   object dspProduto_Tam: TDataSetProvider
     DataSet = sdsProduto_Tam
-    Left = 272
+    Left = 248
     Top = 488
   end
   object cdsProduto_Tam: TClientDataSet
@@ -5104,7 +5114,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'Tamanho'
     Params = <>
     ProviderName = 'dspProduto_Tam'
-    Left = 312
+    Left = 280
     Top = 488
     object cdsProduto_TamID: TIntegerField
       FieldName = 'ID'
@@ -5118,7 +5128,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsProduto_Tam: TDataSource
     DataSet = cdsProduto_Tam
-    Left = 352
+    Left = 312
     Top = 488
   end
   object sdsCupomFiscal_ProdPrincipal: TSQLDataSet
@@ -5161,7 +5171,7 @@ object dmCupomFiscal: TdmCupomFiscal
   object dspCupomFiscal_ProdPrincipal: TDataSetProvider
     DataSet = sdsCupomFiscal_ProdPrincipal
     UpdateMode = upWhereKeyOnly
-    Left = 72
+    Left = 64
     Top = 520
   end
   object cdsCupomFiscal_ProdPrincipal: TClientDataSet
@@ -5169,7 +5179,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID;ITEM_ORIGINAL'
     Params = <>
     ProviderName = 'dspCupomFiscal_ProdPrincipal'
-    Left = 112
+    Left = 96
     Top = 520
     object cdsCupomFiscal_ProdPrincipalID: TIntegerField
       FieldName = 'ID'
@@ -5196,7 +5206,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupomFiscal_ProdPrincipal: TDataSource
     DataSet = cdsCupomFiscal_ProdPrincipal
-    Left = 152
+    Left = 128
     Top = 520
   end
   object sdsPedido: TSQLDataSet
@@ -5226,13 +5236,13 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
-    Top = 5
+    Left = 385
+    Top = 13
   end
   object dspPedido: TDataSetProvider
     DataSet = sdsPedido
-    Left = 457
-    Top = 5
+    Left = 417
+    Top = 13
   end
   object cdsPedido: TClientDataSet
     Aggregates = <>
@@ -5240,8 +5250,8 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspPedido'
     OnCalcFields = cdsPedidoCalcFields
-    Left = 497
-    Top = 5
+    Left = 457
+    Top = 13
     object cdsPedidoID: TIntegerField
       Alignment = taCenter
       DisplayLabel = 'ID Pedido'
@@ -5515,8 +5525,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsPedido: TDataSource
     DataSet = cdsPedido
-    Left = 537
-    Top = 5
+    Left = 489
+    Top = 13
   end
   object sdsPedido_Tipo: TSQLDataSet
     NoMetadata = True
@@ -5537,21 +5547,21 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 417
-    Top = 48
+    Left = 385
+    Top = 56
   end
   object dspPedido_Tipo: TDataSetProvider
     DataSet = sdsPedido_Tipo
-    Left = 457
-    Top = 48
+    Left = 417
+    Top = 56
   end
   object cdsPedido_Tipo: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspPedido_Tipo'
-    Left = 497
-    Top = 48
+    Left = 457
+    Top = 56
     object cdsPedido_TipoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -5636,8 +5646,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsPedido_Tipo: TDataSource
     DataSet = cdsPedido_Tipo
-    Left = 537
-    Top = 48
+    Left = 489
+    Top = 56
   end
   object sdsPrc_Atualiza_Status_Ped: TSQLDataSet
     CommandText = 'PRC_ATUALIZA_STATUS_PED'
@@ -5650,16 +5660,16 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 433
-    Top = 544
+    Left = 849
+    Top = 24
   end
   object mPedidoAux: TClientDataSet
     Active = True
     Aggregates = <>
     IndexFieldNames = 'ID_Pedido'
     Params = <>
-    Left = 473
-    Top = 552
+    Left = 945
+    Top = 80
     Data = {
       2C0000009619E0BD0100000018000000010000000000030000002C000949445F
       50656469646F04000100000000000000}
@@ -5674,12 +5684,12 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 532
   end
   object dspEnqIPI: TDataSetProvider
     DataSet = sdsEnqIPI
-    Left = 272
+    Left = 248
     Top = 532
   end
   object cdsEnqIPI: TClientDataSet
@@ -5687,7 +5697,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'CODIGO'
     Params = <>
     ProviderName = 'dspEnqIPI'
-    Left = 312
+    Left = 280
     Top = 532
     object cdsEnqIPIID: TIntegerField
       FieldName = 'ID'
@@ -5709,7 +5719,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsEnqIPI: TDataSource
     DataSet = cdsEnqIPI
-    Left = 352
+    Left = 312
     Top = 532
   end
   object qFilial: TSQLQuery
@@ -5721,8 +5731,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'WHERE ((F.USA_CUPOM = '#39'S'#39') OR (F.USA_NFCE = '#39'S'#39'))'
       '  AND INATIVO = '#39'N'#39)
     SQLConnection = dmDatabase.scoDados
-    Left = 792
-    Top = 376
+    Left = 1008
+    Top = 264
     object qFilialCONTADOR: TIntegerField
       FieldName = 'CONTADOR'
       Required = True
@@ -5735,8 +5745,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'SELECT MAX(NUMCUPOM) ULT FROM CUPOMFISCAL'
       'WHERE CANCELADO = '#39'N'#39)
     SQLConnection = dmDatabase.scoDados
-    Left = 952
-    Top = 376
+    Left = 944
+    Top = 216
     object qUltimo_CNFULT: TIntegerField
       FieldName = 'ULT'
     end
@@ -5757,8 +5767,8 @@ object dmCupomFiscal: TdmCupomFiscal
       ' CF.ID_CLIENTE = :C1'
       'ORDER BY CF.DTEMISSAO')
     SQLConnection = dmDatabase.scoDados
-    Left = 696
-    Top = 376
+    Left = 912
+    Top = 264
   end
   object sdsProduto_Consumo_Tam: TSQLDataSet
     NoMetadata = True
@@ -5785,20 +5795,20 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 619
-    Top = 568
+    Left = 563
+    Top = 288
   end
   object dspProduto_Consumo_Tam: TDataSetProvider
     DataSet = sdsProduto_Consumo_Tam
-    Left = 651
-    Top = 568
+    Left = 595
+    Top = 288
   end
   object cdsProduto_Consumo_Tam: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspProduto_Consumo_Tam'
-    Left = 691
-    Top = 568
+    Left = 627
+    Top = 288
     object cdsProduto_Consumo_TamQTD_CONSUMO: TFloatField
       FieldName = 'QTD_CONSUMO'
     end
@@ -5812,8 +5822,8 @@ object dmCupomFiscal: TdmCupomFiscal
     Aggregates = <>
     Params = <>
     ProviderName = 'dspProduto_Consumo'
-    Left = 675
-    Top = 328
+    Left = 635
+    Top = 128
     object cdsProduto_ConsumoID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -5846,8 +5856,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspProduto_Consumo: TDataSetProvider
     DataSet = sdsProduto_Consumo
-    Left = 635
-    Top = 328
+    Left = 595
+    Top = 128
   end
   object sdsProduto_Consumo: TSQLDataSet
     NoMetadata = True
@@ -5861,8 +5871,8 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 603
-    Top = 328
+    Left = 563
+    Top = 128
   end
   object frxReport1: TfrxReport
     Version = '5.6.8'
@@ -5877,7 +5887,7 @@ object dmCupomFiscal: TdmCupomFiscal
     ReportOptions.LastChange = 42811.391278831020000000
     ScriptLanguage = 'PascalScript'
     StoreInDFM = False
-    Left = 608
+    Left = 824
     Top = 520
   end
   object frxDBDataset1: TfrxDBDataset
@@ -5951,7 +5961,7 @@ object dmCupomFiscal: TdmCupomFiscal
       'NOME_VENDEDOR=NOME_VENDEDOR')
     DataSource = dsCupomFiscal
     BCDToCurrency = False
-    Left = 640
+    Left = 856
     Top = 520
   end
   object frxDBDataset2: TfrxDBDataset
@@ -5959,7 +5969,7 @@ object dmCupomFiscal: TdmCupomFiscal
     CloseDataSource = False
     DataSource = dsCupom_Itens
     BCDToCurrency = False
-    Left = 672
+    Left = 888
     Top = 520
   end
   object frxDBDataset3: TfrxDBDataset
@@ -5967,7 +5977,7 @@ object dmCupomFiscal: TdmCupomFiscal
     CloseDataSource = False
     DataSource = dsCupom_Parc
     BCDToCurrency = False
-    Left = 704
+    Left = 920
     Top = 520
   end
   object frxDBDataset4: TfrxDBDataset
@@ -5975,11 +5985,11 @@ object dmCupomFiscal: TdmCupomFiscal
     CloseDataSource = False
     DataSource = dsFilial
     BCDToCurrency = False
-    Left = 736
+    Left = 952
     Top = 520
   end
   object frxBarCodeObject1: TfrxBarCodeObject
-    Left = 768
+    Left = 984
     Top = 520
   end
   object qCupomPed: TSQLQuery
@@ -5996,8 +6006,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'WHERE I.ID_PEDIDO > 0'
       'AND I.ID = :ID')
     SQLConnection = dmDatabase.scoDados
-    Left = 664
-    Top = 376
+    Left = 880
+    Top = 264
     object qCupomPedID_PEDIDO: TIntegerField
       FieldName = 'ID_PEDIDO'
     end
@@ -6013,8 +6023,8 @@ object dmCupomFiscal: TdmCupomFiscal
     SQL.Strings = (
       'SELECT ID FROM EXTCOMISSAO WHERE ID_CUPOM = :IC')
     SQLConnection = dmDatabase.scoDados
-    Left = 824
-    Top = 376
+    Left = 816
+    Top = 216
   end
   object sdsTransp: TSQLDataSet
     NoMetadata = True
@@ -6027,20 +6037,20 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 800
-    Top = 64
+    Left = 568
+    Top = 336
   end
   object dspTransp: TDataSetProvider
     DataSet = sdsTransp
-    Left = 840
-    Top = 64
+    Left = 600
+    Top = 336
   end
   object cdsTransp: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspTransp'
-    Left = 880
-    Top = 64
+    Left = 632
+    Top = 336
     object cdsTranspCODIGO: TIntegerField
       FieldName = 'CODIGO'
       Required = True
@@ -6106,8 +6116,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTransp: TDataSource
     DataSet = cdsTransp
-    Left = 920
-    Top = 64
+    Left = 664
+    Top = 336
   end
   object sdsCupomFiscal_Cli: TSQLDataSet
     CommandText = 'SELECT *'#13#10'FROM CUPOMFISCAL_CLI'#13#10'WHERE ID = :ID'
@@ -6187,7 +6197,7 @@ object dmCupomFiscal: TdmCupomFiscal
     DataSetField = cdsCupomFiscalsdsCupomFiscal_Cli
     IndexFieldNames = 'ID'
     Params = <>
-    Left = 112
+    Left = 96
     Top = 200
     object cdsCupomFiscal_CliID: TIntegerField
       FieldName = 'ID'
@@ -6250,13 +6260,13 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCupomFiscal_Cli: TDataSource
     DataSet = cdsCupomFiscal_Cli
-    Left = 152
+    Left = 128
     Top = 200
   end
   object dspCidade: TDataSetProvider
     DataSet = sdsCidade
-    Left = 827
-    Top = 160
+    Left = 603
+    Top = 432
   end
   object sdsCidade: TSQLDataSet
     NoMetadata = True
@@ -6270,16 +6280,16 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 795
-    Top = 159
+    Left = 571
+    Top = 431
   end
   object cdsCidade: TClientDataSet
     Aggregates = <>
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspCidade'
-    Left = 867
-    Top = 160
+    Left = 635
+    Top = 432
     object cdsCidadeID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6318,8 +6328,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCidade: TDataSource
     DataSet = cdsCidade
-    Left = 907
-    Top = 160
+    Left = 667
+    Top = 432
   end
   object qCidade: TSQLQuery
     MaxBlobSize = -1
@@ -6334,8 +6344,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM CIDADE'
       'WHERE ID = :ID')
     SQLConnection = dmDatabase.scoDados
-    Left = 944
-    Top = 160
+    Left = 968
+    Top = 168
     object qCidadeID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6389,8 +6399,8 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID_Pedido'
     Params = <>
     StoreDefs = True
-    Left = 953
-    Top = 216
+    Left = 913
+    Top = 80
     Data = {
       490000009619E0BD01000000180000000200000000000300000049000949445F
       50656469646F0400010000000000084F42535F4E6F7461010049000000010005
@@ -6416,8 +6426,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM PEDIDO_CUPOM'
       'WHERE ID = :ID')
     SQLConnection = dmDatabase.scoDados
-    Left = 472
-    Top = 96
+    Left = 936
+    Top = 168
     object qPedido_CupomID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6478,8 +6488,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM PARAMETROS_FIN'
       'WHERE ID = 1')
     SQLConnection = dmDatabase.scoDados
-    Left = 800
-    Top = 8
+    Left = 1032
+    Top = 168
     object qParametros_FinID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6503,8 +6513,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM PARAMETROS_USUARIO'
       'WHERE USUARIO = :USUARIO')
     SQLConnection = dmDatabase.scoDados
-    Left = 856
-    Top = 8
+    Left = 1000
+    Top = 168
     object qParametros_UsuarioID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6542,20 +6552,20 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 835
-    Top = 216
+    Left = 571
+    Top = 488
   end
   object dspCupom_Cons_Parc: TDataSetProvider
     DataSet = sdsCupom_Cons_Parc
-    Left = 867
-    Top = 216
+    Left = 603
+    Top = 488
   end
   object cdsCupom_Cons_Parc: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspCupom_Cons_Parc'
-    Left = 899
-    Top = 216
+    Left = 635
+    Top = 488
     object cdsCupom_Cons_ParcVALOR: TFloatField
       FieldName = 'VALOR'
     end
@@ -6575,20 +6585,20 @@ object dmCupomFiscal: TdmCupomFiscal
     MaxBlobSize = -1
     Params = <>
     SQLConnection = dmDatabase.scoDados
-    Left = 800
-    Top = 112
+    Left = 568
+    Top = 384
   end
   object dspLocalEstoque: TDataSetProvider
     DataSet = sdsLocalEstoque
-    Left = 840
-    Top = 112
+    Left = 600
+    Top = 384
   end
   object cdsLocalEstoque: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspLocalEstoque'
-    Left = 880
-    Top = 112
+    Left = 632
+    Top = 384
     object cdsLocalEstoqueID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6600,8 +6610,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsLocalEstoque: TDataSource
     DataSet = cdsLocalEstoque
-    Left = 920
-    Top = 112
+    Left = 664
+    Top = 384
   end
   object sdsTerminal: TSQLDataSet
     NoMetadata = True
@@ -6615,7 +6625,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspTerminal: TDataSetProvider
     DataSet = sdsTerminal
-    Left = 72
+    Left = 64
     Top = 312
   end
   object cdsTerminal: TClientDataSet
@@ -6623,7 +6633,7 @@ object dmCupomFiscal: TdmCupomFiscal
     IndexFieldNames = 'ID'
     Params = <>
     ProviderName = 'dspTerminal'
-    Left = 112
+    Left = 96
     Top = 312
     object cdsTerminalID: TSmallintField
       FieldName = 'ID'
@@ -6635,7 +6645,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTerminal: TDataSource
     DataSet = cdsTerminal
-    Left = 152
+    Left = 128
     Top = 312
   end
   object qUnidade: TSQLQuery
@@ -6651,8 +6661,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM UNIDADE'
       'WHERE UNIDADE = :U1')
     SQLConnection = dmDatabase.scoDados
-    Left = 984
-    Top = 376
+    Left = 976
+    Top = 216
     object qUnidadeFRACIONAVEL: TStringField
       FieldName = 'FRACIONAVEL'
       FixedChar = True
@@ -6672,8 +6682,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM CUPOMFISCAL C'
       'WHERE C.id = :ID')
     SQLConnection = dmDatabase.scoDados
-    Left = 840
-    Top = 328
+    Left = 904
+    Top = 168
     object qVerID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6695,19 +6705,19 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 40
+    Left = 32
     Top = 568
   end
   object dspCombinacao: TDataSetProvider
     DataSet = sdsCombinacao
-    Left = 72
+    Left = 64
     Top = 568
   end
   object cdsCombinacao: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspCombinacao'
-    Left = 104
+    Left = 96
     Top = 568
     object cdsCombinacaoID: TIntegerField
       FieldName = 'ID'
@@ -6727,19 +6737,19 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsCombinacao: TDataSource
     DataSet = cdsCombinacao
-    Left = 136
+    Left = 128
     Top = 568
   end
   object dsTamanho: TDataSource
     DataSet = cdsTamanho
-    Left = 136
+    Left = 128
     Top = 600
   end
   object cdsTamanho: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspTamanho'
-    Left = 104
+    Left = 96
     Top = 600
     object cdsTamanhoID: TIntegerField
       FieldName = 'ID'
@@ -6753,7 +6763,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspTamanho: TDataSetProvider
     DataSet = sdsTamanho
-    Left = 72
+    Left = 64
     Top = 600
   end
   object sdsTamanho: TSQLDataSet
@@ -6766,7 +6776,7 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 40
+    Left = 32
     Top = 600
   end
   object sdsParametrosGeral: TSQLDataSet
@@ -6781,7 +6791,7 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 232
+    Left = 208
     Top = 584
     object IntegerField2: TIntegerField
       FieldName = 'ID'
@@ -6790,7 +6800,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dspParametrosGeral: TDataSetProvider
     DataSet = sdsParametrosGeral
-    Left = 272
+    Left = 248
     Top = 584
   end
   object cdsParametrosGeral: TClientDataSet
@@ -6798,7 +6808,7 @@ object dmCupomFiscal: TdmCupomFiscal
     Params = <>
     ProviderName = 'dspParametros'
     BeforePost = cdsParametrosBeforePost
-    Left = 312
+    Left = 280
     Top = 584
     object cdsParametrosGeralID: TIntegerField
       FieldName = 'ID'
@@ -6807,7 +6817,7 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsParametrosGeral: TDataSource
     DataSet = cdsParametrosGeral
-    Left = 352
+    Left = 312
     Top = 584
   end
   object qParametros_Geral: TSQLQuery
@@ -6817,8 +6827,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'SELECT ENDGRIDS'
       'FROM PARAMETROS_GERAL')
     SQLConnection = dmDatabase.scoDados
-    Left = 792
-    Top = 328
+    Left = 872
+    Top = 168
     object qParametros_GeralENDGRIDS: TStringField
       FieldName = 'ENDGRIDS'
       Size = 250
@@ -6832,8 +6842,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM TIPOCOBRANCA'
       'WHERE DINHEIRO = '#39'S'#39)
     SQLConnection = dmDatabase.scoDados
-    Left = 1016
-    Top = 376
+    Left = 1008
+    Top = 216
     object qTipoDinheiroID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6856,8 +6866,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'FROM PESSOA'
       'WHERE CNPJ_CPF = :C1')
     SQLConnection = dmDatabase.scoDados
-    Left = 1048
-    Top = 376
+    Left = 1040
+    Top = 216
     object qClienteCODIGO: TIntegerField
       FieldName = 'CODIGO'
       Required = True
@@ -6877,8 +6887,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'where m.id_produto = :id_produto'
       'order by m.dtemissao desc')
     SQLConnection = dmDatabase.scoDados
-    Left = 896
-    Top = 456
+    Left = 845
+    Top = 168
     object qProdSTDTEMISSAO: TDateField
       FieldName = 'DTEMISSAO'
     end
@@ -6920,8 +6930,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'WHERE ID = :ID'
       '  AND UF = :UF')
     SQLConnection = dmDatabase.scoDados
-    Left = 859
-    Top = 452
+    Left = 819
+    Top = 316
     object qProduto_UFID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -6974,8 +6984,8 @@ object dmCupomFiscal: TdmCupomFiscal
       '     AND TUF.UF = :UF'
       '     AND TUF.TIPO_PRODUTO = :TIPO_PRODUTO')
     SQLConnection = dmDatabase.scoDados
-    Left = 929
-    Top = 456
+    Left = 817
+    Top = 168
     object qNCM_UFID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -7057,20 +7067,20 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 800
-    Top = 272
+    Left = 568
+    Top = 544
   end
   object dspTotais: TDataSetProvider
     DataSet = sdsTotais
-    Left = 840
-    Top = 272
+    Left = 600
+    Top = 544
   end
   object cdsTotais: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspTotais'
-    Left = 880
-    Top = 272
+    Left = 632
+    Top = 544
     object cdsTotaisNOME: TStringField
       FieldName = 'NOME'
       Size = 30
@@ -7082,8 +7092,8 @@ object dmCupomFiscal: TdmCupomFiscal
   end
   object dsTotais: TDataSource
     DataSet = cdsTotais
-    Left = 920
-    Top = 272
+    Left = 664
+    Top = 544
   end
   object sds_prc_Exluir_Cupom: TSQLDataSet
     CommandText = 'PRC_EXCLUIR_CUPOM'
@@ -7096,8 +7106,8 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 425
-    Top = 600
+    Left = 817
+    Top = 24
   end
   object sds_prc_Grava_Estoque: TSQLDataSet
     CommandText = 'PRC_GRAVAR_ESTOQUE'
@@ -7115,8 +7125,8 @@ object dmCupomFiscal: TdmCupomFiscal
         ParamType = ptInput
       end>
     SQLConnection = dmDatabase.scoDados
-    Left = 473
-    Top = 600
+    Left = 881
+    Top = 24
   end
   object qCBarra_Int: TSQLQuery
     MaxBlobSize = -1
@@ -7134,8 +7144,8 @@ object dmCupomFiscal: TdmCupomFiscal
       'where C.COD_BARRA = :COD_BARRA'
       '')
     SQLConnection = dmDatabase.scoDados
-    Left = 915
-    Top = 540
+    Left = 1039
+    Top = 264
     object qCBarra_IntID: TIntegerField
       FieldName = 'ID'
       Required = True
@@ -7178,7 +7188,596 @@ object dmCupomFiscal: TdmCupomFiscal
       'where C.COD_BARRA = :COD_BARRA'
       '')
     SQLConnection = dmDatabase.scoDados
-    Left = 987
-    Top = 532
+    Left = 851
+    Top = 316
+  end
+  object sdsGrupo: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 'SELECT * FROM GRUPO'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoDados
+    Left = 560
+    Top = 184
+    object sdsGrupoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object sdsGrupoNOME: TStringField
+      FieldName = 'NOME'
+      Size = 40
+    end
+    object sdsGrupoCODIGO: TStringField
+      FieldName = 'CODIGO'
+    end
+  end
+  object dspGrupo: TDataSetProvider
+    DataSet = sdsGrupo
+    Left = 592
+    Top = 184
+  end
+  object cdsGrupo: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspGrupo'
+    BeforePost = cdsParametrosBeforePost
+    Left = 624
+    Top = 184
+    object cdsGrupoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsGrupoNOME: TStringField
+      FieldName = 'NOME'
+      Size = 40
+    end
+    object cdsGrupoCODIGO: TStringField
+      FieldName = 'CODIGO'
+    end
+  end
+  object dsGrupo: TDataSource
+    DataSet = cdsGrupo
+    Left = 656
+    Top = 184
+  end
+  object sdsConsProduto: TSQLDataSet
+    NoMetadata = True
+    GetMetadata = False
+    CommandText = 'SELECT * FROM PRODUTO P'#13#10'LEFT JOIN GRUPO G ON G.ID = P.ID_GRUPO'
+    MaxBlobSize = -1
+    Params = <>
+    SQLConnection = dmDatabase.scoDados
+    Left = 568
+    Top = 592
+  end
+  object dspConsProduto: TDataSetProvider
+    DataSet = sdsConsProduto
+    Left = 600
+    Top = 592
+  end
+  object cdsConsProduto: TClientDataSet
+    Aggregates = <>
+    Params = <>
+    ProviderName = 'dspConsProduto'
+    Left = 632
+    Top = 592
+    object cdsConsProdutoID: TIntegerField
+      FieldName = 'ID'
+      Required = True
+    end
+    object cdsConsProdutoREFERENCIA: TStringField
+      FieldName = 'REFERENCIA'
+    end
+    object cdsConsProdutoNOME: TStringField
+      FieldName = 'NOME'
+      Size = 100
+    end
+    object cdsConsProdutoCOD_BARRA: TStringField
+      FieldName = 'COD_BARRA'
+      Size = 14
+    end
+    object cdsConsProdutoPRECO_VENDA: TFloatField
+      FieldName = 'PRECO_VENDA'
+    end
+    object cdsConsProdutoPESOLIQUIDO: TFloatField
+      FieldName = 'PESOLIQUIDO'
+    end
+    object cdsConsProdutoPESOBRUTO: TFloatField
+      FieldName = 'PESOBRUTO'
+    end
+    object cdsConsProdutoINATIVO: TStringField
+      FieldName = 'INATIVO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoID_CSTIPI: TIntegerField
+      FieldName = 'ID_CSTIPI'
+    end
+    object cdsConsProdutoPERC_IPI: TFloatField
+      FieldName = 'PERC_IPI'
+    end
+    object cdsConsProdutoPRECO_CUSTO: TFloatField
+      FieldName = 'PRECO_CUSTO'
+    end
+    object cdsConsProdutoTIPO_REG: TStringField
+      FieldName = 'TIPO_REG'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPOSSE_MATERIAL: TStringField
+      FieldName = 'POSSE_MATERIAL'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoESTOQUE: TStringField
+      FieldName = 'ESTOQUE'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoMATERIAL_OUTROS: TStringField
+      FieldName = 'MATERIAL_OUTROS'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoUSUARIO: TStringField
+      FieldName = 'USUARIO'
+      Size = 15
+    end
+    object cdsConsProdutoDTCAD: TDateField
+      FieldName = 'DTCAD'
+    end
+    object cdsConsProdutoHRCAD: TTimeField
+      FieldName = 'HRCAD'
+    end
+    object cdsConsProdutoCA: TStringField
+      FieldName = 'CA'
+    end
+    object cdsConsProdutoCOMPLEMENTO: TStringField
+      FieldName = 'COMPLEMENTO'
+      Size = 200
+    end
+    object cdsConsProdutoID_NCM: TIntegerField
+      FieldName = 'ID_NCM'
+    end
+    object cdsConsProdutoORIGEM_PROD: TStringField
+      FieldName = 'ORIGEM_PROD'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoOBS: TMemoField
+      FieldName = 'OBS'
+      BlobType = ftMemo
+      Size = 1
+    end
+    object cdsConsProdutoCODSITCF: TStringField
+      FieldName = 'CODSITCF'
+      Size = 5
+    end
+    object cdsConsProdutoPERC_REDUCAOICMS: TFloatField
+      FieldName = 'PERC_REDUCAOICMS'
+    end
+    object cdsConsProdutoTIPO_VENDA: TStringField
+      FieldName = 'TIPO_VENDA'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPERC_MARGEMLUCRO: TFloatField
+      FieldName = 'PERC_MARGEMLUCRO'
+    end
+    object cdsConsProdutoUNIDADE: TStringField
+      FieldName = 'UNIDADE'
+      Size = 6
+    end
+    object cdsConsProdutoDT_ALTPRECO: TDateField
+      FieldName = 'DT_ALTPRECO'
+    end
+    object cdsConsProdutoLOCALIZACAO: TStringField
+      FieldName = 'LOCALIZACAO'
+      Size = 30
+    end
+    object cdsConsProdutoID_GRUPO: TIntegerField
+      FieldName = 'ID_GRUPO'
+    end
+    object cdsConsProdutoID_SUBGRUPO: TIntegerField
+      FieldName = 'ID_SUBGRUPO'
+    end
+    object cdsConsProdutoID_MARCA: TIntegerField
+      FieldName = 'ID_MARCA'
+    end
+    object cdsConsProdutoID_FORNECEDOR: TIntegerField
+      FieldName = 'ID_FORNECEDOR'
+    end
+    object cdsConsProdutoPERC_IMPORTACAO: TFloatField
+      FieldName = 'PERC_IMPORTACAO'
+    end
+    object cdsConsProdutoCOD_ANT: TStringField
+      FieldName = 'COD_ANT'
+      Size = 10
+    end
+    object cdsConsProdutoPERC_REDUCAOICMSSUBST: TFloatField
+      FieldName = 'PERC_REDUCAOICMSSUBST'
+    end
+    object cdsConsProdutoUSA_GRADE: TStringField
+      FieldName = 'USA_GRADE'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoID_GRADE: TIntegerField
+      FieldName = 'ID_GRADE'
+    end
+    object cdsConsProdutoUSA_PERC_IMP_INTERESTADUAL: TStringField
+      FieldName = 'USA_PERC_IMP_INTERESTADUAL'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoIMPRIMIR_ETIQUETA_NAV: TStringField
+      FieldName = 'IMPRIMIR_ETIQUETA_NAV'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoCARIMBO: TStringField
+      FieldName = 'CARIMBO'
+      Size = 25
+    end
+    object cdsConsProdutoPERC_QUEBRAMAT: TFloatField
+      FieldName = 'PERC_QUEBRAMAT'
+    end
+    object cdsConsProdutoSPED_TIPO_ITEM: TStringField
+      FieldName = 'SPED_TIPO_ITEM'
+      Size = 2
+    end
+    object cdsConsProdutoQTD_ESTOQUE_MIN: TFloatField
+      FieldName = 'QTD_ESTOQUE_MIN'
+    end
+    object cdsConsProdutoPERC_PIS: TFloatField
+      FieldName = 'PERC_PIS'
+    end
+    object cdsConsProdutoPERC_COFINS: TFloatField
+      FieldName = 'PERC_COFINS'
+    end
+    object cdsConsProdutoPERC_ICMS_IMP: TFloatField
+      FieldName = 'PERC_ICMS_IMP'
+    end
+    object cdsConsProdutoPERC_IPI_IMP: TFloatField
+      FieldName = 'PERC_IPI_IMP'
+    end
+    object cdsConsProdutoREFERENCIA_PADRAO: TStringField
+      FieldName = 'REFERENCIA_PADRAO'
+    end
+    object cdsConsProdutoNUM_FCI: TStringField
+      FieldName = 'NUM_FCI'
+      Size = 40
+    end
+    object cdsConsProdutoPERC_USADO_FCI: TFloatField
+      FieldName = 'PERC_USADO_FCI'
+    end
+    object cdsConsProdutoNCM_EX: TStringField
+      FieldName = 'NCM_EX'
+      Size = 2
+    end
+    object cdsConsProdutoID_SITTRIB_CF: TIntegerField
+      FieldName = 'ID_SITTRIB_CF'
+    end
+    object cdsConsProdutoID_CLIENTE: TIntegerField
+      FieldName = 'ID_CLIENTE'
+    end
+    object cdsConsProdutoPRECO_REVENDA: TFMTBCDField
+      FieldName = 'PRECO_REVENDA'
+      Precision = 15
+      Size = 10
+    end
+    object cdsConsProdutoPRECO_INDUSTRIALIZACAO: TFMTBCDField
+      FieldName = 'PRECO_INDUSTRIALIZACAO'
+      Precision = 15
+      Size = 10
+    end
+    object cdsConsProdutoPRECO_CONSUMO: TFMTBCDField
+      FieldName = 'PRECO_CONSUMO'
+      Precision = 15
+      Size = 10
+    end
+    object cdsConsProdutoFOTO: TStringField
+      FieldName = 'FOTO'
+      Size = 150
+    end
+    object cdsConsProdutoREFERENCIA_SEQ: TIntegerField
+      FieldName = 'REFERENCIA_SEQ'
+    end
+    object cdsConsProdutoID_COR: TIntegerField
+      FieldName = 'ID_COR'
+    end
+    object cdsConsProdutoCALCULAR_2_LADOS: TStringField
+      FieldName = 'CALCULAR_2_LADOS'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPERC_VIDRO: TFloatField
+      FieldName = 'PERC_VIDRO'
+    end
+    object cdsConsProdutoID_LINHA: TIntegerField
+      FieldName = 'ID_LINHA'
+    end
+    object cdsConsProdutoID_CFOP_NFCE: TIntegerField
+      FieldName = 'ID_CFOP_NFCE'
+    end
+    object cdsConsProdutoUSA_PRECO_COR: TStringField
+      FieldName = 'USA_PRECO_COR'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoUSA_COR: TStringField
+      FieldName = 'USA_COR'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoTRANSFER: TStringField
+      FieldName = 'TRANSFER'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPRECO_CUSTO_TOTAL: TFloatField
+      FieldName = 'PRECO_CUSTO_TOTAL'
+    end
+    object cdsConsProdutoID_CONTA_ORCAMENTO: TIntegerField
+      FieldName = 'ID_CONTA_ORCAMENTO'
+    end
+    object cdsConsProdutoID_LOCAL_ESTOQUE_PROD: TIntegerField
+      FieldName = 'ID_LOCAL_ESTOQUE_PROD'
+    end
+    object cdsConsProdutoPERC_COMISSAO: TFloatField
+      FieldName = 'PERC_COMISSAO'
+    end
+    object cdsConsProdutoID_ENQIPI: TIntegerField
+      FieldName = 'ID_ENQIPI'
+    end
+    object cdsConsProdutoLANCA_LOTE_CONTROLE: TStringField
+      FieldName = 'LANCA_LOTE_CONTROLE'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoCOD_CEST: TStringField
+      FieldName = 'COD_CEST'
+      Size = 7
+    end
+    object cdsConsProdutoPICTOGRAMA: TStringField
+      FieldName = 'PICTOGRAMA'
+      Size = 150
+    end
+    object cdsConsProdutoPICTO_CABEDAL: TStringField
+      FieldName = 'PICTO_CABEDAL'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPICTO_INTERIOR: TStringField
+      FieldName = 'PICTO_INTERIOR'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPICTO_SOLA: TStringField
+      FieldName = 'PICTO_SOLA'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoCOD_PRODUTO_CLI: TStringField
+      FieldName = 'COD_PRODUTO_CLI'
+      Size = 15
+    end
+    object cdsConsProdutoFILIAL: TIntegerField
+      FieldName = 'FILIAL'
+    end
+    object cdsConsProdutoBAIXA_ESTOQUE_MAT: TStringField
+      FieldName = 'BAIXA_ESTOQUE_MAT'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoCOD_JUSTNEW: TIntegerField
+      FieldName = 'COD_JUSTNEW'
+    end
+    object cdsConsProdutoNOME_ORIGINAL: TStringField
+      FieldName = 'NOME_ORIGINAL'
+      Size = 100
+    end
+    object cdsConsProdutoIMP_ROTULO: TStringField
+      FieldName = 'IMP_ROTULO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoNUM_MS: TStringField
+      FieldName = 'NUM_MS'
+    end
+    object cdsConsProdutoIMP_CONSUMO_NFE: TStringField
+      FieldName = 'IMP_CONSUMO_NFE'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoGERAR_FCI: TStringField
+      FieldName = 'GERAR_FCI'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoMEDIDA: TStringField
+      FieldName = 'MEDIDA'
+    end
+    object cdsConsProdutoQTD_EMBALAGEM: TFloatField
+      FieldName = 'QTD_EMBALAGEM'
+    end
+    object cdsConsProdutoDT_ALT_PRECOCUSTO: TDateField
+      FieldName = 'DT_ALT_PRECOCUSTO'
+    end
+    object cdsConsProdutoUSA_CARIMBO_OC: TStringField
+      FieldName = 'USA_CARIMBO_OC'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoUSA_NA_BALANCA: TStringField
+      FieldName = 'USA_NA_BALANCA'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoMENSAGEM: TStringField
+      FieldName = 'MENSAGEM'
+      Size = 250
+    end
+    object cdsConsProdutoPERC_DESC_MAX: TFloatField
+      FieldName = 'PERC_DESC_MAX'
+    end
+    object cdsConsProdutoID_CSTICMS_BRED: TIntegerField
+      FieldName = 'ID_CSTICMS_BRED'
+    end
+    object cdsConsProdutoTIPO_MAT: TStringField
+      FieldName = 'TIPO_MAT'
+      Size = 1
+    end
+    object cdsConsProdutoID_PROCESSO_GRUPO: TIntegerField
+      FieldName = 'ID_PROCESSO_GRUPO'
+    end
+    object cdsConsProdutoTIPO_PRODUCAO: TStringField
+      FieldName = 'TIPO_PRODUCAO'
+      Size = 1
+    end
+    object cdsConsProdutoCRIADO_OS: TStringField
+      FieldName = 'CRIADO_OS'
+      Size = 1
+    end
+    object cdsConsProdutoID_MATERIAL_CRU: TIntegerField
+      FieldName = 'ID_MATERIAL_CRU'
+    end
+    object cdsConsProdutoID_FORMA: TIntegerField
+      FieldName = 'ID_FORMA'
+    end
+    object cdsConsProdutoTAMANHO: TStringField
+      FieldName = 'TAMANHO'
+      Size = 3
+    end
+    object cdsConsProdutoTESTE: TStringField
+      FieldName = 'TESTE'
+      Size = 15
+    end
+    object cdsConsProdutoPRECO_LIQ: TFloatField
+      FieldName = 'PRECO_LIQ'
+    end
+    object cdsConsProdutoUSA_CLIQ: TStringField
+      FieldName = 'USA_CLIQ'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoQTD_PECA_EMB: TIntegerField
+      FieldName = 'QTD_PECA_EMB'
+    end
+    object cdsConsProdutoLARGURA: TFloatField
+      FieldName = 'LARGURA'
+    end
+    object cdsConsProdutoALTURA: TFloatField
+      FieldName = 'ALTURA'
+    end
+    object cdsConsProdutoESPESSURA: TFloatField
+      FieldName = 'ESPESSURA'
+    end
+    object cdsConsProdutoMULTIPLICADOR: TFloatField
+      FieldName = 'MULTIPLICADOR'
+    end
+    object cdsConsProdutoREF2: TStringField
+      FieldName = 'REF2'
+    end
+    object cdsConsProdutoFATOR_CALCULO: TFloatField
+      FieldName = 'FATOR_CALCULO'
+    end
+    object cdsConsProdutoREF_ORD: TStringField
+      FieldName = 'REF_ORD'
+    end
+    object cdsConsProdutoGERAR_WEB: TStringField
+      FieldName = 'GERAR_WEB'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoTAM_CALC: TFloatField
+      FieldName = 'TAM_CALC'
+    end
+    object cdsConsProdutoCOD_BARRA2: TStringField
+      FieldName = 'COD_BARRA2'
+      Size = 14
+    end
+    object cdsConsProdutoPOSSUE_LADO: TStringField
+      FieldName = 'POSSUE_LADO'
+      Size = 1
+    end
+    object cdsConsProdutoUNIDADE2: TStringField
+      FieldName = 'UNIDADE2'
+      Size = 6
+    end
+    object cdsConsProdutoCAIXINHA: TStringField
+      FieldName = 'CAIXINHA'
+      Size = 30
+    end
+    object cdsConsProdutoSEPARA_COR: TStringField
+      FieldName = 'SEPARA_COR'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoVALIDADE: TSmallintField
+      FieldName = 'VALIDADE'
+    end
+    object cdsConsProdutoID_CSTICMS: TIntegerField
+      FieldName = 'ID_CSTICMS'
+    end
+    object cdsConsProdutoNOME_MODELO: TStringField
+      FieldName = 'NOME_MODELO'
+      Size = 100
+    end
+    object cdsConsProdutoDESC_MAXIMO: TFloatField
+      FieldName = 'DESC_MAXIMO'
+    end
+    object cdsConsProdutoQTD_POR_ROTULO: TFloatField
+      FieldName = 'QTD_POR_ROTULO'
+    end
+    object cdsConsProdutoPERC_ICMS_NFCE: TFloatField
+      FieldName = 'PERC_ICMS_NFCE'
+    end
+    object cdsConsProdutoTIPO_ALGODAO: TStringField
+      FieldName = 'TIPO_ALGODAO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoCALCULAR_ST: TStringField
+      FieldName = 'CALCULAR_ST'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoPRECO_CUSTO_ANT: TFloatField
+      FieldName = 'PRECO_CUSTO_ANT'
+    end
+    object cdsConsProdutoTIPO: TStringField
+      FieldName = 'TIPO'
+      FixedChar = True
+      Size = 1
+    end
+    object cdsConsProdutoCODIGO: TStringField
+      FieldName = 'CODIGO'
+    end
+    object cdsConsProdutoNIVEL: TIntegerField
+      FieldName = 'NIVEL'
+    end
+    object cdsConsProdutoSUPERIOR: TStringField
+      FieldName = 'SUPERIOR'
+    end
+    object cdsConsProdutoCOD_PRINCIPAL: TIntegerField
+      FieldName = 'COD_PRINCIPAL'
+    end
+    object cdsConsProdutoTIPO_PROD: TStringField
+      FieldName = 'TIPO_PROD'
+      FixedChar = True
+      Size = 1
+    end
+  end
+  object dsConsProduto: TDataSource
+    DataSet = cdsConsProduto
+    Left = 664
+    Top = 592
+  end
+  object ACBrValidador: TACBrValidador
+    IgnorarChar = './-'
+    Left = 1024
+    Top = 32
   end
 end

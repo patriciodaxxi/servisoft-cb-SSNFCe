@@ -198,6 +198,8 @@ type
     RxDBComboBox46: TRxDBComboBox;
     Label83: TLabel;
     RxDBComboBox47: TRxDBComboBox;
+    lblSolicitaCPF: TLabel;
+    comboSolicitaCPF: TRxDBComboBox;
     procedure FormShow(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormDestroy(Sender: TObject);

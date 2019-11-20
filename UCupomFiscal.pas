@@ -15,7 +15,14 @@ uses
   cxGridCustomView, cxGridCustomTableView, cxGridTableView,
   cxGridDBTableView, cxGrid, dxSkinsCore, dxSkinBlue, dxSkinMoneyTwins,
   dxSkinOffice2007Blue, dxSkinSeven, dxSkinscxPCPainter, cxLookAndFeels,
-  dxGDIPlusClasses, GradientLabel;
+  dxGDIPlusClasses, GradientLabel, dxSkinBlack, dxSkinCaramel,
+  dxSkinCoffee, dxSkinDarkRoom, dxSkinDarkSide, dxSkinFoggy,
+  dxSkinGlassOceans, dxSkiniMaginary, dxSkinLilian, dxSkinLiquidSky,
+  dxSkinLondonLiquidSky, dxSkinMcSkin, dxSkinOffice2007Black,
+  dxSkinOffice2007Green, dxSkinOffice2007Pink, dxSkinOffice2007Silver,
+  dxSkinPumpkin, dxSkinSharp, dxSkinSilver, dxSkinSpringTime,
+  dxSkinStardust, dxSkinSummer2008, dxSkinsDefaultPainters,
+  dxSkinValentine, dxSkinXmas2008Blue, ACBrValidador;
 type
   tEnumTipoDesconto = (tpValor, tpPercentual, tpValorPago);
 
@@ -82,6 +89,8 @@ type
     GradientLabel4: TGradientLabel;
     GradientLabel5: TGradientLabel;
     GradientLabel6: TGradientLabel;
+    ACBrValidador: TACBrValidador;
+    GradientLabel7: TGradientLabel;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormShow(Sender: TObject);
     procedure Edit1Exit(Sender: TObject);
@@ -184,6 +193,7 @@ type
     procedure prc_Move_Itens;
     function fnc_Estoque_OK(ID_Produto, ID_Cor: Integer; Tamanho: string; Qtd: Real): Boolean;
     function fnc_Validacao_OK: Boolean;
+    procedure prc_Digita_Documento;
     //procedure prc_Busca_IBPT;
   end;
 
@@ -253,7 +263,8 @@ begin
   fDmCupomFiscal.cdsVendedor.Open;
 
   vSerieCupom := fDmCupomFiscal.lerIni('IMPRESSORA', 'Serie');
-
+  vCpfOK := False;
+  vDocumentoClienteVenda := '';
   fDmEstoque := TDmEstoque.Create(Self);
   fDmMovimento := TdmMovimento.Create(Self);
 
@@ -395,6 +406,9 @@ begin
       prcPesa;
     end;
 
+    if (fDmCupomFiscal.cdsCupomParametrosSOLICITA_CPF.AsString = 'S') and (not vCpfOK) then
+      fDmCupomFiscal.prc_Digita_Documento;
+
     vSubTotal := StrToFloat(FormatFloat('0.00', vVlrItem * CurrencyEdit1.Value));
     prc_Move_Itens;
     CurrencyEdit1Exit(Sender);
@@ -437,7 +451,6 @@ begin
     Edit1.Text := fDmCupomFiscal.cdsCupomParametrosPRODUTO_PADRAO.AsString;
     prc_EnterCodigo;
   end;
-
   vCalcula_IPI := True;
   vPedidoSelecionado := False;
   vAplicarDescontoItem := False;
@@ -523,6 +536,9 @@ begin
   if (Key = Vk_F4) then
     prc_ConsPreco;
 
+  if (Key = Vk_F5) then
+    prc_Digita_Documento;
+
   if (Key = Vk_F6) then
     prc_InformaCliente;
 
@@ -575,6 +591,9 @@ begin
       pnlDescricaoProduto.Text := '';
       pnlDescricaoProduto.Update;
       pnlCaixaLivre.Visible := True;
+      vDocumentoClienteVenda := '';
+      vCpfOK := False;
+      Limpa_Campos;
     end;
   end;
 
@@ -591,6 +610,21 @@ begin
           ffrmConsCupom := TfrmConsCupom.Create(nil);
           ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
           ffrmConsCupom.vCancelar := True;
+          try
+            ffrmConsCupom.ShowModal;
+          finally
+            FreeAndNil(ffrmConsCupom);
+          end;
+          fDmCupomFiscal.cdsCupomFiscal.Close;
+        end;
+      end;
+      'E' :
+      begin
+        if not (fDmCupomFiscal.cdsCupomFiscal.State in [dsEdit, dsInsert]) then
+        begin
+          ffrmConsCupom := TfrmConsCupom.Create(nil);
+          ffrmConsCupom.fDmCupomFiscal := fDmCupomFiscal;
+          ffrmConsCupom.vExcluir := True;
           try
             ffrmConsCupom.ShowModal;
           finally
@@ -632,9 +666,10 @@ begin
   if trim(Edit1.Text) = '' then
     exit;
 
-  if fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'R' then
-    vCampoPesquisa := 'REF'
-  else
+   //Tirei no dia 18/11/2019 - nao sei pra que serve
+//  if fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'R' then
+//    vCampoPesquisa := 'REF'
+//  else
     vCampoPesquisa := 'ID';
 
   if ((Length(Edit1.Text) > 7) and (vCampoPesquisa = 'ID')) or (Length(Edit1.Text) = 13) then
@@ -941,8 +976,12 @@ begin
   FreeAndNil(ffCupomFiscalPgto);
 
   vTextoFechamento := '';
-  if (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '') and (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '000.000.000-00') then
-    vTextoFechamento := 'Consumidor CPF: ' + fDmCupomFiscal.cdsCupomFiscalCPF.AsString + #13;
+  if vDocumentoClienteVenda <> EmptyStr then
+    vTextoFechamento := 'Consumidor CPF: ' + vDocumentoClienteVenda + #13;
+
+//  if (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '') and (fDmCupomFiscal.cdsCupomFiscalCPF.AsString <> '000.000.000-00') then
+//    vTextoFechamento := 'Consumidor CPF: ' + fDmCupomFiscal.cdsCupomFiscalCPF.AsString + #13;
+
   if not fDmCupomFiscal.vEncerrado then
     exit;
 
@@ -1033,6 +1072,8 @@ begin
     //******************
     if fDmCupomFiscal.cdsCupomFiscal.Active then
       fDmCupomFiscal.cdsCupomFiscal.Close;
+    vDocumentoClienteVenda := '';
+    vCpfOK := False;
     pnlDescricaoProduto.Text := '';
     pnlDescricaoProduto.Update;
     pnlCaixaLivre.Visible := True;
@@ -1328,12 +1369,18 @@ begin
     begin
       ffrmConsultaRapidaCupom := TfrmConsultaRapidaProduto.Create(nil);
       try
-        ffrmConsultaRapidaCupom.edtDescricao.Text := UpperCase(Edit1.Text);
+        if fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'R' then
+          ffrmConsultaRapidaCupom.edtReferencia.Text := UpperCase(Edit1.Text)
+        else
+          ffrmConsultaRapidaCupom.edtDescricao.Text := UpperCase(Edit1.Text);
         ffrmConsultaRapidaCupom.fdmCupomFiscal := fDmCupomFiscal;
         ffrmConsultaRapidaCupom.ShowModal;
         if ffrmConsultaRapidaCupom.ModalResult = mrOK then
         begin
-          Edit1.Text := IntToStr(ffrmConsultaRapidaCupom.codigoProdutoRetorno);
+//          if fDmCupomFiscal.cdsCupomParametrosUSA_COD_REF.AsString = 'R' then
+//            Edit1.Text := ffrmConsultaRapidaCupom.referenciaRetorno
+//          else
+            Edit1.Text := IntToStr(ffrmConsultaRapidaCupom.codigoProdutoRetorno);
         end
         else
         begin
@@ -2320,6 +2367,52 @@ begin
 //        DescItemVlr := StrToFloat(Copy(FloatToStr(DescItemVlr), 1, Pos(',', FloatToStr(DescItemVlr)) + 2));
 //      end;
 
+end;
+
+procedure TfCupomFiscal.prc_Digita_Documento;
+begin
+  if vDocumentoClienteVenda = '' then
+  begin
+    repeat
+      vCpfOK := False;
+      if (not vCpfOK) then
+        vDocumentoClienteVenda := InputBox('Documento Cliente!', 'Informar CPF/CNPJ no Cupom?', vDocumentoClienteVenda);
+      if vDocumentoClienteVenda <> '' then
+      begin
+        if length(vDocumentoClienteVenda) = 11 then
+        begin
+          ACBrValidador.TipoDocto := TACBrValTipoDocto(docCPF);
+          ACBrValidador.Documento := vDocumentoClienteVenda;
+
+          if ACBrValidador.Validar then
+          begin
+            vCpfOK := True;
+            vDocumentoClienteVenda := ACBrValidador.Formatar;
+          end
+          else
+            ShowMessage('ERRO: O CPF DIGITADO É INVÁLIDO!');
+        end
+        else
+        if length(vDocumentoClienteVenda) = 14 then
+        begin
+          ACBrValidador.TipoDocto := TACBrValTipoDocto(docCNPJ);
+          ACBrValidador.Documento := vDocumentoClienteVenda;
+          if ACBrValidador.Validar then
+          begin
+            vCpfOK := True;
+            vDocumentoClienteVenda := ACBrValidador.Formatar;
+          end
+          else
+            ShowMessage('ERRO: O CNPJ DIGITADO É INVÁLIDO!');
+        end;
+      end;
+      if vDocumentoClienteVenda = '' then
+        vCpfOK := True;
+    until
+      vCpfOK;
+  end
+  else
+    vCpfOK := True;
 end;
 
 end.

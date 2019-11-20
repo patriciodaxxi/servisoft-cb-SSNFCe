@@ -14,7 +14,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
   OldCreateOrder = False
   OnClose = FormClose
   OnCreate = FormCreate
-  OnKeyDown = FormKeyDown
+  OnKeyDown = documento
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
@@ -83,14 +83,14 @@ object fNFCE_ACBR: TfNFCE_ACBR
     Left = 0
     Top = 80
     Width = 963
-    Height = 403
+    Height = 404
     Align = alClient
     TabOrder = 1
     object RzPageControl1: TRzPageControl
       Left = 1
       Top = 1
       Width = 961
-      Height = 401
+      Height = 402
       ActivePage = TabSheet1
       Align = alClient
       TabIndex = 0
@@ -320,7 +320,7 @@ object fNFCE_ACBR: TfNFCE_ACBR
   end
   object pnlBotton: TPanel
     Left = 0
-    Top = 483
+    Top = 484
     Width = 963
     Height = 41
     Align = alBottom

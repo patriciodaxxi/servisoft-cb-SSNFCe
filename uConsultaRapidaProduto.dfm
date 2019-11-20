@@ -20,7 +20,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 150
     Top = 0
     Width = 1066
-    Height = 593
+    Height = 594
     Align = alClient
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -162,6 +162,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 1
+        OnKeyDown = edtReferenciaKeyDown
       end
       object edtCodigoBarra: TEdit
         Left = 563
@@ -175,11 +176,12 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
         Font.Style = []
         ParentFont = False
         TabOrder = 2
+        OnKeyDown = edtCodigoBarraKeyDown
       end
       object comboGrupo: TRxDBLookupCombo
         Left = 816
         Top = 32
-        Width = 185
+        Width = 201
         Height = 27
         DropDownCount = 8
         Font.Charset = DEFAULT_CHARSET
@@ -187,8 +189,12 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
         Font.Height = -16
         Font.Name = 'Tahoma'
         Font.Style = []
+        LookupField = 'ID'
+        LookupDisplay = 'NOME'
+        LookupSource = dmCupomFiscal.dsGrupo
         ParentFont = False
         TabOrder = 3
+        OnKeyDown = comboGrupoKeyDown
       end
     end
     object pnlPrincipal: TAdvPanel
@@ -228,7 +234,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
         Height = 366
         Align = alClient
         BorderStyle = bsNone
-        DataSource = dmCupomFiscal.dsProduto
+        DataSource = dmCupomFiscal.dsConsProduto
         Font.Charset = DEFAULT_CHARSET
         Font.Color = clWindowText
         Font.Height = -11
@@ -274,6 +280,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
             Title.Font.Height = -11
             Title.Font.Name = 'Verdana'
             Title.Font.Style = [fsBold]
+            Width = 59
             Visible = True
           end
           item
@@ -287,6 +294,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
             Title.Font.Height = -11
             Title.Font.Name = 'Verdana'
             Title.Font.Style = [fsBold]
+            Width = 140
             Visible = True
           end
           item
@@ -342,6 +350,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
             Title.Font.Height = -11
             Title.Font.Name = 'Verdana'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end
           item
@@ -369,6 +378,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
             Title.Font.Height = -11
             Title.Font.Name = 'Verdana'
             Title.Font.Style = [fsBold]
+            Width = 64
             Visible = True
           end>
       end
@@ -410,7 +420,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 0
     Top = 0
     Width = 150
-    Height = 593
+    Height = 594
     Align = alLeft
     BevelInner = bvNone
     BevelOuter = bvNone
@@ -423,7 +433,7 @@ object frmConsultaRapidaProduto: TfrmConsultaRapidaProduto
     Left = 1216
     Top = 0
     Width = 150
-    Height = 593
+    Height = 594
     Align = alRight
     BevelInner = bvNone
     BevelOuter = bvNone

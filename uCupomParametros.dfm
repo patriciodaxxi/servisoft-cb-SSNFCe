@@ -80,7 +80,7 @@ object fCupomParametros: TfCupomParametros
     Left = 0
     Top = 35
     Width = 1366
-    Height = 670
+    Height = 671
     ActivePage = TabSheet4
     Align = alClient
     TabOrder = 1
@@ -90,7 +90,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 1358
-        Height = 642
+        Height = 643
         Align = alClient
         Enabled = False
         TabOrder = 0
@@ -1103,6 +1103,14 @@ object fCupomParametros: TfCupomParametros
           Alignment = taRightJustify
           Caption = 'Gerar C. Receber:'
         end
+        object lblSolicitaCPF: TLabel
+          Left = 559
+          Top = 174
+          Width = 109
+          Height = 13
+          Alignment = taRightJustify
+          Caption = 'Solicita CPF na Venda:'
+        end
         object RxDBLookupCombo3: TRxDBLookupCombo
           Left = 246
           Top = 34
@@ -1430,6 +1438,24 @@ object fCupomParametros: TfCupomParametros
             'C'
             'N'
             '')
+        end
+        object comboSolicitaCPF: TRxDBComboBox
+          Left = 670
+          Top = 166
+          Width = 91
+          Height = 21
+          Style = csDropDownList
+          DataField = 'SOLICITA_CPF'
+          DataSource = dmCupomFiscal.dsCupomParametros
+          EnableValues = True
+          ItemHeight = 13
+          Items.Strings = (
+            'Sim'
+            'N'#227'o')
+          TabOrder = 20
+          Values.Strings = (
+            'S'
+            'N')
         end
       end
       object GroupBox2: TGroupBox
@@ -2078,7 +2104,7 @@ object fCupomParametros: TfCupomParametros
         Left = 0
         Top = 0
         Width = 1358
-        Height = 642
+        Height = 643
         Align = alClient
         TabOrder = 0
         object Label15: TLabel
@@ -2234,6 +2260,7 @@ object fCupomParametros: TfCupomParametros
             item
               Expanded = False
               FieldName = 'NUMREGISTRO'
+              Width = 64
               Visible = True
             end>
         end

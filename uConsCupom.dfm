@@ -1,6 +1,6 @@
 object frmConsCupom: TfrmConsCupom
-  Left = 250
-  Top = 78
+  Left = 102
+  Top = 103
   Width = 1087
   Height = 524
   Caption = 'Consulta Cupons'
@@ -597,7 +597,7 @@ object frmConsCupom: TfrmConsCupom
     Settings.URLColor = clTeal
     Settings.Width = 0
     Style = psTMS
-    Left = 809
-    Top = 33
+    Left = 1025
+    Top = 25
   end
 end
