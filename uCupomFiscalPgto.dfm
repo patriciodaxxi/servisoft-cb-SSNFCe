@@ -40,10 +40,28 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       Font.Style = [fsBold]
       GlyphSpacing = 5
       ParentFont = False
-      TabOrder = 1
+      TabOrder = 0
       TabStop = False
       Transparent = True
       OnClick = brCancelarClick
+    end
+    object btGaveta: TNxButton
+      Left = 500
+      Top = 5
+      Width = 187
+      Height = 30
+      Caption = '&Gaveta (F8)'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clGreen
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      GlyphSpacing = 5
+      ParentFont = False
+      TabOrder = 1
+      TabStop = False
+      Transparent = True
+      OnClick = btGavetaClick
     end
     object btConfirmar: TNxButton
       Left = 126
@@ -61,27 +79,9 @@ object fCupomFiscalPgto: TfCupomFiscalPgto
       ParentFont = False
       ParentShowHint = False
       ShowHint = True
-      TabOrder = 0
+      TabOrder = 2
       Transparent = True
       OnClick = btConfirmarClick
-    end
-    object btGaveta: TNxButton
-      Left = 500
-      Top = 5
-      Width = 187
-      Height = 30
-      Caption = '&Gaveta (F8)'
-      Font.Charset = DEFAULT_CHARSET
-      Font.Color = clGreen
-      Font.Height = -16
-      Font.Name = 'Arial'
-      Font.Style = [fsBold]
-      GlyphSpacing = 5
-      ParentFont = False
-      TabOrder = 2
-      TabStop = False
-      Transparent = True
-      OnClick = btGavetaClick
     end
   end
   object RzPageControl1: TRzPageControl

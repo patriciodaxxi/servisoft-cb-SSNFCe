@@ -294,6 +294,7 @@ object dmCupomFiscal: TdmCupomFiscal
     ProviderName = 'dspCupomFiscal'
     BeforePost = cdsCupomFiscalBeforePost
     OnNewRecord = cdsCupomFiscalNewRecord
+    OnReconcileError = cdsCupomFiscalReconcileError
     Left = 120
     Top = 8
     object cdsCupomFiscalID: TIntegerField
